@@ -1,4 +1,2 @@
-# TP_Session_Infographie
-blablabla
-gdrg
-kjh
+# TP_Info
+Esperons que ca fonctionne la
