@@ -1,23 +1,33 @@
 #include "ofApp.h"
 
 //--------------------------------------------------------------
-void ofApp::setup(){
+void ofApp::setup()
+{
+	this->cube = new Cube(500, 500, 200, 200, 100, 100);
 
 }
 
 //--------------------------------------------------------------
-void ofApp::update(){
+void ofApp::update()
+{
 
 }
 
 //--------------------------------------------------------------
-void ofApp::draw(){
-
+void ofApp::draw()
+{
+	this->cube->draw();
 }
 
 //--------------------------------------------------------------
-void ofApp::keyPressed(int key){
+void ofApp::keyPressed(int key)
+{
+	ofImage *image = util.ImportImage();
+	image->draw(0, 0, 0, 100, 100);
 
+	ofTexture *texture = new ofTexture();
+	texture->loadData()
+	
 }
 
 //--------------------------------------------------------------
