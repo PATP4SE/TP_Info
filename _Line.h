@@ -1,5 +1,8 @@
 #pragma once
-class _Line
+
+#include "Primitive.h"
+
+class _Line : public Primitive
 {
 public:
 	_Line();

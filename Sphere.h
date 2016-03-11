@@ -1,5 +1,8 @@
 #pragma once
-class Sphere
+
+#include "Form.h"
+
+class Sphere : public Form
 {
 public:
 	Sphere();
