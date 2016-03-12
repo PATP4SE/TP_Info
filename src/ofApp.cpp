@@ -2,17 +2,30 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
+	listener = new ofxCircleMenuButtonListener();
+	
+	m.setup();
+	m.setRadius(50, 150);
 
+	m.addMenuItem("Autres creation");	// 0
+	m.addMenuItem("Creation 3D");		// 1
+	m.addMenuItem("Creation 2D");		// 2
+	m.addMenuItem("Importer");			// 3
+	m.addMenuItem("Quitter");			// 4
+	m.addMenuItem("Exporter");			// 5
+
+	m.enableMouseControl();
+
+	m.setListener(listener);
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-
+	m.draw();
 }
 
 //--------------------------------------------------------------
@@ -38,7 +51,7 @@ void ofApp::mouseDragged(int x, int y, int button){
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
 
-}
+}	
 
 //--------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button){
@@ -69,3 +82,32 @@ void ofApp::gotMessage(ofMessage msg){
 void ofApp::dragEvent(ofDragInfo dragInfo){ 
 
 }
+
+void ofxCircleMenuButtonListener::buttonClicked(int p_button)
+{
+	if (p_button == 0)
+	{
+		cout << "TEST_0" << endl;
+	}
+	else if (p_button == 1)
+	{
+		cout << "TEST_1" << endl;
+	}
+	else if (p_button == 2)
+	{
+		cout << "TEST_2" << endl;
+	}
+	else if (p_button == 3)
+	{
+		cout << "TEST_3" << endl;
+	}
+	else if (p_button == 4)
+	{
+		cout << "TEST_4" << endl;
+	}
+	else if (p_button == 5)
+	{
+		cout << "TEST_5" << endl;
+	}
+}
+	
