@@ -28,7 +28,11 @@ public:
 	int GetY();
 	int GetZ();
 
+	bool isSelected();
+	void SetSelected(bool _selected);
+
 	void draw(ofColor _color);
+	void draw(ofImage * &_image);
 	void draw();
 
 private:
@@ -38,5 +42,8 @@ private:
 	int x;
 	int y;
 	int z;
+	bool selected;
+
+	ofMesh applyMesh(ofPoint _topLeft, ofPoint _topRight, ofPoint _bottomLeft, ofPoint _bottomRight, ofImage *_image);
 };
 

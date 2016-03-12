@@ -3,8 +3,11 @@
 //--------------------------------------------------------------
 void ofApp::setup()
 {
+<<<<<<< HEAD
 	ofSetBackgroundColor(ofColor(224, 224, 224));
 	this->cube = new Cube(500, 500, 200, 200, 100, 100);
+=======
+>>>>>>> refs/remotes/origin/master
 
 	listener = new ofxCircleMenuButtonListener();
 
@@ -36,11 +39,15 @@ void ofApp::draw() {
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key)
 {
+<<<<<<< HEAD
 	ofImage *image = util.ImportImage();
 	image->draw(0, 0, 0, 100, 100);
 
 	ofTexture *texture = new ofTexture();
 	//texture->loadData()
+=======
+	
+>>>>>>> refs/remotes/origin/master
 }
 
 //--------------------------------------------------------------
