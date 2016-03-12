@@ -28,10 +28,10 @@ public:
 	int GetY();
 	int GetZ();
 
+	void draw(ofColor _color);
 	void draw();
 
 private:
-
 	int height;
 	int width;
 	int depth;

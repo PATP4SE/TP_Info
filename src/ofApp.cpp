@@ -1,11 +1,17 @@
 #include "ofApp.h"
 
 //--------------------------------------------------------------
+<<<<<<< HEAD
 void ofApp::setup(){
 	listener = new ofxCircleMenuButtonListener();
 	
 	m.setup();
 	m.setRadius(50, 150);
+=======
+void ofApp::setup()
+{
+	this->cube = new Cube(500, 500, 200, 200, 100, 100);
+>>>>>>> refs/remotes/origin/master
 
 	m.addMenuItem("Autres creation");	// 0
 	m.addMenuItem("Creation 3D");		// 1
@@ -20,17 +26,35 @@ void ofApp::setup(){
 }
 
 //--------------------------------------------------------------
+<<<<<<< HEAD
 void ofApp::update(){
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
 	m.draw();
+=======
+void ofApp::update()
+{
+
 }
 
 //--------------------------------------------------------------
-void ofApp::keyPressed(int key){
+void ofApp::draw()
+{
+	this->cube->draw();
+>>>>>>> refs/remotes/origin/master
+}
 
+//--------------------------------------------------------------
+void ofApp::keyPressed(int key)
+{
+	ofImage *image = util.ImportImage();
+	image->draw(0, 0, 0, 100, 100);
+
+	ofTexture *texture = new ofTexture();
+	texture->loadData()
+	
 }
 
 //--------------------------------------------------------------

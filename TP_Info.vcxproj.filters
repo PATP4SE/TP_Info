@@ -4,38 +4,38 @@
     <ClCompile Include="src\main.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="_Line.cpp">
-      <Filter>src\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="Cube.cpp">
-      <Filter>src\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="Form.cpp">
-      <Filter>src\Objects</Filter>
-    </ClCompile>
     <ClCompile Include="Group.cpp">
-      <Filter>src\Scene</Filter>
+      <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\ofApp.cpp">
-      <Filter>src\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Renderer.cpp">
-      <Filter>src\Scene</Filter>
+      <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="Transformation.cpp">
-      <Filter>src\Scene</Filter>
+      <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="Utilities.cpp">
-      <Filter>src\Scene</Filter>
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="_Line.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="Cube.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="Form.cpp">
+      <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="Primitive.cpp">
-      <Filter>src\Objects</Filter>
+      <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="Sphere.cpp">
-      <Filter>src\Objects</Filter>
+      <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="Triangle.cpp">
-      <Filter>src\Objects</Filter>
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="renderer.cpp">
+      <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\..\addons\ofxUI\src\ofxUI2DGraph.cpp">
       <Filter>addons\ofxUI\src</Filter>
@@ -218,38 +218,38 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="_Line.h">
-      <Filter>src\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="Cube.h">
-      <Filter>src\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="Form.h">
-      <Filter>src\Objects</Filter>
-    </ClInclude>
     <ClInclude Include="Group.h">
-      <Filter>src\Scene</Filter>
+      <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\ofApp.h">
-      <Filter>src\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Renderer.h">
-      <Filter>src\Scene</Filter>
+      <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="Transformation.h">
-      <Filter>src\Scene</Filter>
+      <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="Utilities.h">
-      <Filter>src\Scene</Filter>
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="_Line.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="Cube.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="Form.h">
+      <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="Primitive.h">
-      <Filter>src\Objects</Filter>
+      <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="Sphere.h">
-      <Filter>src\Objects</Filter>
+      <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="Triangle.h">
-      <Filter>src\Objects</Filter>
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer.h">
+      <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\addons\ofxCircleMenuButton\src\ofxCircleMenuButton.h">
       <Filter>addons\ofxCircleMenuButton\src</Filter>

@@ -2,7 +2,7 @@
 
 
 
-Cube::Cube(int _x, int _y, int _z, int _height, int _width, int _depth)
+Cube::Cube(int _x, int _y, int _z, int _width, int _height, int _depth)
 {
 	this->x = _x;
 	this->y = _y;
@@ -27,15 +27,22 @@ Cube::~Cube()
 {
 }
 
-//Dessine à partir du centre du cube
 void Cube::draw()
 {
+	this->draw(ofGetBackgroundColor());
+}
+
+//Dessine à partir du centre du cube
+void Cube::draw(ofColor _color)
+{
+	ofSetColor(_color);
+	ofDrawBox(this->x, this->y, this->z, this->width, this->height, this->depth);
 	int left = this->x - (this->width / 2);
 	int right = this->x + (this->width / 2);
-	int top = this->y + (this->height / 2);
-	int bottom = this->y - (this->height / 2);
-	int front = this->z - (this->depth / 2);
-	int back = this->z + (this->depth / 2);
+	int top = this->y - (this->height / 2);
+	int bottom = this->y + (this->height / 2);
+	int front = this->z + (this->depth / 2);
+	int back = this->z - (this->depth / 2);
 
 	ofPoint topFrontLeft = ofPoint(left, top, front);
 	ofPoint topFrontRight = ofPoint(right, top, front);
@@ -46,16 +53,55 @@ void Cube::draw()
 	ofPoint topBackRight = ofPoint(right, top, back);
 	ofPoint bottomBackLeft = ofPoint(left, bottom, back);
 	ofPoint bottomBackRight = ofPoint(right, bottom, back);
+	
+	ofSetColor(ofColor::blue);
+	ofDrawSphere(topFrontLeft, 3);
+	ofDrawSphere(topFrontRight, 3);
+	ofDrawSphere(bottomFrontLeft, 3);
+	ofDrawSphere(bottomFrontRight, 3);
 
-	ofDrawSphere(topFrontLeft, 10);
-	ofDrawSphere(topFrontRight, 10);
-	ofDrawSphere(bottomFrontLeft, 10);
-	ofDrawSphere(bottomFrontRight, 10);
+	ofDrawSphere(topBackLeft, 3);
+	ofDrawSphere(topBackRight, 3);
+	ofDrawSphere(bottomBackLeft, 3);
+	ofDrawSphere(bottomBackRight, 3);
 
-	ofDrawSphere(topBackLeft, 10);
-	ofDrawSphere(topBackRight, 10);
-	ofDrawSphere(bottomBackLeft, 10);
-	ofDrawSphere(bottomBackRight, 10);
+	/*ofSetColor(ofColor::green);
+	ofDrawRectangle(topFrontLeft, this->width, this->height);
+
+	ofSetColor(ofColor::red);
+	ofDrawRectangle(topBackLeft, this->width, this->height);
+
+	ofSetColor(ofColor::yellow);
+	ofDrawRectangle(topFrontLeft, this->width, this->height);
+
+	ofSetColor(ofColor::pink);
+	ofDrawRectangle(topFrontLeft, this->width, this->height);
+
+	ofSetColor(ofColor::aqua);
+	ofDrawRectangle(topFrontLeft, this->width, this->height);
+
+	ofSetColor(ofColor::brown);
+	ofDrawRectangle(topFrontLeft, this->width, this->height);*/
+	
+
+	ofSetColor(ofColor::black);
+	//Draw les lignes sur le front
+	ofDrawLine(topFrontLeft, topFrontRight);
+	ofDrawLine(topFrontLeft, bottomFrontLeft);
+	ofDrawLine(topFrontRight, bottomFrontRight);
+	ofDrawLine(bottomFrontLeft, bottomFrontRight);
+	//Draw les lignes du back
+	ofDrawLine(topBackLeft, topBackRight);
+	ofDrawLine(topBackLeft, bottomBackLeft);
+	ofDrawLine(topBackRight, bottomBackRight);
+	ofDrawLine(bottomBackLeft, bottomBackRight);
+	//Les lignes du dessous
+	ofDrawLine(bottomFrontLeft, bottomBackLeft);
+	ofDrawLine(bottomFrontRight, bottomBackRight);
+	//Les lignes du dessus
+	ofDrawLine(topFrontLeft, topBackLeft);
+	ofDrawLine(topFrontRight, topBackRight);
+
 
 }
 
