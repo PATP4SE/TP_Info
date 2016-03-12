@@ -26,7 +26,7 @@ void ofApp::keyPressed(int key)
 	image->draw(0, 0, 0, 100, 100);
 
 	ofTexture *texture = new ofTexture();
-	texture->loadData()
+	texture->loadData();
 	
 }
 

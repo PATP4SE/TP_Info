@@ -11,6 +11,7 @@
 #include "../Group.h"
 #include "../renderer.h"
 #include "../Utilities.h"
+#include "../Modele.h"
 
 #include <list>
 
