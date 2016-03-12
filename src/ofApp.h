@@ -1,5 +1,7 @@
 #pragma once
 
+#include "ofMain.h"
+#include "ofxCircleMenuButton.h"
 #include <ofMain.h>
 #include "../Cube.h"
 #include "../Sphere.h"
@@ -13,6 +15,7 @@
 #include "../Utilities.h"
 
 #include <list>
+
 
 class ofApp : public ofBaseApp
 {
@@ -39,4 +42,7 @@ private:
 	list<Group> *groups;
 	Utilities util;
 		
+	ofxCircleMenuButton m;
+	ofxCircleMenuButtonListener *listener;
+
 };
