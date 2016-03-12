@@ -226,6 +226,7 @@ Z:\VS 2015\OpenFrameworks\addons\ofxXmlSettings\libs;%(AdditionalIncludeDirector
     <ClCompile Include="Cube.cpp" />
     <ClCompile Include="Form.cpp" />
     <ClCompile Include="Group.cpp" />
+    <ClCompile Include="Modele3D.cpp" />
     <ClCompile Include="Primitive.cpp" />
     <ClCompile Include="renderer.cpp" />
     <ClCompile Include="Sphere.cpp" />
@@ -293,6 +294,7 @@ Z:\VS 2015\OpenFrameworks\addons\ofxXmlSettings\libs;%(AdditionalIncludeDirector
     <ClInclude Include="Cube.h" />
     <ClInclude Include="Form.h" />
     <ClInclude Include="Group.h" />
+    <ClInclude Include="Modele3D.h" />
     <ClInclude Include="Primitive.h" />
     <ClInclude Include="renderer.h" />
     <ClInclude Include="Sphere.h" />
