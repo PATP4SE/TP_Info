@@ -12,23 +12,13 @@ public:
 	~Sphere();
 
 	void SetRadius(int _raidus);
-	void SetX(int _x);
-	void SetY(int _y);
-	void SetZ(int _z);
-
 	int GetRadius();
-	int GetX();
-	int GetY();
-	int GetZ();
 
 	void draw();
 	void draw(ofColor _color);
-	void draw(ofImage * & _image);
+	void drawWithTexture();
 
 private:
 	int radius;
-	int x;
-	int y;
-	int z;
 };
 

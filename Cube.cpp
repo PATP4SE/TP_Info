@@ -1,28 +1,18 @@
 #include "Cube.h"
 
-
-
-Cube::Cube(int _x, int _y, int _z, int _width, int _height, int _depth)
+Cube::Cube(int _x, int _y, int _z, int _width, int _height, int _depth) :Form(_x, _y, _z)
 {
-	this->x = _x;
-	this->y = _y;
-	this->z = _z;
 	this->height = _height;
 	this->width = _width;
 	this->depth = _depth;
-	this->selected = false;
 }
 
-Cube::Cube()
+Cube::Cube() :Form()
 {
-	this->x = 0;
-	this->y = 0;
-	this->z = 0;
 	this->height = 0;
 	this->width = 0;
 	this->depth = 0;
 }
-
 
 Cube::~Cube()
 {
@@ -33,14 +23,20 @@ void Cube::draw()
 	this->draw(ofGetBackgroundColor());
 }
 
-void Cube::drawOnCube(ofImage * & _image)
+void Cube::drawOnCube()
 {
-	float left = this->x - (this->width / 2);
-	float right = this->x + (this->width / 2);
-	float top = this->y - (this->height / 2);
-	float bottom = this->y + (this->height / 2);
-	float front = this->z + (this->depth / 2);
-	float back = this->z - (this->depth / 2);
+	ofPushMatrix();
+	ofTranslate(this->x, this->y, this->z);
+	ofRotateX(this->xRotation);
+	ofRotateY(this->yRotation);
+	ofRotateZ(this->zRotation);
+
+	float left = 0 - (this->width / 2);
+	float right = 0 + (this->width / 2);
+	float top = 0 - (this->height / 2);
+	float bottom = 0 + (this->height / 2);
+	float front = 0 + (this->depth / 2);
+	float back = 0 - (this->depth / 2);
 
 	ofPoint topFrontLeft = ofPoint(left, top, front);
 	ofPoint topFrontRight = ofPoint(right, top, front);
@@ -90,7 +86,6 @@ void Cube::drawOnCube(ofImage * & _image)
 		left, bottom, front, //bas gauche front
 		right, bottom, front, //bas droit front
 	};
-
 	int indicies[] = {
 		0,1,2,
 		1,2,3,
@@ -124,8 +119,7 @@ void Cube::drawOnCube(ofImage * & _image)
 		points[i].z = verts[i * 3 + 2];
 
 		mesh.addVertex(points[i]);
-		//mesh.addTexCoord(ofVec2f(points[i].x,points[i].y));
-		//mesh.addColor(ofColor::white);
+		mesh.addColor(ofColor::white);
 	}
 	float tcoords[] = {
 		//front
@@ -185,26 +179,48 @@ void Cube::drawOnCube(ofImage * & _image)
 		mesh.addIndex(fI + 3);
 	}
 
+	//Dessine les points
+	if (this->selected)
+		ofSetColor(ofColor::red);
+	else
+		ofSetColor(ofColor::blue);
+
+	ofDrawSphere(topFrontLeft, 3);
+	ofDrawSphere(topFrontRight, 3);
+	ofDrawSphere(bottomFrontLeft, 3);
+	ofDrawSphere(bottomFrontRight, 3);
+
+	ofDrawSphere(topBackLeft, 3);
+	ofDrawSphere(topBackRight, 3);
+	ofDrawSphere(bottomBackLeft, 3);
+	ofDrawSphere(bottomBackRight, 3);
+
 	ofDisableArbTex();
+	ofImage image = *this->texture;
 	ofDisableBlendMode();
 	ofEnableDepthTest();
-
-	ofSetColor(ofColor::white);
-	_image->getTextureReference().bind();
-	//mesh.drawWireframe();
+	//ofSetColor(ofColor::white);
+	image.getTextureReference().bind();
 	mesh.draw();
-	_image->getTextureReference().unbind();
+	image.getTextureReference().unbind();
+	ofPopMatrix();
 }
 
-void Cube::drawOnFaces(ofImage * & _image)
+void Cube::drawOnFaces()
 {
-	ofDrawBox(this->x, this->y, this->z, this->width, this->height, this->depth);
-	int left = this->x - (this->width / 2);
-	int right = this->x + (this->width / 2);
-	int top = this->y - (this->height / 2);
-	int bottom = this->y + (this->height / 2);
-	int front = this->z + (this->depth / 2);
-	int back = this->z - (this->depth / 2);
+	ofPushMatrix();
+	ofTranslate(this->x, this->y, this->z);
+	ofRotateX(this->xRotation);
+	ofRotateY(this->yRotation);
+	ofRotateZ(this->zRotation);
+
+	//ofDrawBox(this->x, this->y, this->z, this->width, this->height, this->depth);
+	int left = 0 - (this->width / 2);
+	int right = 0 + (this->width / 2);
+	int top = 0 - (this->height / 2);
+	int bottom = 0 + (this->height / 2);
+	int front = 0 + (this->depth / 2);
+	int back = 0 - (this->depth / 2);
 
 	ofPoint topFrontLeft = ofPoint(left, top, front);
 	ofPoint topFrontRight = ofPoint(right, top, front);
@@ -234,12 +250,12 @@ void Cube::drawOnFaces(ofImage * & _image)
 
 	//Applique la texture
 	ofSetColor(ofColor::white);
-	applyMesh(topBackRight, topBackLeft, bottomBackRight, bottomBackLeft, _image);//Back
-	applyMesh(topBackLeft, topFrontLeft, bottomBackLeft, bottomFrontLeft, _image);//Left
-	applyMesh(topFrontRight, topBackRight, bottomFrontRight, bottomBackRight, _image);//Right
-	applyMesh(topBackLeft, topBackRight, topFrontLeft, topFrontRight, _image);//Top
-	applyMesh(bottomBackRight, bottomBackLeft, bottomFrontRight, bottomFrontLeft, _image);//Bottom
-	applyMesh(topFrontLeft, topFrontRight, bottomFrontLeft, bottomFrontRight, _image);//Front
+	applyMesh(topBackRight, topBackLeft, bottomBackRight, bottomBackLeft);//Back
+	applyMesh(topBackLeft, topFrontLeft, bottomBackLeft, bottomFrontLeft);//Left
+	applyMesh(topFrontRight, topBackRight, bottomFrontRight, bottomBackRight);//Right
+	applyMesh(topBackLeft, topBackRight, topFrontLeft, topFrontRight);//Top
+	applyMesh(bottomBackRight, bottomBackLeft, bottomFrontRight, bottomFrontLeft);//Bottom
+	applyMesh(topFrontLeft, topFrontRight, bottomFrontLeft, bottomFrontRight);//Front
 
 	//Dessine les lignes sur le front
 	ofSetColor(ofColor::black);
@@ -258,19 +274,24 @@ void Cube::drawOnFaces(ofImage * & _image)
 	//Dessine les lignes du dessus
 	ofDrawLine(topFrontLeft, topBackLeft);
 	ofDrawLine(topFrontRight, topBackRight);
+	ofPopMatrix();
 }
 
 //Dessine à partir du centre du cube
 void Cube::draw(ofColor _color)
 {
+	ofPushMatrix();
+	ofTranslate(this->x, this->y, this->z);
+	ofRotateX(this->xRotation);
+	ofRotateY(this->yRotation);
+	ofRotateZ(this->zRotation);
 	ofSetColor(_color);
-	ofDrawBox(this->x, this->y, this->z, this->width, this->height, this->depth);
-	int left = this->x - (this->width / 2);
-	int right = this->x + (this->width / 2);
-	int top = this->y - (this->height / 2);
-	int bottom = this->y + (this->height / 2);
-	int front = this->z + (this->depth / 2);
-	int back = this->z - (this->depth / 2);
+	int left = 0 - (this->width / 2);
+	int right = 0 + (this->width / 2);
+	int top = 0 - (this->height / 2);
+	int bottom = 0 + (this->height / 2);
+	int front = 0 + (this->depth / 2);
+	int back = 0 - (this->depth / 2);
 
 	ofPoint topFrontLeft = ofPoint(left, top, front);
 	ofPoint topFrontRight = ofPoint(right, top, front);
@@ -314,8 +335,12 @@ void Cube::draw(ofColor _color)
 	//Les lignes du dessus
 	ofDrawLine(topFrontLeft, topBackLeft);
 	ofDrawLine(topFrontRight, topBackRight);
-
+	ofPopMatrix();
 }
+
+/******************************************************************************
+***************                 GET ET SET            *************************
+*******************************************************************************/
 
 void Cube::SetHeight(int _height)
 {
@@ -339,28 +364,6 @@ void Cube::SetDimension(int _height, int _width, int _depth)
 	this->depth = _depth;
 }
 
-void Cube::SetX(int _x)
-{
-	this->x = _x;
-}
-
-void Cube::SetY(int _y)
-{
-	this->y = _y;
-}
-
-void Cube::SetZ(int _z)
-{
-	this->z = _z;
-}
-
-void Cube::SetPosition(int _x, int _y, int _z)
-{
-	this->x = _x;
-	this->y = _y;
-	this->z = _z;
-}
-
 int Cube::GetHeight()
 {
 	return this->height;
@@ -376,37 +379,22 @@ int Cube::GetDepth()
 	return this->depth;
 }
 
-int Cube::GetX()
-{
-	return this->x;
-}
-
-int Cube::GetY()
-{
-	return this->y;
-}
-
-int Cube::GetZ()
-{
-	return this->z;
-}
-
-ofMesh Cube::applyMesh(ofPoint _topLeft, ofPoint _topRight, ofPoint _bottomLeft, ofPoint _bottomRight, ofImage *_image)
+ofMesh Cube::applyMesh(ofPoint _topLeft, ofPoint _topRight, ofPoint _bottomLeft, ofPoint _bottomRight)
 {
 	ofMesh *mesh = new ofMesh();
 	mesh->setMode(OF_PRIMITIVE_TRIANGLE_STRIP);
 	
 	mesh->addVertex(_topLeft); //haut gauche
-	mesh->addTexCoord(_image->getTextureReference().getCoordFromPercent(0, 0));
+	mesh->addTexCoord(this->texture->getTextureReference().getCoordFromPercent(0, 0));
 	mesh->addVertex(_topRight); //haut droit
-	mesh->addTexCoord(_image->getTextureReference().getCoordFromPercent(1, 0));
+	mesh->addTexCoord(this->texture->getTextureReference().getCoordFromPercent(1, 0));
 	mesh->addVertex(_bottomLeft);//bas gauche
-	mesh->addTexCoord(_image->getTextureReference().getCoordFromPercent(0, 1));
+	mesh->addTexCoord(this->texture->getTextureReference().getCoordFromPercent(0, 1));
 	mesh->addVertex(_bottomRight); //bas droit
-	mesh->addTexCoord(_image->getTextureReference().getCoordFromPercent(1, 1));
+	mesh->addTexCoord(this->texture->getTextureReference().getCoordFromPercent(1, 1));
 
-	_image->getTextureReference().bind();
+	this->texture->getTextureReference().bind();
 	mesh->draw();
-	_image->getTextureReference().unbind();
+	this->texture->getTextureReference().unbind();
 	return *mesh;
 }
