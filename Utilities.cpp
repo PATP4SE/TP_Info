@@ -1,6 +1,5 @@
 #include "Utilities.h"
 
-
 Utilities::Utilities()
 {
 }
@@ -42,6 +41,7 @@ ofImage* Utilities::ImportImage()
 	if (dialog.bSuccess)
 	{
 		string extension = dialog.fileName.substr(dialog.fileName.find_last_of(".") + 1);
+		transform(extension.begin(), extension.end(), extension.begin(), (int(*)(int))tolower);
 		if (extension == "png" || extension == "jpg" || extension == "bmp" || extension == "gif")
 		{
 			image->load(dialog.filePath);
