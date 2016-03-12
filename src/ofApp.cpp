@@ -3,14 +3,15 @@
 //--------------------------------------------------------------
 void ofApp::setup()
 {
+	ofSetBackgroundColor(ofColor(224, 224, 224));
 	this->cube = new Cube(500, 500, 200, 200, 100, 100);
 
-listener = new ofxCircleMenuButtonListener();
+	listener = new ofxCircleMenuButtonListener();
 
-m.setup();
-m.setRadius(50, 150);
+	m.setup();
+	m.setRadius(60, 180);
 
-	m.addMenuItem("Autres creation");	// 0
+	m.addMenuItem("Creation diverse");	// 0
 	m.addMenuItem("Creation 3D");		// 1
 	m.addMenuItem("Creation 2D");		// 2
 	m.addMenuItem("Importer");			// 3
