@@ -11,8 +11,13 @@ public:
 	Sphere();
 	~Sphere();
 
-	void SetRadius(int _raidus);
+	void SetDimension(int _x, int _y, int _z) { SetRadius(_x);   SetRadius(_y);  SetRadius(_z);}
+	void SetRadius(int _radius);
 	int GetRadius();
+
+	int GetWidth() { GetRadius(); }
+	int GetHeight() { GetRadius(); }
+	int GetHeight() { GetRadius(); }
 
 	void draw();
 	void draw(ofColor _color);

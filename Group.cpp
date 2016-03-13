@@ -94,12 +94,63 @@ void Group::ajoutTransformationsGroupePrimitive(Primitive *p_primitive)
 	p_primitive->SetPosition(p_primitive->GetX() + this->GetX(), p_primitive->GetY() + this->GetY(), p_primitive->GetZ() + this->GetZ());
 	// Rotation 
 	
+	// Dimension
+
+}
+
+void Group::ajoutTransformationsGroupeForme(Form *p_form)
+{
+	// Translation
+	p_form->SetPosition(p_form->GetX() + this->GetX(), p_form->GetY() + this->GetY(), p_form->GetZ() + this->GetZ());
+	// Rotation 
+
+	// Dimension
+
+}
+
+void Group::ajoutTransformationsGroupeGroupe(Group *p_group)
+{
+	// Translation
+	p_group->SetPosition(p_group->GetX() + this->GetX(), p_group->GetY() + this->GetY(), p_group->GetZ() + this->GetZ());
+	// Rotation 
+
+	// Dimension
+
+}
+
+void Group::ajoutTransformationsGroupeEnsemble()
+{
+
 }
 
 void Group::enleverTransformationsGroupePrimitive(Primitive *p_primitive)
 {
 	// Translation
 	p_primitive->SetPosition(p_primitive->GetX() - this->GetX(), p_primitive->GetY() - this->GetY(), p_primitive->GetZ() - this->GetZ());
+	// Rotation 
+
+	// Dimension
+
+}
+
+void Group::enleverTransformationsGroupeForme(Form *p_form)
+{
+	// Translation
+	p_form->SetPosition(p_form->GetX() - this->GetX(), p_form->GetY() - this->GetY(), p_form->GetZ() - this->GetZ());
+	// Rotation 
+
+	// Dimension
+
+}
+
+void Group::enleverTransformationsGroupeGroupe(Group *p_group)
+{
+	// Translation
+	p_group->SetPosition(p_group->GetX() - this->GetX(), p_group->GetY() - this->GetY(), p_group->GetZ() - this->GetZ());
+	// Rotation 
+
+	// Dimension
+
 }
 
 /******************************************************************************

@@ -45,6 +45,44 @@ int Primitive::GetLineWidth()
 	return this->lineWidth;
 }
 
+int Primitive::GetRotationX()
+{
+	return this->xRotation;
+}
+
+int Primitive::GetRotationY()
+{
+	return this->yRotation;
+}
+
+int Primitive::GetRotationZ()
+{
+	return this->zRotation;
+}
+
+void Primitive::RotateX(int _x)
+{
+	this->xRotation = _x;
+}
+
+void Primitive::RotateY(int _y)
+{
+	this->yRotation = _y;
+}
+
+void Primitive::RotateZ(int _z)
+{
+	this->zRotation = _z;
+}
+
+void Primitive::Rotate(int _x, int _y, int _z)
+{
+	this->xRotation = _x;
+	this->yRotation = _y;
+	this->zRotation = _z;
+}
+
+
 void Primitive::SetX(int _x)
 {
 	this->x = _x;
@@ -71,8 +109,11 @@ void Primitive::SetLineWidth(int _width)
 {
 	this->lineWidth = _width;
 }
+<<<<<<< HEAD
 
 void Primitive::SetNom(string p_nom)
 {
 	this->m_nom = p_nom;
 }
+=======
+>>>>>>> 4864c66a8370929d907a7662274cd97939aa7181
