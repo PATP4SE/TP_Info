@@ -2,6 +2,8 @@
 
 #include <string>
 #include "ofMain.h"
+#include "Primitive.h"
+#include "Form.h"
 
 class Group
 {
@@ -31,12 +33,31 @@ public:
 	void RotateZ(int _z);
 	void Rotate(int _x, int _y, int _z);
 
-	//void ajoutGroupe(int p_type, T* p_objet);
-	void enleverGroupe(string p_nom);
+	void ajoutGroupePrimitive(Primitive *p_primitive);
+	void ajoutGroupeForme(Form *p_form);
+	void ajoutGroupeGroupe(Group *p_group);
 
+	void enleverGroupePrimitive(string p_nom);
+	void enleverGroupeForme(string p_nom);
+	void enleverGroupeGroupe(string p_nom);
+
+	void ajoutTransformationsGroupePrimitive(Primitive *p_primitive);
+	void ajoutTransformationsGroupeForme(Form *p_form);
+	void ajoutTransformationsGroupeGroupe(Group *p_group);
+
+	void ajoutTransformationsGroupeEnsemble();
+
+	void enleverTransformationsGroupePrimitive(Primitive *p_primitive);
+	void enleverTransformationsGroupeForme(Form *p_form);
+	void enleverTransformationsGroupeGroupe(Group *p_group);
+
+	void enleverTransformationsGroupeEnsemble();
 private:
-	//template <typename T>
-	//std::list<std::pair<int p_typeObjet,T* p_objet> > m_ElementGroupe;
+	
+	list<Form*> *forms;
+	list<Primitive*> *primitives;
+	list<Group*> *groups;
+
 	string m_nom;
 
 	bool selected;

@@ -1,14 +1,16 @@
 #pragma once
 
 #include "ofMain.h"
+#include <string>
 
 class Form
 {
 public:
 	Form();
-	Form(int _x, int _y, int _z);
+	Form(string p_nom, int _x, int _y, int _z);
 	~Form();
 
+	string GetNom();
 	int GetX();
 	int GetY();
 	int GetZ();
@@ -19,6 +21,7 @@ public:
 
 	void SetTexture(ofImage *_image);
 
+	void SetNom(string p_nom);
 	void SetX(int _x);
 	void SetY(int _y);
 	void SetZ(int _z);
@@ -29,6 +32,8 @@ public:
 	void RotateZ(int _z);
 	void Rotate(int _x, int _y, int _z);
 protected:
+	string m_nom;
+
 	bool selected;
 	int x;
 	int y;

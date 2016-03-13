@@ -1,4 +1,8 @@
 #pragma once
+
+#include "ofMain.h"
+#include <string>
+
 class Primitive
 {
 public:
@@ -6,11 +10,13 @@ public:
 	Primitive();
 	~Primitive();
 
+	string GetNom();
 	int GetX();
 	int GetY();
 	int GetZ();
 	int GetLineWidth();
 
+	void SetNom(string p_nom);
 	void SetX(int _x);
 	void SetY(int _y);
 	void SetZ(int _z);
@@ -18,6 +24,7 @@ public:
 	void SetLineWidth(int _width);
 
 protected:
+	string m_nom;
 	int x;
 	int y;
 	int z;

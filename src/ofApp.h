@@ -9,9 +9,7 @@
 #include "../Primitive.h"
 #include "../_Line.h"
 #include "../Triangle.h"
-#include "../Transformation.h"
 #include "../Group.h"
-#include "../renderer.h"
 #include "../Utilities.h"
 
 #include <list>
@@ -37,9 +35,9 @@ public:
 	void gotMessage(ofMessage msg);
 private:
 	Cube *cube;
-	list<Form> *forms;
-	list<Primitive> *primitives;
-	list<Group> *groups;
+	list<Form*> *forms;
+	list<Primitive*> *primitives;
+	list<Group*> *groups;
 	Utilities util;
 		
 	ofxCircleMenuButton m;

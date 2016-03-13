@@ -1,6 +1,6 @@
 #include "Cube.h"
 
-Cube::Cube(int _x, int _y, int _z, int _width, int _height, int _depth) :Form(_x, _y, _z)
+Cube::Cube(string p_nom, int _x, int _y, int _z, int _width, int _height, int _depth) :Form(p_nom, _x, _y, _z)
 {
 	this->height = _height;
 	this->width = _width;

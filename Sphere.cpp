@@ -5,7 +5,7 @@ Sphere::Sphere(): Form()
 	this->radius = 0;
 }
 
-Sphere::Sphere(int _x, int _y, int _z, int _radius):Form(_x, _y, _z)
+Sphere::Sphere(string p_nom, int _x, int _y, int _z, int _radius):Form(p_nom, _x, _y, _z)
 {
 	this->radius = _radius;
 }

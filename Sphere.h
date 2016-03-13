@@ -7,7 +7,7 @@ class Sphere : public Form
 {
 public:
 
-	Sphere(int _x, int _y, int _z, int _radius);
+	Sphere(string p_nom, int _x, int _y, int _z, int _radius);
 	Sphere();
 	~Sphere();
 

@@ -17,13 +17,11 @@ public:
 
 	//ofxAssimpModelLoader* chargerModele();
 
-	void SetNom(string p_nom);
 	void SetHeight(int _height);
 	void SetWidth(int _width);
 	void SetDepth(int _depth);
 	void SetDimension(int _height, int _width, int _depth);
 
-	string GetNom();
 	int GetHeight();
 	int GetWidth();
 	int GetDepth();
@@ -31,7 +29,6 @@ public:
 	void draw();
 
 private:
-	string m_nom;
 	//ofxAssimpModelLoader *m_monModele;
 
 	int height;

@@ -20,6 +20,11 @@ Primitive::~Primitive()
 {
 }
 
+string Primitive::GetNom()
+{
+	return this->m_nom;
+}
+
 int Primitive::GetX()
 {
 	return this->x;
@@ -65,4 +70,9 @@ void Primitive::SetPosition(int _x, int _y, int _z)
 void Primitive::SetLineWidth(int _width)
 {
 	this->lineWidth = _width;
+}
+
+void Primitive::SetNom(string p_nom)
+{
+	this->m_nom = p_nom;
 }

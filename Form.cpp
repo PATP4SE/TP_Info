@@ -12,8 +12,9 @@ Form::Form()
 	this->texture = NULL;
 }
 
-Form::Form(int _x, int _y, int _z)
+Form::Form(string p_nom, int _x, int _y, int _z)
 {
+	this->m_nom = p_nom;
 	this->x = _x;
 	this->y = _y;
 	this->z = _z;
@@ -33,6 +34,11 @@ Form::~Form()
 /******************************************************************************
 ***************                 GET ET SET            *************************
 *******************************************************************************/
+
+string Form::GetNom()
+{
+	return this->m_nom;
+}
 
 int Form::GetX()
 {
@@ -62,6 +68,11 @@ int Form::GetRotationY()
 int Form::GetRotationZ()
 {
 	return this->zRotation;
+}
+
+void Form::SetNom(string p_nom)
+{
+	this->m_nom = p_nom;
 }
 
 void Form::SetTexture(ofImage *_image)

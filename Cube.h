@@ -6,7 +6,7 @@
 class Cube : public Form
 {
 public:
-	Cube(int _x, int _y, int _z, int _height, int _width, int _depth);
+	Cube(string p_nom, int _x, int _y, int _z, int _height, int _width, int _depth);
 	Cube();
 	~Cube();
 

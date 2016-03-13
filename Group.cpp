@@ -1,7 +1,5 @@
 #include "Group.h"
 
-
-
 Group::Group()
 {
 	this->x = 0;
@@ -29,26 +27,80 @@ Group::Group(string p_nom)
 	this->yRotation = 0;
 	this->zRotation = 0;
 	this->selected = false;
-}
-/*
-void ajoutGroupe(int p_type, T* p_objet)
-{
-	this->m_ElementGroupe.push_back(std::make_pair(p_type,p_objet));
+
+
 }
 
-void enleverGroupe(string p_nom)
+void Group::ajoutGroupePrimitive(Primitive *p_primitive)
 {
-	std::list<pair> mylist;
-	std::list<int>::iterator it1;
+	this->primitives->push_back(p_primitive);
+}
 
-	for (it=m_ElementGroupe.begin(); it!=m_ElementGroupe.end(); ++it)
+void Group::ajoutGroupeForme(Form *p_form)
+{
+	this->forms->push_back(p_form);
+}
+
+void Group::ajoutGroupeGroupe(Group *p_group)
+{
+	this->groups->push_back(p_group);
+}
+
+void Group::enleverGroupePrimitive(string p_nom)
+{
+	list<Primitive*>::iterator it = this->primitives->begin();
+
+	for (it = this->primitives->begin(); it!= this->primitives->end(); ++it)
 	{
-		if ((it->second)->GetName() == p_nom) then
-			
-		end if
+		if ((*it)->GetNom() == p_nom)
+		{
+			enleverTransformationsGroupePrimitive(*it);
+			this->primitives->erase(it);
+		}
 	}
 }
-*/
+
+void Group::enleverGroupeForme(string p_nom)
+{
+	list<Form*>::iterator it = this->forms->begin();
+
+	for (it = this->forms->begin(); it != this->forms->end(); ++it)
+	{
+		if ((*it)->GetNom() == p_nom)
+		{
+			//enleverTransformationsGroupeForme(*it);
+			this->forms->erase(it);
+		}
+	}
+}
+
+void Group::enleverGroupeGroupe(string p_nom)
+{
+	list<Group*>::iterator it = this->groups->begin();
+
+	for (it = this->groups->begin(); it != this->groups->end(); ++it)
+	{
+		if ((*it)->GetNom() == p_nom)
+		{
+			//enleverTransformationsGroupeGroupe(*it);
+			this->groups->erase(it);
+		}
+	}
+}
+
+void Group::ajoutTransformationsGroupePrimitive(Primitive *p_primitive)
+{
+	// Translation
+	p_primitive->SetPosition(p_primitive->GetX() + this->GetX(), p_primitive->GetY() + this->GetY(), p_primitive->GetZ() + this->GetZ());
+	// Rotation 
+	
+}
+
+void Group::enleverTransformationsGroupePrimitive(Primitive *p_primitive)
+{
+	// Translation
+	p_primitive->SetPosition(p_primitive->GetX() - this->GetX(), p_primitive->GetY() - this->GetY(), p_primitive->GetZ() - this->GetZ());
+}
 
 /******************************************************************************
 ***************                 GET ET SET            *************************
