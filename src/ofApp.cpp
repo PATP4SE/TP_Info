@@ -3,11 +3,17 @@
 //--------------------------------------------------------------
 void ofApp::setup()
 {
+	//fEnableDepthTest();
+	//glShadeModel(GL_SMOOTH);
+/*
 <<<<<<< HEAD
 	ofSetBackgroundColor(ofColor(224, 224, 224));
 	this->cube = new Cube(500, 500, 200, 200, 100, 100);
 =======
 >>>>>>> refs/remotes/origin/master
+*/
+	ofSetFrameRate(60);
+	ofEnableDepthTest();
 
 	listener = new ofxCircleMenuButtonListener();
 
@@ -24,6 +30,7 @@ void ofApp::setup()
 	m.enableMouseControl();
 
 	m.setListener(listener);
+	
 }
 
 //--------------------------------------------------------------
@@ -33,12 +40,13 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::draw() {
 	m.draw();
-	this->cube->draw();
+	//this->cube->draw();
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key)
 {
+	/*
 <<<<<<< HEAD
 	ofImage *image = util.ImportImage();
 	image->draw(0, 0, 0, 100, 100);
@@ -48,6 +56,7 @@ void ofApp::keyPressed(int key)
 =======
 	
 >>>>>>> refs/remotes/origin/master
+	*/
 }
 
 //--------------------------------------------------------------
@@ -127,4 +136,3 @@ void ofxCircleMenuButtonListener::buttonClicked(int p_button)
 		cout << "TEST_5" << endl;
 	}
 }
-	
