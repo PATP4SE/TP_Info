@@ -60,6 +60,7 @@ private:
 	ofxUIDropDownList *m_DDL_3;
 
 	void guiEvent_DropDownList(ofxUIEventArgs &e);
+	void guiEvent_DoAction(int p_IdButton);
 
 	// Propriétés
 	ofxUICanvas *m_guiParametres;

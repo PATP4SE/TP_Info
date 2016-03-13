@@ -175,7 +175,7 @@ void ofApp::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-
+	guiEvent_DoAction(m_menu.hitTest());
 }	
 
 //--------------------------------------------------------------
@@ -213,58 +213,60 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
 
 }
 
-void ofxCircleMenuButtonListener::buttonClicked(int p_button)
+void ofApp::guiEvent_DoAction(int p_IdButton)
 {
-	if (p_button == 0)
+	if (p_IdButton != -1)
 	{
-		// Créer groupe
-		//m_guiCreerGroupe->setVisible(false);
+		if (p_IdButton == 0)
+		{
+			// Créer groupe
+			m_guiCreerGroupe->setVisible(true);
+		}
+		else if (p_IdButton == 1)
+		{
+			// Création diverse
 
-	}
-	else if (p_button == 1)
-	{
-		// Création diverse
+			/*
+			INSERT CODE HERE
+			*/
+		}
+		else if (p_IdButton == 2)
+		{
+			// Création 3D
 
-		/*
-		INSERT CODE HERE
-		*/
-	}
-	else if (p_button == 2)
-	{
-		// Création 3D
+			/*
+			INSERT CODE HERE
+			*/
+		}
+		else if (p_IdButton == 3)
+		{
+			// Création 2D
 
-		/*
-		INSERT CODE HERE
-		*/
-	}
-	else if (p_button == 3)
-	{
-		// Création 2D
+			/*
+			INSERT CODE HERE
+			*/
+		}
+		else if (p_IdButton == 4)
+		{
+			// Importer
 
-		/*
-		INSERT CODE HERE
-		*/
-	}
-	else if (p_button == 4)
-	{
-		// Importer
+			/*
+			INSERT CODE HERE
+			*/
+		}
+		else if (p_IdButton == 5)
+		{
+			// Quitter l'application
+			exit();
+		}
+		else if (p_IdButton == 6)
+		{
+			// Exporter
 
-		/*
-		INSERT CODE HERE
-		*/
-	}
-	else if (p_button == 5)
-	{
-		// Quitter l'application
-		exit(0);
-	}
-	else if (p_button == 6)
-	{
-		// Exporter
-
-		/*
-		INSERT CODE HERE
-		*/
+			/*
+			INSERT CODE HERE
+			*/
+		}
 	}
 }
 
