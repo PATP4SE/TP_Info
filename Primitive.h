@@ -6,7 +6,7 @@
 class Primitive
 {
 public:
-	Primitive(int _x, int _y, int _z, int _lineWidth = 1);
+	Primitive(string p_nom, int _x, int _y, int _z, int _lineWidth = 1);
 	Primitive();
 	~Primitive();
 
@@ -15,6 +15,7 @@ public:
 	int GetY();
 	int GetZ();
 	int GetLineWidth();
+	bool IsSelected();
 
 	void SetNom(string p_nom);
 
@@ -27,6 +28,7 @@ public:
 	void SetZ(int _z);
 	void SetPosition(int _x, int _y, int _z);
 	void SetLineWidth(int _width);
+	void SetSelected(bool _selected);
 
 	void RotateX(int _x);
 	void RotateY(int _y);
@@ -42,5 +44,6 @@ protected:
 	int yRotation;
 	int zRotation;
 	int lineWidth;
+	bool selected;
 };
 

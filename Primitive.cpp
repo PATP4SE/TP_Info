@@ -8,8 +8,9 @@ Primitive::Primitive()
 	this->z = 0;
 }
 
-Primitive::Primitive(int _x, int _y, int _z, int _lineWidth)
+Primitive::Primitive(string p_nom, int _x, int _y, int _z, int _lineWidth)
 {
+	this->m_nom = p_nom;
 	this->x = _x;
 	this->y = _y;
 	this->z = _z;
@@ -58,6 +59,16 @@ int Primitive::GetRotationY()
 int Primitive::GetRotationZ()
 {
 	return this->zRotation;
+}
+
+bool Primitive::IsSelected()
+{
+	return this->selected;
+}
+
+void Primitive::SetSelected(bool _selected)
+{
+	this->selected = _selected;
 }
 
 void Primitive::RotateX(int _x)

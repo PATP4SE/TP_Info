@@ -18,7 +18,8 @@ public:
 	int GetRotationX();
 	int GetRotationY();
 	int GetRotationZ();
-
+	bool IsSelected();
+	
 	virtual int GetWidth() = 0;
 	virtual int GetHeight() = 0;
 	virtual int GetDepth() = 0;
@@ -31,6 +32,7 @@ public:
 	void SetZ(int _z);
 	void SetPosition(int _x, int _y, int _z);
 	virtual void SetDimension(int _x, int _y, int _z) = 0;
+	void SetSelected(bool _selected);
 
 	void RotateX(int _x);
 	void RotateY(int _y);

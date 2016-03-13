@@ -70,6 +70,16 @@ int Form::GetRotationZ()
 	return this->zRotation;
 }
 
+bool Form::IsSelected()
+{
+	return this->selected;
+}
+
+void Form::SetSelected(bool _selected)
+{
+	this->selected = _selected;
+}
+
 void Form::SetNom(string p_nom)
 {
 	this->m_nom = p_nom;
