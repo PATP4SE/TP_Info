@@ -2,6 +2,7 @@
 
 #include "ofMain.h"
 #include "ofxCircleMenuButton.h"
+#include "ofxUI/src/ofxUI.h"
 #include <ofMain.h>
 #include "../Cube.h"
 #include "../Sphere.h"
@@ -34,13 +35,54 @@ public:
 	void dragEvent(ofDragInfo dragInfo);
 	void gotMessage(ofMessage msg);
 private:
-	Cube *cube;
 	list<Form*> *forms;
 	list<Primitive*> *primitives;
 	list<Group*> *groups;
 	Utilities util;
 		
-	ofxCircleMenuButton m;
-	ofxCircleMenuButtonListener *listener;
+	#pragma region Gestion - Interface
+	//////////////////////////////////////////////////
+	// Menu
+	ofxCircleMenuButton m_menu;
+	ofxCircleMenuButtonListener *m_listener;
+
+	// DropDownList
+	vector<string> m_dataDDL_1;
+	ofxUISuperCanvas *m_guiDDL_1;
+	ofxUIDropDownList *m_DDL_1;
+
+	vector<string> m_dataDDL_2;
+	ofxUISuperCanvas *m_guiDDL_2;
+	ofxUIDropDownList *m_DDL_2;
+
+	vector<string> m_dataDDL_3;
+	ofxUISuperCanvas *m_guiDDL_3;
+	ofxUIDropDownList *m_DDL_3;
+
+	void guiEvent_DropDownList(ofxUIEventArgs &e);
+
+	// Propriétés
+	ofxUICanvas *m_guiParametres;
+	void guiEvent_Proprietes(ofxUIEventArgs &e);
+	float m_couleurR, m_couleurG, m_couleurB, m_couleurA;
+	float m_positionX, m_positionY, m_positionZ;
+	float m_rotationX, m_rotationY, m_rotationZ;
+
+	float m_maxWidthPosition, m_maxHeightPosition;
+	bool m_drawFillVisible;
+	string m_valeurDimension;
+
+	// Créer groupe
+	ofxUISuperCanvas *m_guiCreerGroupe;
+	void guiEvent_CreerGroupe(ofxUIEventArgs &e);
+	string m_nomNouveauGroupe;
+
+	// Autres
+	HWND m_hwndDesktop;
+	RECT m_rectDesktop;
+
+	ofxUICanvas *m_guiFPS;
+	//////////////////////////////////////////////////
+	#pragma endregion
 
 };

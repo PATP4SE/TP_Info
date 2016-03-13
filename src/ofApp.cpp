@@ -3,33 +3,123 @@
 //--------------------------------------------------------------
 void ofApp::setup()
 {
-	//fEnableDepthTest();
-	//glShadeModel(GL_SMOOTH);
-/*
-<<<<<<< HEAD
-	ofSetBackgroundColor(ofColor(224, 224, 224));
-	this->cube = new Cube(500, 500, 200, 200, 100, 100);
-=======
->>>>>>> refs/remotes/origin/master
-*/
 	ofSetFrameRate(60);
 	ofEnableDepthTest();
+	glShadeModel(GL_SMOOTH);
 
-	listener = new ofxCircleMenuButtonListener();
+	#pragma region Gestion - Interface
+	//////////////////////////////////////////////////
+	ofSetBackgroundColor(ofColor(224, 224, 224));
 
-	m.setup();
-	m.setRadius(60, 180);
+	// Autres
+	m_hwndDesktop = GetDesktopWindow();
+	GetWindowRect(m_hwndDesktop, &m_rectDesktop);
 
-	m.addMenuItem("Creation diverse");	// 0
-	m.addMenuItem("Creation 3D");		// 1
-	m.addMenuItem("Creation 2D");		// 2
-	m.addMenuItem("Importer");			// 3
-	m.addMenuItem("Quitter");			// 4
-	m.addMenuItem("Exporter");			// 5
+	m_guiFPS = new ofxUICanvas((ofGetWidth() - 211), (ofGetHeight() - 30), 211, 211);
+	m_guiFPS->addFPSSlider("FPS");
+	m_guiFPS->autoSizeToFitWidgets();
+	m_guiFPS->setVisible(true);
 
-	m.enableMouseControl();
+	// Menu
+	m_listener = new ofxCircleMenuButtonListener();
+	m_menu.setup();
+	m_menu.setRadius(80, 240);
+	m_menu.addMenuItem("Creer groupe");  // 0
+	m_menu.addMenuItem("Creation diverse"); // 1
+	m_menu.addMenuItem("Creation 3D");  // 2
+	m_menu.addMenuItem("Creation 2D");  // 3
+	m_menu.addMenuItem("Importer");   // 4
+	m_menu.addMenuItem("Quitter");   // 5
+	m_menu.addMenuItem("Exporter");   // 6
+	m_menu.enableMouseControl();
+	m_menu.setListener(m_listener);
 
-	m.setListener(listener);
+	// DropDownList
+	m_guiDDL_1 = new ofxUISuperCanvas("Liste d'elements 2D", 0, 0, 200, 211);
+	m_guiDDL_1->addSpacer();
+	m_DDL_1 = m_guiDDL_1->addDropDownList("Elements 2D", m_dataDDL_1);
+	m_DDL_1->setAllowMultiple(true);
+	m_DDL_1->setAutoClose(false);
+	m_guiDDL_1->autoSizeToFitWidgets();
+	ofAddListener(m_guiDDL_1->newGUIEvent, this, &ofApp::guiEvent_DropDownList);
+
+	m_guiDDL_2 = new ofxUISuperCanvas("Liste d'elements 3D", 201, 0, 200, 211);
+	m_guiDDL_2->addSpacer();
+	m_DDL_2 = m_guiDDL_2->addDropDownList("Elements 3D", m_dataDDL_2);
+	m_DDL_2->setAllowMultiple(true);
+	m_DDL_2->setAutoClose(false);
+	m_guiDDL_2->autoSizeToFitWidgets();
+	ofAddListener(m_guiDDL_2->newGUIEvent, this, &ofApp::guiEvent_DropDownList);
+
+	m_guiDDL_3 = new ofxUISuperCanvas("Liste de groupes", 402, 0, 200, 211);
+	m_guiDDL_3->addSpacer();
+	m_DDL_3 = m_guiDDL_3->addDropDownList("Groupes", m_dataDDL_3);
+	m_DDL_3->setAllowMultiple(false);
+	m_DDL_3->setAutoClose(true);
+	m_guiDDL_3->autoSizeToFitWidgets();
+	ofAddListener(m_guiDDL_3->newGUIEvent, this, &ofApp::guiEvent_DropDownList);
+
+	// Parametres
+	m_couleurR = 0, m_couleurB = 0, m_couleurG = 0, m_couleurA = 255;
+	m_positionX = (m_rectDesktop.right / 2), m_positionY = (m_rectDesktop.bottom / 2), m_positionZ = 0;
+	m_rotationX = 0, m_rotationY = 0, m_rotationZ = 0;
+	m_maxWidthPosition = m_rectDesktop.right, m_maxHeightPosition = m_rectDesktop.bottom;
+	m_drawFillVisible = true;
+	m_valeurDimension = "0.0";
+
+	const char* args[] = { "01", "02", "03", "04" };
+	std::vector<std::string> v(args, args + 4);
+
+	// Parametres
+
+	m_guiParametres = new ofxUICanvas(ofGetWidth() - 211, 0, 211, 211);
+	m_guiParametres->addLabel("Parametres");
+	m_guiParametres->addSpacer();
+	m_guiParametres->addLabel("Dimension");
+	m_guiParametres->addTextInput("m_valeurDimension", m_valeurDimension);
+	m_guiParametres->addSpacer();
+	m_guiParametres->addLabel("Position XYZ");
+	m_guiParametres->addSlider("X", 0.0, (m_maxWidthPosition), &m_positionX);
+	m_guiParametres->addSlider("Y", 0.0, (m_maxHeightPosition), &m_positionY);
+	m_guiParametres->addSlider("Z", 0.0, (m_maxWidthPosition), &m_positionZ);
+	m_guiParametres->addSpacer();
+	m_guiParametres->addLabel("Rotation XYZ");
+	m_guiParametres->addSlider("X", 0.0, (360), &m_rotationX);
+	m_guiParametres->addSlider("Y", 0.0, (360), &m_rotationY);
+	m_guiParametres->addSlider("Z", 0.0, (360), &m_rotationZ);
+	m_guiParametres->addSpacer();
+	m_guiParametres->addLabel("Couleur RGBA");
+	m_guiParametres->addSlider("RED", 0.0, 255.0, &m_couleurR);
+	m_guiParametres->addSlider("GREEN", 0.0, 255.0, &m_couleurG);
+	m_guiParametres->addSlider("BLUE", 0.0, 255.0, &m_couleurB);
+	m_guiParametres->addSlider("ALPHA", 0.0, 255.0, &m_couleurA);
+	m_guiParametres->addSpacer();
+	m_guiParametres->addDropDownList("Selection Groupe", v);
+	m_guiParametres->addSpacer();
+	m_guiParametres->addDropDownList("Selection Image", v);
+	m_guiParametres->addSpacer();
+	m_guiParametres->addLabelToggle("VISIBLE", &m_drawFillVisible);
+	m_guiParametres->addSpacer();
+	m_guiParametres->addLabelButton("Valider", false);
+	m_guiParametres->addLabelButton("Annuler", false);
+	m_guiParametres->autoSizeToFitWidgets();
+	ofAddListener(m_guiParametres->newGUIEvent, this, &ofApp::guiEvent_Proprietes);
+	m_guiParametres->setVisible(true);
+
+	// Créer groupe
+	m_nomNouveauGroupe = "";
+
+	m_guiCreerGroupe = new ofxUISuperCanvas("Nouveau groupe", ((ofGetWidth() / 2) - (100)), ((ofGetHeight() / 2) - (100)), 200, 211);
+	m_guiCreerGroupe->addSpacer();
+	m_guiCreerGroupe->addTextInput("m_ti_CreerGroupe", m_nomNouveauGroupe);
+	m_guiCreerGroupe->addSpacer();
+	m_guiCreerGroupe->addLabelButton("Valider", false);
+	m_guiCreerGroupe->addLabelButton("Annuler", false);
+	m_guiCreerGroupe->autoSizeToFitWidgets();
+	ofAddListener(m_guiCreerGroupe->newGUIEvent, this, &ofApp::guiEvent_CreerGroupe);
+	m_guiCreerGroupe->setVisible(false);
+	//////////////////////////////////////////////////
+	#pragma endregion
 	
 }
 
@@ -39,24 +129,33 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw() {
-	m.draw();
-	//this->cube->draw();
+	#pragma region Gestion - Interface
+	//////////////////////////////////////////////////
+	m_menu.draw();
+
+	ofSetColor(0, 0, 0);
+	ofDrawBitmapString("F1 - Afficher l'interface", 10, (ofGetHeight() - 35));
+	ofDrawBitmapString("Clic droit - Afficher le menu", 10, (ofGetHeight() - 15));
+	//////////////////////////////////////////////////
+	#pragma endregion
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key)
 {
-	/*
-<<<<<<< HEAD
-	ofImage *image = util.ImportImage();
-	image->draw(0, 0, 0, 100, 100);
-
-	ofTexture *texture = new ofTexture();
-	//texture->loadData()
-=======
-	
->>>>>>> refs/remotes/origin/master
-	*/
+	switch (key)
+	{
+	case 257:
+	{
+		m_guiDDL_1->toggleVisible();
+		m_guiDDL_2->toggleVisible();
+		m_guiDDL_3->toggleVisible();
+		m_guiParametres->toggleVisible();
+	}
+	break;
+	default:
+		break;
+	}
 }
 
 //--------------------------------------------------------------
@@ -96,7 +195,12 @@ void ofApp::mouseExited(int x, int y){
 
 //--------------------------------------------------------------
 void ofApp::windowResized(int w, int h){
-
+	#pragma region Gestion - Interface
+	//////////////////////////////////////////////////
+	m_guiParametres->setPosition(ofGetWidth() - 211, 0);
+	m_guiFPS->setPosition((ofGetWidth() - 211), (ofGetHeight() - 35));
+	//////////////////////////////////////////////////
+	#pragma endregion
 }
 
 //--------------------------------------------------------------
@@ -113,26 +217,152 @@ void ofxCircleMenuButtonListener::buttonClicked(int p_button)
 {
 	if (p_button == 0)
 	{
-		cout << "TEST_0" << endl;
+		// Créer groupe
+		//m_guiCreerGroupe->setVisible(false);
+
 	}
 	else if (p_button == 1)
 	{
-		cout << "TEST_1" << endl;
+		// Création diverse
+
+		/*
+		INSERT CODE HERE
+		*/
 	}
 	else if (p_button == 2)
 	{
-		cout << "TEST_2" << endl;
+		// Création 3D
+
+		/*
+		INSERT CODE HERE
+		*/
 	}
 	else if (p_button == 3)
 	{
-		cout << "TEST_3" << endl;
+		// Création 2D
+
+		/*
+		INSERT CODE HERE
+		*/
 	}
 	else if (p_button == 4)
 	{
-		cout << "TEST_4" << endl;
+		// Importer
+
+		/*
+		INSERT CODE HERE
+		*/
 	}
 	else if (p_button == 5)
 	{
-		cout << "TEST_5" << endl;
+		// Quitter l'application
+		exit(0);
+	}
+	else if (p_button == 6)
+	{
+		// Exporter
+
+		/*
+		INSERT CODE HERE
+		*/
+	}
+}
+
+void ofApp::guiEvent_DropDownList(ofxUIEventArgs &e)
+{
+	string m_nomWidget = e.widget->getName();
+	int m_kindWidget = e.widget->getKind();
+
+	if (m_kindWidget == OFX_UI_WIDGET_DROPDOWNLIST)
+	{
+		if (m_nomWidget == "Elements 2D")
+		{
+			ofxUIToggle *toggle = (ofxUIToggle*)e.widget;
+			m_DDL_1->setShowCurrentSelected(toggle->getValue());
+
+			ofxUIDropDownList *m_DDL_Temp = (ofxUIDropDownList*)e.widget;
+			vector<ofxUIWidget *> &m_selectedDDL = m_DDL_Temp->getSelected();
+			for (int i = 0; i < m_selectedDDL.size(); i++)
+			{
+			}
+		}
+		else if (m_nomWidget == "Elements 3D")
+		{
+			ofxUIToggle *toggle = (ofxUIToggle*)e.widget;
+			m_DDL_2->setShowCurrentSelected(toggle->getValue());
+
+			ofxUIDropDownList *m_DDL_Temp = (ofxUIDropDownList*)e.widget;
+			vector<ofxUIWidget *> &m_selectedDDL = m_DDL_Temp->getSelected();
+			for (int i = 0; i < m_selectedDDL.size(); i++)
+			{
+			}
+		}
+		else if (m_nomWidget == "Groupes")
+		{
+			ofxUIToggle *toggle = (ofxUIToggle*)e.widget;
+			m_DDL_3->setShowCurrentSelected(toggle->getValue());
+
+			ofxUIDropDownList *m_DDL_Temp = (ofxUIDropDownList*)e.widget;
+			vector<ofxUIWidget *> &m_selectedDDL = m_DDL_Temp->getSelected();
+			for (int i = 0; i < m_selectedDDL.size(); i++)
+			{
+			}
+		}
+	}
+}
+
+void ofApp::guiEvent_Proprietes(ofxUIEventArgs &e)
+{
+	string m_nomWidget = e.widget->getName();
+	int m_kindWidget = e.widget->getKind();
+
+	if (m_kindWidget == OFX_UI_WIDGET_TEXTINPUT)
+	{
+		ofxUITextInput *txtinput = (ofxUITextInput*)e.widget;
+		m_valeurDimension = txtinput->getTextString();
+
+		cout << m_valeurDimension << endl;
+
+		txtinput->setAutoClear(false);
+	}
+}
+
+void ofApp::guiEvent_CreerGroupe(ofxUIEventArgs &e)
+{
+	string m_nomWidget = e.widget->getName();
+	int m_kindWidget = e.widget->getKind();
+
+	if (m_kindWidget == OFX_UI_WIDGET_TEXTINPUT)
+	{
+		ofxUITextInput *txtinput = (ofxUITextInput*)e.widget;
+		m_nomNouveauGroupe = txtinput->getTextString();
+		txtinput->setAutoClear(false);
+	}
+	else if (m_kindWidget == OFX_UI_WIDGET_LABELBUTTON)
+	{
+		if (m_nomWidget == "Valider")
+		{
+			cout << m_nomNouveauGroupe << endl;
+
+			/*
+			INSERT CODE HERE
+			*/
+
+			ofxUITextInput *txtinput = (ofxUITextInput*)m_guiCreerGroupe->getWidget("m_ti_CreerGroupe");
+			txtinput->setTextString("");
+			m_guiCreerGroupe->setVisible(false);
+		}
+		else if (m_nomWidget == "Annuler")
+		{
+			cout << "ANNULER" << endl;
+
+			/*
+			INSERT CODE HERE
+			*/
+
+			ofxUITextInput *txtinput = (ofxUITextInput*)m_guiCreerGroupe->getWidget("m_ti_CreerGroupe");
+			txtinput->setTextString("");
+			m_guiCreerGroupe->setVisible(false);
+		}
 	}
 }
