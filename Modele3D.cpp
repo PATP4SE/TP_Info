@@ -1,13 +1,16 @@
 #include "Modele3D.h"
 
-Modele3D::Modele3D(/*ofxAssimpModelLoader* p_modele,*/ string p_nom) :Form()
+Modele3D::Modele3D(/*ofxAssimpModelLoader* p_modele,*/string p_nom) :Form(p_nom, 0,0,0)
 {
 	//this->m_monModele = p_modele;
-	this->m_nom = p_nom;
 
-	this->height = 0;
-	this->width = 0;
-	this->depth = 0;
+	this->height = 1;
+	this->width = 1;
+	this->depth = 1;
+
+	//this->m_monModele.setRotation(this->xRotation, this->yRotation, this->zRotation, 0, 0);
+	//this->m_monModele.setScale(this->width, this->height, this->depth);
+	//this->m_monModele.setPosition(this->x, this->y, this->z);
 }
 
 Modele3D::~Modele3D()
@@ -25,7 +28,7 @@ Modele3D::Modele3D(/*ofxAssimpModelLoader* p_modele,*/ string p_nom, int p_x, in
 	this->depth = p_depth;
 
 	//this->m_monModele.setRotation(this->xRotation, this->yRotation, this->zRotation, 0, 0);
-	//this->m_monModele.setScale(1, 1, 1);
+	//this->m_monModele.setScale(this->width, this->height, this->depth);
 	//this->m_monModele.setPosition(this->x, this->y, this->z);
 }
 
@@ -61,7 +64,7 @@ void Modele3D::draw()
 {
 	ofPushMatrix();
 		//this->m_monModele.setRotation(this->xRotation, this->yRotation, this->zRotation, 0, 0);
-		//this->m_monModele.setScale(1, 1, 1);
+		//this->m_monModele.setScale(this->width, this->height, this->depth);
 		//this->m_monModele.setPosition(this->x, this->y, this->z);
 		//this->m_monModele.drawFaces();
 	ofPopMatrix();

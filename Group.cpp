@@ -8,6 +8,9 @@ Group::Group()
 	this->xRotation = 0;
 	this->yRotation = 0;
 	this->zRotation = 0;
+	this->xDimension = 1;
+	this->yDimension = 1;
+	this->zDimension = 1;
 	this->selected = false;
 }
 
@@ -26,9 +29,10 @@ Group::Group(string p_nom)
 	this->xRotation = 0;
 	this->yRotation = 0;
 	this->zRotation = 0;
+	this->xDimension = 1;
+	this->yDimension = 1;
+	this->zDimension = 1;
 	this->selected = false;
-
-
 }
 
 void Group::ajoutGroupePrimitive(Primitive *p_primitive)
@@ -68,7 +72,7 @@ void Group::enleverGroupeForme(string p_nom)
 	{
 		if ((*it)->GetNom() == p_nom)
 		{
-			//enleverTransformationsGroupeForme(*it);
+			enleverTransformationsGroupeForme(*it);
 			this->forms->erase(it);
 		}
 	}
@@ -82,7 +86,7 @@ void Group::enleverGroupeGroupe(string p_nom)
 	{
 		if ((*it)->GetNom() == p_nom)
 		{
-			//enleverTransformationsGroupeGroupe(*it);
+			enleverTransformationsGroupeGroupe(*it);
 			this->groups->erase(it);
 		}
 	}
@@ -93,9 +97,9 @@ void Group::ajoutTransformationsGroupePrimitive(Primitive *p_primitive)
 	// Translation
 	p_primitive->SetPosition(p_primitive->GetX() + this->GetX(), p_primitive->GetY() + this->GetY(), p_primitive->GetZ() + this->GetZ());
 	// Rotation 
-	
+	p_primitive->Rotate(p_primitive->GetRotationX() + this->xRotation, p_primitive->GetRotationY() + this->yRotation, p_primitive->GetRotationZ() + this->zRotation);
 	// Dimension
-
+	//p_primitive->SetDimension(p_primitive->GetWidth()*this->xDimension, p_primitive->GetHeight()*this->yDimension, p_primitive->GetDepth()*this->zDimension);
 }
 
 void Group::ajoutTransformationsGroupeForme(Form *p_form)
@@ -103,9 +107,9 @@ void Group::ajoutTransformationsGroupeForme(Form *p_form)
 	// Translation
 	p_form->SetPosition(p_form->GetX() + this->GetX(), p_form->GetY() + this->GetY(), p_form->GetZ() + this->GetZ());
 	// Rotation 
-
+	p_form->Rotate(p_form->GetRotationX() + this->xRotation, p_form->GetRotationY() + this->yRotation, p_form->GetRotationZ() + this->zRotation);
 	// Dimension
-
+	p_form->SetDimension(p_form->GetWidth()*this->xDimension, p_form->GetHeight()*this->yDimension, p_form->GetDepth()*this->zDimension);
 }
 
 void Group::ajoutTransformationsGroupeGroupe(Group *p_group)
@@ -113,14 +117,36 @@ void Group::ajoutTransformationsGroupeGroupe(Group *p_group)
 	// Translation
 	p_group->SetPosition(p_group->GetX() + this->GetX(), p_group->GetY() + this->GetY(), p_group->GetZ() + this->GetZ());
 	// Rotation 
-
+	p_group->Rotate(p_group->GetRotationX() + this->xRotation, p_group->GetRotationY() + this->yRotation, p_group->GetRotationZ() + this->zRotation);
 	// Dimension
-
+	p_group->SetDimension(p_group->GetDimensionX()*this->xDimension, p_group->GetDimensionY()*this->yDimension, p_group->GetDimensionZ()*this->zDimension);
 }
 
 void Group::ajoutTransformationsGroupeEnsemble()
 {
+	//Primitives
+	list<Primitive*>::iterator it = this->primitives->begin();
 
+	for (it = this->primitives->begin(); it != this->primitives->end(); ++it)
+	{
+		ajoutTransformationsGroupePrimitive(*it);
+	}
+
+	//Formes
+	list<Form*>::iterator it2 = this->forms->begin();
+
+	for (it2 = this->forms->begin(); it2 != this->forms->end(); ++it2)
+	{
+		ajoutTransformationsGroupeForme(*it2);
+	}
+
+	//Groupes
+	list<Group*>::iterator it3 = this->groups->begin();
+
+	for (it3 = this->groups->begin(); it3 != this->groups->end(); ++it3)
+	{
+		ajoutTransformationsGroupeGroupe(*it3);
+	}
 }
 
 void Group::enleverTransformationsGroupePrimitive(Primitive *p_primitive)
@@ -128,9 +154,9 @@ void Group::enleverTransformationsGroupePrimitive(Primitive *p_primitive)
 	// Translation
 	p_primitive->SetPosition(p_primitive->GetX() - this->GetX(), p_primitive->GetY() - this->GetY(), p_primitive->GetZ() - this->GetZ());
 	// Rotation 
-
+	p_primitive->Rotate(p_primitive->GetRotationX() - this->xRotation, p_primitive->GetRotationY() - this->yRotation, p_primitive->GetRotationZ() - this->zRotation);
 	// Dimension
-
+	//p_primitive->SetDimension(p_primitive->GetWidth()/this->xDimension, p_primitive->GetHeight()/this->yDimension, p_primitive->GetDepth()/this->zDimension);
 }
 
 void Group::enleverTransformationsGroupeForme(Form *p_form)
@@ -138,9 +164,36 @@ void Group::enleverTransformationsGroupeForme(Form *p_form)
 	// Translation
 	p_form->SetPosition(p_form->GetX() - this->GetX(), p_form->GetY() - this->GetY(), p_form->GetZ() - this->GetZ());
 	// Rotation 
-
+	p_form->Rotate(p_form->GetRotationX() - this->xRotation, p_form->GetRotationY() - this->yRotation, p_form->GetRotationZ() - this->zRotation);
 	// Dimension
+	p_form->SetDimension(p_form->GetWidth()/this->xDimension, p_form->GetHeight()/this->yDimension, p_form->GetDepth()/this->zDimension);
+}
 
+void Group::enleverTransformationsGroupeEnsemble()
+{
+	//Primitives
+	list<Primitive*>::iterator it = this->primitives->begin();
+
+	for (it = this->primitives->begin(); it != this->primitives->end(); ++it)
+	{
+		enleverTransformationsGroupePrimitive(*it);
+	}
+
+	//Formes
+	list<Form*>::iterator it2 = this->forms->begin();
+
+	for (it2 = this->forms->begin(); it2 != this->forms->end(); ++it2)
+	{
+		enleverTransformationsGroupeForme(*it2);
+	}
+
+	//Groupes
+	list<Group*>::iterator it3 = this->groups->begin();
+
+	for (it3 = this->groups->begin(); it3 != this->groups->end(); ++it3)
+	{
+		enleverTransformationsGroupeGroupe(*it3);
+	}
 }
 
 void Group::enleverTransformationsGroupeGroupe(Group *p_group)
@@ -148,9 +201,9 @@ void Group::enleverTransformationsGroupeGroupe(Group *p_group)
 	// Translation
 	p_group->SetPosition(p_group->GetX() - this->GetX(), p_group->GetY() - this->GetY(), p_group->GetZ() - this->GetZ());
 	// Rotation 
-
+	p_group->Rotate(p_group->GetRotationX() - this->xRotation, p_group->GetRotationY() - this->yRotation, p_group->GetRotationZ() - this->zRotation);
 	// Dimension
-
+	p_group->SetDimension(p_group->GetDimensionX()/this->xDimension, p_group->GetDimensionY()/this->yDimension, p_group->GetDimensionZ()/this->zDimension);
 }
 
 /******************************************************************************
@@ -191,6 +244,21 @@ int Group::GetRotationY()
 int Group::GetRotationZ()
 {
 	return this->zRotation;
+}
+
+int Group::GetDimensionX()
+{
+	return this->xDimension;
+}
+
+int Group::GetDimensionY()
+{
+	return this->yDimension;
+}
+
+int Group::GetDimensionZ()
+{
+	return this->zDimension;
 }
 
 void Group::SetNom(string p_nom)
@@ -240,4 +308,26 @@ void Group::Rotate(int _x, int _y, int _z)
 	this->xRotation = _x;
 	this->yRotation = _y;
 	this->zRotation = _z;
+}
+
+void Group::DimensionX(int _x)
+{
+	this->xDimension = _x;
+}
+
+void Group::DimensionY(int _y)
+{
+	this->yDimension = _y;
+}
+
+void Group::DimensionZ(int _z)
+{
+	this->zDimension = _z;
+}
+
+void Group::SetDimension(int _x, int _y, int _z)
+{
+	this->xDimension = _x;
+	this->yDimension = _y;
+	this->zDimension = _z;
 }
