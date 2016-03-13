@@ -40,6 +40,44 @@ int Primitive::GetLineWidth()
 	return this->lineWidth;
 }
 
+int Primitive::GetRotationX()
+{
+	return this->xRotation;
+}
+
+int Primitive::GetRotationY()
+{
+	return this->yRotation;
+}
+
+int Primitive::GetRotationZ()
+{
+	return this->zRotation;
+}
+
+void Primitive::RotateX(int _x)
+{
+	this->xRotation = _x;
+}
+
+void Primitive::RotateY(int _y)
+{
+	this->yRotation = _y;
+}
+
+void Primitive::RotateZ(int _z)
+{
+	this->zRotation = _z;
+}
+
+void Primitive::Rotate(int _x, int _y, int _z)
+{
+	this->xRotation = _x;
+	this->yRotation = _y;
+	this->zRotation = _z;
+}
+
+
 void Primitive::SetX(int _x)
 {
 	this->x = _x;
