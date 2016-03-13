@@ -29,6 +29,7 @@ public:
 	void SetPosition(int _x, int _y, int _z);
 	void SetLineWidth(int _width);
 	void SetSelected(bool _selected);
+	virtual void SetDimension(int _x, int _y, int _z) = 0;
 
 	void RotateX(int _x);
 	void RotateY(int _y);
