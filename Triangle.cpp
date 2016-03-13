@@ -2,16 +2,16 @@
 
 #include "Triangle.h"
 
-Triangle::Triangle(ofPoint _point1, ofPoint _point2, ofPoint _point3, int _lineWidth):
-	Primitive((_point1.x + _point2.x + _point3.x) / 3, (_point1.y + _point2.y + _point3.y) / 3, (_point1.z + _point2.z + _point3.z) / 3, _lineWidth)
+Triangle::Triangle(string p_nom, ofPoint _point1, ofPoint _point2, ofPoint _point3, int _lineWidth):
+	Primitive(p_nom, (_point1.x + _point2.x + _point3.x) / 3, (_point1.y + _point2.y + _point3.y) / 3, (_point1.z + _point2.z + _point3.z) / 3, _lineWidth)
 {
 	this->point1 = _point1;
 	this->point2 = _point2;
 	this->point3 = _point3;
 }
 
-Triangle::Triangle(int _positionX, int _positionY, int _positionZ, int _width, int _height, int _lineWidth): 
-	Primitive(_positionX, _positionY, _positionZ, _lineWidth)
+Triangle::Triangle(string p_nom, int _positionX, int _positionY, int _positionZ, int _width, int _height, int _lineWidth):
+	Primitive(p_nom, _positionX, _positionY, _positionZ, _lineWidth)
 {
 	this->point1 = ofPoint(_positionX - (_width/2), _positionY, _positionZ);
 	this->point2 = ofPoint(_positionX + (_width / 2), _positionY, _positionZ);

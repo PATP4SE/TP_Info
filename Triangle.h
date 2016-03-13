@@ -6,8 +6,8 @@
 class Triangle : public Primitive
 {
 public:
-	Triangle(ofPoint _point1, ofPoint _point2, ofPoint _point3, int _lineWidth = 1);
-	Triangle(int _positionX, int _positionY, int _positionZ, int _width, int _height, int _lineWidth = 1);
+	Triangle(string p_nom, ofPoint _point1, ofPoint _point2, ofPoint _point3, int _lineWidth = 1);
+	Triangle(string p_nom, int _positionX, int _positionY, int _positionZ, int _width, int _height, int _lineWidth = 1);
 	Triangle();
 	~Triangle();
 
