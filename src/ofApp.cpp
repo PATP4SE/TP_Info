@@ -344,9 +344,8 @@ void ofApp::guiEvent_CreerGroupe(ofxUIEventArgs &e)
 		{
 			cout << m_nomNouveauGroupe << endl;
 
-			/*
-			INSERT CODE HERE
-			*/
+			Group * m_nouveauGroupe = new Group(m_nomNouveauGroupe);
+			groups->push_back(m_nouveauGroupe);
 
 			ofxUITextInput *txtinput = (ofxUITextInput*)m_guiCreerGroupe->getWidget("m_ti_CreerGroupe");
 			txtinput->setTextString("");
@@ -355,10 +354,6 @@ void ofApp::guiEvent_CreerGroupe(ofxUIEventArgs &e)
 		else if (m_nomWidget == "Annuler")
 		{
 			cout << "ANNULER" << endl;
-
-			/*
-			INSERT CODE HERE
-			*/
 
 			ofxUITextInput *txtinput = (ofxUITextInput*)m_guiCreerGroupe->getWidget("m_ti_CreerGroupe");
 			txtinput->setTextString("");
