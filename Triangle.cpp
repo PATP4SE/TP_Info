@@ -2,7 +2,7 @@
 
 #include "Triangle.h"
 
-Triangle::Triangle(ofPoint _point1, ofPoint _point2, ofPoint _point3, int _lineWidth = 1):
+Triangle::Triangle(ofPoint _point1, ofPoint _point2, ofPoint _point3, int _lineWidth):
 	Primitive((_point1.x + _point2.x + _point3.x) / 3, (_point1.y + _point2.y + _point3.y) / 3, (_point1.z + _point2.z + _point3.z) / 3, _lineWidth)
 {
 	this->point1 = _point1;
@@ -10,7 +10,7 @@ Triangle::Triangle(ofPoint _point1, ofPoint _point2, ofPoint _point3, int _lineW
 	this->point3 = _point3;
 }
 
-Triangle::Triangle(int _positionX, int _positionY, int _positionZ, int _width, int _height, int _lineWidth = 1): 
+Triangle::Triangle(int _positionX, int _positionY, int _positionZ, int _width, int _height, int _lineWidth): 
 	Primitive(_positionX, _positionY, _positionZ, _lineWidth)
 {
 	this->point1 = ofPoint(_positionX - (_width/2), _positionY, _positionZ);
@@ -18,12 +18,12 @@ Triangle::Triangle(int _positionX, int _positionY, int _positionZ, int _width, i
 	this->point3 = ofPoint(_positionX, _positionY - (_width / 2), _positionZ);
 }
 
-void Triangle::draw(bool fill = false)
+void Triangle::draw(bool fill)
 {
 	this->draw(ofColor::black, fill);
 }
 
-void Triangle::draw(ofColor _color, bool fill = false)
+void Triangle::draw(ofColor _color, bool fill)
 {
 	ofSetColor(_color);
 	if (fill)

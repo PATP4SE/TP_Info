@@ -8,7 +8,7 @@ Primitive::Primitive()
 	this->z = 0;
 }
 
-Primitive::Primitive(int _x, int _y, int _z, int _lineWidth = 1)
+Primitive::Primitive(int _x, int _y, int _z, int _lineWidth)
 {
 	this->x = _x;
 	this->y = _y;

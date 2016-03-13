@@ -25,6 +25,9 @@ void Cube::draw()
 
 void Cube::drawOnCube()
 {
+	if (this->texture == NULL)
+		return;
+
 	ofPushMatrix();
 	ofTranslate(this->x, this->y, this->z);
 	ofRotateX(this->xRotation);
@@ -199,7 +202,7 @@ void Cube::drawOnCube()
 	ofImage image = *this->texture;
 	ofDisableBlendMode();
 	ofEnableDepthTest();
-	//ofSetColor(ofColor::white);
+	ofSetColor(ofColor::white);
 	image.getTextureReference().bind();
 	mesh.draw();
 	image.getTextureReference().unbind();
@@ -208,6 +211,12 @@ void Cube::drawOnCube()
 
 void Cube::drawOnFaces()
 {
+	if (this->texture == NULL)
+	{
+		this->draw();
+		return;
+	}
+		
 	ofPushMatrix();
 	ofTranslate(this->x, this->y, this->z);
 	ofRotateX(this->xRotation);
