@@ -37,57 +37,57 @@ Group::Group(string p_nom)
 
 void Group::ajoutGroupePrimitive(Primitive *p_primitive)
 {
-	this->primitives->push_back(p_primitive);
+	this->primitives.push_back(p_primitive);
 }
 
 void Group::ajoutGroupeForme(Form *p_form)
 {
-	this->forms->push_back(p_form);
+	this->forms.push_back(p_form);
 }
-
+ 
 void Group::ajoutGroupeGroupe(Group *p_group)
 {
-	this->groups->push_back(p_group);
+	this->groups.push_back(p_group);
 }
 
 void Group::enleverGroupePrimitive(string p_nom)
 {
-	list<Primitive*>::iterator it = this->primitives->begin();
+	list<Primitive*>::iterator it = this->primitives.begin();
 
-	for (it = this->primitives->begin(); it!= this->primitives->end(); ++it)
+	for (it = this->primitives.begin(); it!= this->primitives.end(); ++it)
 	{
 		if ((*it)->GetNom() == p_nom)
 		{
 			enleverTransformationsGroupePrimitive(*it);
-			this->primitives->erase(it);
+			this->primitives.erase(it);
 		}
 	}
 }
 
 void Group::enleverGroupeForme(string p_nom)
 {
-	list<Form*>::iterator it = this->forms->begin();
+	list<Form*>::iterator it = this->forms.begin();
 
-	for (it = this->forms->begin(); it != this->forms->end(); ++it)
+	for (it = this->forms.begin(); it != this->forms.end(); ++it)
 	{
 		if ((*it)->GetNom() == p_nom)
 		{
 			enleverTransformationsGroupeForme(*it);
-			this->forms->erase(it);
+			this->forms.erase(it);
 		}
 	}
 }
 
 void Group::enleverGroupeGroupe(string p_nom)
 {
-	list<Group*>::iterator it = this->groups->begin();
+	list<Group*>::iterator it = this->groups.begin();
 
-	for (it = this->groups->begin(); it != this->groups->end(); ++it)
+	for (it = this->groups.begin(); it != this->groups.end(); ++it)
 	{
 		if ((*it)->GetNom() == p_nom)
 		{
 			enleverTransformationsGroupeGroupe(*it);
-			this->groups->erase(it);
+			this->groups.erase(it);
 		}
 	}
 }
@@ -125,25 +125,25 @@ void Group::ajoutTransformationsGroupeGroupe(Group *p_group)
 void Group::ajoutTransformationsGroupeEnsemble()
 {
 	//Primitives
-	list<Primitive*>::iterator it = this->primitives->begin();
+	list<Primitive*>::iterator it = this->primitives.begin();
 
-	for (it = this->primitives->begin(); it != this->primitives->end(); ++it)
+	for (it = this->primitives.begin(); it != this->primitives.end(); ++it)
 	{
 		ajoutTransformationsGroupePrimitive(*it);
 	}
 
 	//Formes
-	list<Form*>::iterator it2 = this->forms->begin();
+	list<Form*>::iterator it2 = this->forms.begin();
 
-	for (it2 = this->forms->begin(); it2 != this->forms->end(); ++it2)
+	for (it2 = this->forms.begin(); it2 != this->forms.end(); ++it2)
 	{
 		ajoutTransformationsGroupeForme(*it2);
 	}
 
 	//Groupes
-	list<Group*>::iterator it3 = this->groups->begin();
+	list<Group*>::iterator it3 = this->groups.begin();
 
-	for (it3 = this->groups->begin(); it3 != this->groups->end(); ++it3)
+	for (it3 = this->groups.begin(); it3 != this->groups.end(); ++it3)
 	{
 		ajoutTransformationsGroupeGroupe(*it3);
 	}
@@ -172,25 +172,25 @@ void Group::enleverTransformationsGroupeForme(Form *p_form)
 void Group::enleverTransformationsGroupeEnsemble()
 {
 	//Primitives
-	list<Primitive*>::iterator it = this->primitives->begin();
+	list<Primitive*>::iterator it = this->primitives.begin();
 
-	for (it = this->primitives->begin(); it != this->primitives->end(); ++it)
+	for (it = this->primitives.begin(); it != this->primitives.end(); ++it)
 	{
 		enleverTransformationsGroupePrimitive(*it);
 	}
 
 	//Formes
-	list<Form*>::iterator it2 = this->forms->begin();
+	list<Form*>::iterator it2 = this->forms.begin();
 
-	for (it2 = this->forms->begin(); it2 != this->forms->end(); ++it2)
+	for (it2 = this->forms.begin(); it2 != this->forms.end(); ++it2)
 	{
 		enleverTransformationsGroupeForme(*it2);
 	}
 
 	//Groupes
-	list<Group*>::iterator it3 = this->groups->begin();
+	list<Group*>::iterator it3 = this->groups.begin();
 
-	for (it3 = this->groups->begin(); it3 != this->groups->end(); ++it3)
+	for (it3 = this->groups.begin(); it3 != this->groups.end(); ++it3)
 	{
 		enleverTransformationsGroupeGroupe(*it3);
 	}
