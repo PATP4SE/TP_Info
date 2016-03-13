@@ -109,11 +109,8 @@ void Primitive::SetLineWidth(int _width)
 {
 	this->lineWidth = _width;
 }
-<<<<<<< HEAD
 
 void Primitive::SetNom(string p_nom)
 {
 	this->m_nom = p_nom;
 }
-=======
->>>>>>> 4864c66a8370929d907a7662274cd97939aa7181

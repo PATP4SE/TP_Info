@@ -15,9 +15,8 @@ public:
 	void SetRadius(int _radius);
 	int GetRadius();
 
-	int GetWidth() { GetRadius(); }
-	int GetHeight() { GetRadius(); }
-	int GetHeight() { GetRadius(); }
+	int GetWidth() { return GetRadius(); }
+	int GetHeight() { return GetRadius(); }
 
 	void draw();
 	void draw(ofColor _color);
