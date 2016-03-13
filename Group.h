@@ -22,6 +22,10 @@ public:
 	int GetRotationY();
 	int GetRotationZ();
 
+	int GetDimensionX();
+	int GetDimensionY();
+	int GetDimensionZ();
+
 	void SetNom(string p_nom);
 	void SetX(int _x);
 	void SetY(int _y);
@@ -32,6 +36,11 @@ public:
 	void RotateY(int _y);
 	void RotateZ(int _z);
 	void Rotate(int _x, int _y, int _z);
+
+	void DimensionX(int _x);
+	void DimensionY(int _y);
+	void DimensionZ(int _z);
+	void SetDimension(int _x, int _y, int _z);
 
 	void ajoutGroupePrimitive(Primitive *p_primitive);
 	void ajoutGroupeForme(Form *p_form);
@@ -67,5 +76,8 @@ private:
 	int xRotation;
 	int yRotation;
 	int zRotation;
+	int xDimension;
+	int yDimension;
+	int zDimension;
 };
 

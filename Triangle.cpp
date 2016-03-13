@@ -10,7 +10,11 @@ Triangle::Triangle(string p_nom, ofPoint _point1, ofPoint _point2, ofPoint _poin
 	this->point3 = _point3;
 }
 
+<<<<<<< HEAD
 Triangle::Triangle(string p_nom, int _positionX, int _positionY, int _positionZ, int _width, int _height, int _lineWidth): 
+=======
+Triangle::Triangle(string p_nom, int _positionX, int _positionY, int _positionZ, int _width, int _height, int _lineWidth):
+>>>>>>> origin/master
 	Primitive(p_nom, _positionX, _positionY, _positionZ, _lineWidth)
 {
 	this->point1 = ofPoint(_positionX - (_width/2), _positionY, _positionZ);
