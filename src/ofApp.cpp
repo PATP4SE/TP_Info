@@ -347,7 +347,9 @@ void ofApp::guiEvent_CreerGroupe(ofxUIEventArgs &e)
 			cout << m_nomNouveauGroupe << endl;
 
 			Group * m_nouveauGroupe = new Group(m_nomNouveauGroupe);
-			groups->push_back(m_nouveauGroupe);
+			groups.push_back(m_nouveauGroupe);
+
+			m_DDL_3->addToggle(m_nomNouveauGroupe);
 
 			ofxUITextInput *txtinput = (ofxUITextInput*)m_guiCreerGroupe->getWidget("m_ti_CreerGroupe");
 			txtinput->setTextString("");

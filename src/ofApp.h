@@ -35,9 +35,9 @@ public:
 	void dragEvent(ofDragInfo dragInfo);
 	void gotMessage(ofMessage msg);
 private:
-	list<Form*> *forms;
-	list<Primitive*> *primitives;
-	list<Group*> *groups;
+	list<Form*> forms;
+	list<Primitive*> primitives;
+	list<Group*> groups;
 	Utilities util;
 		
 	#pragma region Gestion - Interface

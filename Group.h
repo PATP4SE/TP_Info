@@ -63,9 +63,10 @@ public:
 	void enleverTransformationsGroupeEnsemble();
 private:
 	
-	list<Form*> *forms;
-	list<Primitive*> *primitives;
-	list<Group*> *groups;
+	list<Form*> forms;
+	list<Primitive*> primitives;
+	list<Group*> groups;
+	list<ofImage*> images;
 
 	string m_nom;
 
