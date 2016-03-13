@@ -24,13 +24,13 @@ void ofApp::setup()
 	m_listener = new ofxCircleMenuButtonListener();
 	m_menu.setup();
 	m_menu.setRadius(80, 240);
-	m_menu.addMenuItem("Creer groupe");  // 0
+	m_menu.addMenuItem("Creer groupe");		// 0
 	m_menu.addMenuItem("Creation diverse"); // 1
-	m_menu.addMenuItem("Creation 3D");  // 2
-	m_menu.addMenuItem("Creation 2D");  // 3
-	m_menu.addMenuItem("Importer");   // 4
-	m_menu.addMenuItem("Quitter");   // 5
-	m_menu.addMenuItem("Exporter");   // 6
+	m_menu.addMenuItem("Creation 3D");		// 2
+	m_menu.addMenuItem("Creation 2D");		// 3
+	m_menu.addMenuItem("Importer");			// 4
+	m_menu.addMenuItem("Quitter");			// 5
+	m_menu.addMenuItem("Exporter");			// 6
 	m_menu.enableMouseControl();
 	m_menu.setListener(m_listener);
 
@@ -104,7 +104,7 @@ void ofApp::setup()
 	m_guiParametres->addLabelButton("Annuler", false);
 	m_guiParametres->autoSizeToFitWidgets();
 	ofAddListener(m_guiParametres->newGUIEvent, this, &ofApp::guiEvent_Proprietes);
-	m_guiParametres->setVisible(true);
+	m_guiParametres->setVisible(false);
 
 	// Créer groupe
 	m_nomNouveauGroupe = "";
