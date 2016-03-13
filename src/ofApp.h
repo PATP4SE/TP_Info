@@ -38,6 +38,7 @@ private:
 	list<Form*> forms;
 	list<Primitive*> primitives;
 	list<Group*> groups;
+	list<ofImage*> images;
 	Utilities util;
 		
 	#pragma region Gestion - Interface

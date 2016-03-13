@@ -176,6 +176,8 @@ void ofApp::mouseDragged(int x, int y, int button){
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
 	guiEvent_DoAction(m_menu.hitTest());
+
+	
 }	
 
 //--------------------------------------------------------------
@@ -348,6 +350,11 @@ void ofApp::guiEvent_CreerGroupe(ofxUIEventArgs &e)
 
 			Group * m_nouveauGroupe = new Group(m_nomNouveauGroupe);
 			groups.push_back(m_nouveauGroupe);
+
+			/*
+			_Line * m_nouvelleLigne = new _Line(m_nomNouvelleLigne,);
+			primitives.push_back(m_nouvelleLigne);
+			*/
 
 			m_DDL_3->addToggle(m_nomNouveauGroupe);
 
