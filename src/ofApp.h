@@ -3,6 +3,8 @@
 #include "ofMain.h"
 #include "ofxCircleMenuButton.h"
 #include "ofxUI/src/ofxUI.h"
+//#include "../addons/ofxCircleMenuButton/src/ofxCircleMenuButton.h"
+//#include "../addons/ofxUI/src/ofxUI.h"
 #include <ofMain.h>
 #include "../Cube.h"
 #include "../Sphere.h"
@@ -42,6 +44,7 @@ private:
 	list<Group*> groups;
 	list<ofImage*> images;
 	list<POINT*> positionSouris;
+	vector<string*> noms_images;
 
 	Utilities util;
 		
