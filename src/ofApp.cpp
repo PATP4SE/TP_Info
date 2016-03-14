@@ -128,6 +128,39 @@ void ofApp::draw() {
 	ofDrawBitmapString("Clic droit - Afficher le menu", 10, (ofGetHeight() - 15));
 	//////////////////////////////////////////////////
 	#pragma endregion
+
+	//Primitives
+	list<Primitive*>::iterator it = this->primitives.begin();
+
+	for (it = this->primitives.begin(); it != this->primitives.end(); ++it)
+	{
+		string nomClasse = typeid(*it).name();
+
+		if(nomClasse == "_Line")
+			(dynamic_cast<_Line*>(*it))->draw();
+		else if(nomClasse == "Triangle")
+			(dynamic_cast<Triangle*>(*it))->draw();
+		else
+			cout << "Mauvais typage sur Primitive";
+	}
+
+	//Formes
+	list<Form*>::iterator it2 = this->forms.begin();
+
+	for (it2 = this->forms.begin(); it2 != this->forms.end(); ++it2)
+	{
+		string nomClasse = typeid(*it2).name();
+
+		if (nomClasse == "Cube")
+			(dynamic_cast<Cube*>(*it))->draw();
+		else if (nomClasse == "Sphere")
+			(dynamic_cast<Sphere*>(*it))->draw();
+		else if (nomClasse == "Modele3D")
+			(dynamic_cast<Modele3D*>(*it))->draw();
+		else
+			cout << "Mauvais typage sur Forme";
+	}
+
 }
 
 //--------------------------------------------------------------

@@ -12,6 +12,8 @@
 #include "../Triangle.h"
 #include "../Group.h"
 #include "../Utilities.h"
+#include "../Modele3D.h"
+#include "../Particule.h"
 
 #include <list>
 
