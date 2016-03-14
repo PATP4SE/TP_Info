@@ -182,7 +182,7 @@ void ofApp::draw() {
 
 	for (it2 = this->forms.begin(); it2 != this->forms.end(); ++it2)
 	{
-		string nomClasse = typeid(*it2).name();
+		string nomClasse = typeid(**it2).name();
 
 		if (nomClasse == "class Cube")
 		{
@@ -351,6 +351,7 @@ void ofApp::guiEvent_DoAction(int p_IdButton)
 			else if (p_IdButton == 1)
 			{
 				// Création 3D
+				this->forms.push_back(new Cube("cube milieu", 500, 500, 0, 100, 100, 100));
 
 				m_sousMenuInt = 1;
 				m_sousMenuBool = true;
