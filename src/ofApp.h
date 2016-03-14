@@ -39,6 +39,7 @@ private:
 	list<Primitive*> primitives;
 	list<Group*> groups;
 	list<ofImage*> images;
+	list<POINT*> positionSouris;
 	Utilities util;
 		
 	#pragma region Gestion - Interface
@@ -77,6 +78,8 @@ private:
 	float m_maxWidthPosition, m_maxHeightPosition;
 	bool m_drawFillVisible;
 	string m_valeurDimension;
+
+	int m_creation;
 
 	// Créer groupe
 	ofxUISuperCanvas *m_guiCreerGroupe;

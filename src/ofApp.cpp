@@ -20,6 +20,8 @@ void ofApp::setup()
 	m_guiFPS->autoSizeToFitWidgets();
 	m_guiFPS->setVisible(true);
 
+	m_creation = 0;
+
 	// Menu
 	m_listener = new ofxCircleMenuButtonListener();
 	m_menu.setup();
@@ -165,7 +167,35 @@ void ofApp::mouseDragged(int x, int y, int button){
 void ofApp::mousePressed(int x, int y, int button){
 	guiEvent_DoAction(m_menu.hitTest());
 
-	
+	switch(m_creation)
+	{
+	case 0 : //Rien à créer
+		if(positionSouris.size() > 0)
+			positionSouris.clear();
+		break;
+	case 1 : //En création de ligne
+		/*
+		POINT *monPoint = new POINT();
+		monPoint->x = x;
+		monPoint->y = y;
+
+		positionSouris.push_back(monPoint);
+		*/
+		if (positionSouris.size() == 2) {}
+			//Créer ligne + réinitialiser liste positionSouris
+		break;
+	case 2 : //En création de triangle
+		/*
+		POINT *monPoint2 = new POINT();
+		monPoint2->x = x;
+		monPoint2->y = y;
+
+		positionSouris.push_back(monPoint2);
+		*/
+		if (positionSouris.size() == 3) {}
+			//Créer triangle + réinitialiser liste positionSouris
+		break;
+	}
 }	
 
 //--------------------------------------------------------------
