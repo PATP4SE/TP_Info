@@ -111,7 +111,15 @@ void ofApp::setup()
 }
 
 //--------------------------------------------------------------
-void ofApp::update(){
+void ofApp::update()
+{
+	m_dataDDL_5.clear();
+	list<ofImage*>::iterator it = this->images.begin();
+
+	for (it = this->images.begin(); it != this->images.end(); ++it)
+	{
+
+	}
 }
 
 //--------------------------------------------------------------
@@ -304,11 +312,23 @@ void ofApp::guiEvent_DoAction(int p_IdButton)
 		}
 		else if (p_IdButton == 3)
 		{
-			// Importer
+			//Importer
+			this->images.push_back(util.ImportImage());
 
-			/*
-			INSERT CODE HERE
-			*/
+			if (m_ActionCreer == -1)
+			{
+				m_ActionCreer = 2;
+
+				m_guiCreerGroupe = new ofxUISuperCanvas("Nom de l'image", ((ofGetWidth() / 2) - (100)), ((ofGetHeight() / 2) - (100)), 200, 211);
+				m_guiCreerGroupe->addSpacer();
+				m_guiCreerGroupe->addTextInput("m_ti_CreerGroupe", m_nomNouveauGroupe);
+				m_guiCreerGroupe->addSpacer();
+				m_guiCreerGroupe->addLabelButton("Valider", false);
+				m_guiCreerGroupe->addLabelButton("Annuler", false);
+				m_guiCreerGroupe->autoSizeToFitWidgets();
+				ofAddListener(m_guiCreerGroupe->newGUIEvent, this, &ofApp::guiEvent_CreerGroupe);
+				m_guiCreerGroupe->setVisible(true);
+			}
 		}
 		else if (p_IdButton == 4)
 		{
@@ -317,12 +337,12 @@ void ofApp::guiEvent_DoAction(int p_IdButton)
 		}
 		else if (p_IdButton == 5)
 		{
+			//Exporter
 			if (m_ActionCreer == -1)
 			{
-				// Exporter
 				m_ActionCreer = 1;
 
-				m_guiCreerGroupe = new ofxUISuperCanvas("Exporter un fichier", ((ofGetWidth() / 2) - (100)), ((ofGetHeight() / 2) - (100)), 200, 211);
+				m_guiCreerGroupe = new ofxUISuperCanvas("Nom de l'image", ((ofGetWidth() / 2) - (100)), ((ofGetHeight() / 2) - (100)), 200, 211);
 				m_guiCreerGroupe->addSpacer();
 				m_guiCreerGroupe->addTextInput("m_ti_CreerGroupe", m_nomNouveauGroupe);
 				m_guiCreerGroupe->addSpacer();
@@ -419,9 +439,39 @@ void ofApp::guiEvent_CreerGroupe(ofxUIEventArgs &e)
 
 				m_DDL_3->addToggle(m_nomNouveauGroupe);
 			}
-			else if (m_ActionCreer == 1)
+			else if (m_ActionCreer == 1)//Exporter
 			{
+				string nomImage = m_nomNouveauGroupe;
+				cout << nomImage << endl;
 
+				list<ofImage*>::iterator it = this->images.begin();
+				bool trouvee = false;
+
+				for (int i = 0; i < this->noms_images.size(); i++)
+				{
+					if (nomImage == *(this->noms_images.at(i)))
+					{
+						util.ExportImage(*it);
+						trouvee = true;
+						break;
+					}
+					it++;
+				}
+				if (!trouvee)
+				{
+					wstring s(L"Cette image n'existe pas");
+					wstring s2(L"Image inexistante");
+					MessageBox(NULL, (LPCWSTR)s.c_str(), (LPCWSTR)s2.c_str(), MB_OK);
+				}
+			}
+
+			else if (m_ActionCreer == 2) //Importer
+			{
+				string* nomImage = new string(m_nomNouveauGroupe);
+				cout << nomImage << endl;
+				
+				m_DDL_5->addToggle(*nomImage);
+				noms_images.push_back(nomImage);
 			}
 
 			m_ActionCreer = -1;
@@ -432,8 +482,12 @@ void ofApp::guiEvent_CreerGroupe(ofxUIEventArgs &e)
 		}
 		else if (m_nomWidget == "Annuler")
 		{
-			m_ActionCreer = -1;
+			if (m_ActionCreer == 2)
+			{
+				this->images.pop_back();
+			}
 
+			m_ActionCreer = -1;
 			cout << "ANNULER" << endl;
 
 			ofxUITextInput *txtinput = (ofxUITextInput*)m_guiCreerGroupe->getWidget("m_ti_CreerGroupe");
