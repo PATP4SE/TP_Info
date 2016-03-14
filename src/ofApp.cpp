@@ -67,13 +67,7 @@ void ofApp::setup()
 	m_drawFillVisible = true;
 	m_valeurDimension = "0.0";
 
-	const char* args[] = { "01", "02", "03", "04" };
-	std::vector<std::string> v(args, args + 4);
-
-	// Parametres
-
-	m_guiParametres = new ofxUICanvas(ofGetWidth() - 211, 0, 211, 211);
-	m_guiParametres->addLabel("Parametres");
+	m_guiParametres = new ofxUISuperCanvas("Parametres", ofGetWidth() - 211, 0, 211, 211);
 	m_guiParametres->addSpacer();
 	m_guiParametres->addLabel("Dimension");
 	m_guiParametres->addTextInput("m_valeurDimension", m_valeurDimension);
@@ -94,9 +88,13 @@ void ofApp::setup()
 	m_guiParametres->addSlider("BLUE", 0.0, 255.0, &m_couleurB);
 	m_guiParametres->addSlider("ALPHA", 0.0, 255.0, &m_couleurA);
 	m_guiParametres->addSpacer();
-	m_guiParametres->addDropDownList("Selection Groupe", v);
+	m_DDL_4 = m_guiParametres->addDropDownList("Selection Groupe", m_dataDDL_4);
+	m_DDL_4->setAllowMultiple(false);
+	m_DDL_4->setAutoClose(true);
 	m_guiParametres->addSpacer();
-	m_guiParametres->addDropDownList("Selection Image", v);
+	m_DDL_5 = m_guiParametres->addDropDownList("Selection Image", m_dataDDL_5);
+	m_DDL_5->setAllowMultiple(false);
+	m_DDL_5->setAutoClose(true);
 	m_guiParametres->addSpacer();
 	m_guiParametres->addLabelToggle("VISIBLE", &m_drawFillVisible);
 	m_guiParametres->addSpacer();
@@ -104,23 +102,13 @@ void ofApp::setup()
 	m_guiParametres->addLabelButton("Annuler", false);
 	m_guiParametres->autoSizeToFitWidgets();
 	ofAddListener(m_guiParametres->newGUIEvent, this, &ofApp::guiEvent_Proprietes);
-	m_guiParametres->setVisible(false);
+	m_guiParametres->setVisible(true);
 
 	// Créer groupe
 	m_nomNouveauGroupe = "";
-
-	m_guiCreerGroupe = new ofxUISuperCanvas("Nouveau groupe", ((ofGetWidth() / 2) - (100)), ((ofGetHeight() / 2) - (100)), 200, 211);
-	m_guiCreerGroupe->addSpacer();
-	m_guiCreerGroupe->addTextInput("m_ti_CreerGroupe", m_nomNouveauGroupe);
-	m_guiCreerGroupe->addSpacer();
-	m_guiCreerGroupe->addLabelButton("Valider", false);
-	m_guiCreerGroupe->addLabelButton("Annuler", false);
-	m_guiCreerGroupe->autoSizeToFitWidgets();
-	ofAddListener(m_guiCreerGroupe->newGUIEvent, this, &ofApp::guiEvent_CreerGroupe);
-	m_guiCreerGroupe->setVisible(false);
+	m_ActionCreer = -1;
 	//////////////////////////////////////////////////
 	#pragma endregion
-	
 }
 
 //--------------------------------------------------------------
@@ -222,6 +210,17 @@ void ofApp::guiEvent_DoAction(int p_IdButton)
 		if (p_IdButton == 0)
 		{
 			// Créer groupe
+			m_nomNouveauGroupe = "";
+			m_ActionCreer = 0;
+
+			m_guiCreerGroupe = new ofxUISuperCanvas("Nouveau groupe", ((ofGetWidth() / 2) - (100)), ((ofGetHeight() / 2) - (100)), 200, 211);
+			m_guiCreerGroupe->addSpacer();
+			m_guiCreerGroupe->addTextInput("m_ti_CreerGroupe", m_nomNouveauGroupe);
+			m_guiCreerGroupe->addSpacer();
+			m_guiCreerGroupe->addLabelButton("Valider", false);
+			m_guiCreerGroupe->addLabelButton("Annuler", false);
+			m_guiCreerGroupe->autoSizeToFitWidgets();
+			ofAddListener(m_guiCreerGroupe->newGUIEvent, this, &ofApp::guiEvent_CreerGroupe);
 			m_guiCreerGroupe->setVisible(true);
 		}
 		else if (p_IdButton == 1)
@@ -361,6 +360,7 @@ void ofApp::guiEvent_CreerGroupe(ofxUIEventArgs &e)
 			ofxUITextInput *txtinput = (ofxUITextInput*)m_guiCreerGroupe->getWidget("m_ti_CreerGroupe");
 			txtinput->setTextString("");
 			m_guiCreerGroupe->setVisible(false);
+			m_guiCreerGroupe->clearEmbeddedWidgets();
 		}
 		else if (m_nomWidget == "Annuler")
 		{
@@ -369,6 +369,7 @@ void ofApp::guiEvent_CreerGroupe(ofxUIEventArgs &e)
 			ofxUITextInput *txtinput = (ofxUITextInput*)m_guiCreerGroupe->getWidget("m_ti_CreerGroupe");
 			txtinput->setTextString("");
 			m_guiCreerGroupe->setVisible(false);
+			m_guiCreerGroupe->clearEmbeddedWidgets();
 		}
 	}
 }
