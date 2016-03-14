@@ -537,6 +537,20 @@ void ofApp::guiEvent_Proprietes(ofxUIEventArgs &e)
 
 		txtinput->setAutoClear(false);
 	}
+	else if (m_kindWidget == OFX_UI_WIDGET_SLIDER_H)
+	{
+
+	}
+	else if (m_kindWidget == OFX_UI_WIDGET_LABELBUTTON)
+	{
+		if (m_nomWidget == "Valider")
+		{
+		}
+		else if (m_nomWidget == "Annuler")
+		{
+
+		}
+	}
 }
 
 void ofApp::guiEvent_CreerGroupe(ofxUIEventArgs &e)
