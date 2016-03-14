@@ -12,6 +12,8 @@
 #include "../Triangle.h"
 #include "../Group.h"
 #include "../Utilities.h"
+#include "../Modele3D.h"
+#include "../Particule.h"
 
 #include <list>
 
@@ -77,13 +79,14 @@ private:
 	bool m_drawFillVisible;
 	string m_valeurDimension;
 
+	POINT *m_monPoint;
+	int m_creation;
+
 	// Créer groupe
 	ofxUISuperCanvas *m_guiCreerGroupe;
 	void guiEvent_CreerGroupe(ofxUIEventArgs &e);
 	string m_nomNouveauGroupe;
 	int m_ActionCreer;
-
-	// Autres créer
 
 	// Autres
 	HWND m_hwndDesktop;

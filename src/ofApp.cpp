@@ -128,6 +128,39 @@ void ofApp::draw() {
 	ofDrawBitmapString("Clic droit - Afficher le menu", 10, (ofGetHeight() - 15));
 	//////////////////////////////////////////////////
 	#pragma endregion
+
+	//Primitives
+	list<Primitive*>::iterator it = this->primitives.begin();
+
+	for (it = this->primitives.begin(); it != this->primitives.end(); ++it)
+	{
+		string nomClasse = typeid(*it).name();
+
+		if(nomClasse == "_Line")
+			(dynamic_cast<_Line*>(*it))->draw();
+		else if(nomClasse == "Triangle")
+			(dynamic_cast<Triangle*>(*it))->draw();
+		else
+			cout << "Mauvais typage sur Primitive";
+	}
+
+	//Formes
+	list<Form*>::iterator it2 = this->forms.begin();
+
+	for (it2 = this->forms.begin(); it2 != this->forms.end(); ++it2)
+	{
+		string nomClasse = typeid(*it2).name();
+
+		if (nomClasse == "Cube")
+			(dynamic_cast<Cube*>(*it))->draw();
+		else if (nomClasse == "Sphere")
+			(dynamic_cast<Sphere*>(*it))->draw();
+		else if (nomClasse == "Modele3D")
+			(dynamic_cast<Modele3D*>(*it))->draw();
+		else
+			cout << "Mauvais typage sur Forme";
+	}
+
 }
 
 //--------------------------------------------------------------
@@ -166,6 +199,37 @@ void ofApp::mouseDragged(int x, int y, int button){
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
 	guiEvent_DoAction(m_menu.hitTest());
+<<<<<<< HEAD
+=======
+
+	switch(m_creation)
+	{
+	case 0 : //Rien à créer
+		if(positionSouris.size() > 0)
+			positionSouris.clear();
+		break;
+	case 1 : //En création de ligne
+		m_monPoint = new POINT();
+		m_monPoint->x = x;
+		m_monPoint->y = y;
+
+		positionSouris.push_back(m_monPoint);
+		
+		if (positionSouris.size() == 2) {}
+			//Créer ligne + réinitialiser liste positionSouris
+		break;
+	case 2 : //En création de triangle
+		m_monPoint = new POINT();
+		m_monPoint->x = x;
+		m_monPoint->y = y;
+
+		positionSouris.push_back(m_monPoint);
+		
+		if (positionSouris.size() == 3) {}
+			//Créer triangle + réinitialiser liste positionSouris
+		break;
+	}
+>>>>>>> origin/master
 }	
 
 //--------------------------------------------------------------
