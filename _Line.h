@@ -6,8 +6,8 @@
 class _Line : public Primitive
 {
 public:
-	_Line(string p_nom, ofPoint _point1, ofPoint _point2, int _lineWidth = 1);
-	_Line(string p_nom, int _x1, int _y1, int _z1, int _x2, int _y2, int _z2, int _lineWidth = 1);
+	_Line(string p_nom, ofPoint _point1, ofPoint _point2, int _lineWidth = 5);
+	_Line(string p_nom, int _x1, int _y1, int _z1, int _x2, int _y2, int _z2, int _lineWidth = 5);
 	_Line();
 	~_Line();
 

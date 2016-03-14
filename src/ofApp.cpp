@@ -359,7 +359,6 @@ void ofApp::guiEvent_DoAction(int p_IdButton)
 			else if (p_IdButton == 1)
 			{
 				// Création 3D
-				this->forms.push_back(new Cube("cube milieu", 500, 500, 0, 100, 100, 100));
 
 				m_sousMenuInt = 1;
 				m_sousMenuBool = true;
@@ -426,6 +425,7 @@ void ofApp::guiEvent_DoAction(int p_IdButton)
 				{
 					// Ligne
 
+					m_ActionCreer = 3;
 					m_guiCreerGroupe = new ofxUISuperCanvas("Nom de la ligne", ((ofGetWidth() / 2) - (100)), ((ofGetHeight() / 2) - (100)), 200, 211);
 					m_guiCreerGroupe->addSpacer();
 					m_guiCreerGroupe->addTextInput("m_ti_CreerGroupe", m_nomNouveauGroupe);
@@ -436,7 +436,7 @@ void ofApp::guiEvent_DoAction(int p_IdButton)
 					ofAddListener(m_guiCreerGroupe->newGUIEvent, this, &ofApp::guiEvent_CreerGroupe);
 					m_guiCreerGroupe->setVisible(true);
 
-					m_ActionCreer = 2;
+					
 					m_sousMenuBool = false;
 					m_sousMenuInt = -1;
 
@@ -445,7 +445,7 @@ void ofApp::guiEvent_DoAction(int p_IdButton)
 				else if (p_IdButton == 1)
 				{
 					// Triangle
-
+					m_ActionCreer = 4;
 					m_guiCreerGroupe = new ofxUISuperCanvas("Nom du triangle", ((ofGetWidth() / 2) - (100)), ((ofGetHeight() / 2) - (100)), 200, 211);
 					m_guiCreerGroupe->addSpacer();
 					m_guiCreerGroupe->addTextInput("m_ti_CreerGroupe", m_nomNouveauGroupe);
@@ -456,7 +456,7 @@ void ofApp::guiEvent_DoAction(int p_IdButton)
 					ofAddListener(m_guiCreerGroupe->newGUIEvent, this, &ofApp::guiEvent_CreerGroupe);
 					m_guiCreerGroupe->setVisible(true);
 
-					m_ActionCreer = 3;
+					
 					m_sousMenuBool = false;
 					m_sousMenuInt = -1;
 				}
@@ -466,6 +466,7 @@ void ofApp::guiEvent_DoAction(int p_IdButton)
 				if (p_IdButton == 0)
 				{
 					// Cube
+					m_ActionCreer = 5;
 					m_guiCreerGroupe = new ofxUISuperCanvas("Nom du cube", ((ofGetWidth() / 2) - (100)), ((ofGetHeight() / 2) - (100)), 200, 211);
 					m_guiCreerGroupe->addSpacer();
 					m_guiCreerGroupe->addTextInput("m_ti_CreerGroupe", m_nomNouveauGroupe);
@@ -476,7 +477,6 @@ void ofApp::guiEvent_DoAction(int p_IdButton)
 					ofAddListener(m_guiCreerGroupe->newGUIEvent, this, &ofApp::guiEvent_CreerGroupe);
 					m_guiCreerGroupe->setVisible(true);
 					
-					m_ActionCreer = 4;
 					m_sousMenuBool = false;
 					m_sousMenuInt = -1;
 				}
@@ -494,7 +494,7 @@ void ofApp::guiEvent_DoAction(int p_IdButton)
 					ofAddListener(m_guiCreerGroupe->newGUIEvent, this, &ofApp::guiEvent_CreerGroupe);
 					m_guiCreerGroupe->setVisible(true);
 					
-					m_ActionCreer = 5;
+					m_ActionCreer = 6;
 					m_sousMenuBool = false;
 					m_sousMenuInt = -1;
 				}
@@ -696,15 +696,31 @@ void ofApp::guiEvent_CreerGroupe(ofxUIEventArgs &e)
 			}
 			else if (m_ActionCreer == 3)
 			{
-				// Triangle
+				// Ligne
+				string nomLine = m_nomNouveauGroupe;
+				this->primitives.push_back(new _Line(nomLine, ofPoint(300, 300, 0), ofPoint(400, 300, 0)));
+				m_DDL_1->addToggle(nomLine);
 			}
 			else if (m_ActionCreer == 4)
 			{
-				// Cube
+				// Triangle
+				string nomTriangle = m_nomNouveauGroupe;
+				this->primitives.push_back(new Triangle(nomTriangle, ofPoint(300, 300, 0), ofPoint(400, 300, 0), ofPoint(350, 400, 0)));
+				m_DDL_1->addToggle(nomTriangle);
 			}
 			else if (m_ActionCreer == 5)
 			{
+				// Cube
+				string nomCube = m_nomNouveauGroupe;
+				this->forms.push_back(new Cube(nomCube, 500, 500, 0, 100, 100, 100));
+				m_DDL_2->addToggle(nomCube);
+			}
+			else if (m_ActionCreer == 6)
+			{
 				// Sphere
+				string nomSphere = m_nomNouveauGroupe;
+				//this->forms.push_back(new Sphere(nomSphere, 500, 500, 0, 100));
+				m_DDL_2->addToggle(nomSphere);
 			}
 
 			m_ActionCreer = -1;
@@ -715,6 +731,10 @@ void ofApp::guiEvent_CreerGroupe(ofxUIEventArgs &e)
 		}
 		else if (m_nomWidget == "Annuler")
 		{
+			if (m_ActionCreer == 2)
+			{
+				this->images.pop_back();
+			}
 			m_ActionCreer = -1;
 			ofxUITextInput *txtinput = (ofxUITextInput*)m_guiCreerGroupe->getWidget("m_ti_CreerGroupe");
 			txtinput->setTextString("");
