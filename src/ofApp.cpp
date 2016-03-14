@@ -20,19 +20,16 @@ void ofApp::setup()
 	m_guiFPS->autoSizeToFitWidgets();
 	m_guiFPS->setVisible(true);
 
-	m_creation = 0;
-
 	// Menu
 	m_listener = new ofxCircleMenuButtonListener();
 	m_menu.setup();
 	m_menu.setRadius(80, 240);
 	m_menu.addMenuItem("Creer groupe");		// 0
-	m_menu.addMenuItem("Creation diverse"); // 1
-	m_menu.addMenuItem("Creation 3D");		// 2
-	m_menu.addMenuItem("Creation 2D");		// 3
-	m_menu.addMenuItem("Importer");			// 4
-	m_menu.addMenuItem("Quitter");			// 5
-	m_menu.addMenuItem("Exporter");			// 6
+	m_menu.addMenuItem("Creation 3D");		// 1
+	m_menu.addMenuItem("Creation 2D");		// 2
+	m_menu.addMenuItem("Importer");			// 3
+	m_menu.addMenuItem("Quitter");			// 4
+	m_menu.addMenuItem("Exporter");			// 5
 	m_menu.enableMouseControl();
 	m_menu.setListener(m_listener);
 
@@ -106,7 +103,7 @@ void ofApp::setup()
 	ofAddListener(m_guiParametres->newGUIEvent, this, &ofApp::guiEvent_Proprietes);
 	m_guiParametres->setVisible(true);
 
-	// Créer groupe
+	// Créer groupe - Autres créer
 	m_nomNouveauGroupe = "";
 	m_ActionCreer = -1;
 	//////////////////////////////////////////////////
@@ -121,7 +118,10 @@ void ofApp::update(){
 void ofApp::draw() {
 	#pragma region Gestion - Interface
 	//////////////////////////////////////////////////
-	m_menu.draw();
+	if (m_ActionCreer == -1)
+	{
+		m_menu.draw();
+	}
 
 	ofSetColor(0, 0, 0);
 	ofDrawBitmapString("F1 - Afficher l'interface", 10, (ofGetHeight() - 35));
@@ -166,36 +166,6 @@ void ofApp::mouseDragged(int x, int y, int button){
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
 	guiEvent_DoAction(m_menu.hitTest());
-
-	switch(m_creation)
-	{
-	case 0 : //Rien à créer
-		if(positionSouris.size() > 0)
-			positionSouris.clear();
-		break;
-	case 1 : //En création de ligne
-		/*
-		POINT *monPoint = new POINT();
-		monPoint->x = x;
-		monPoint->y = y;
-
-		positionSouris.push_back(monPoint);
-		*/
-		if (positionSouris.size() == 2) {}
-			//Créer ligne + réinitialiser liste positionSouris
-		break;
-	case 2 : //En création de triangle
-		/*
-		POINT *monPoint2 = new POINT();
-		monPoint2->x = x;
-		monPoint2->y = y;
-
-		positionSouris.push_back(monPoint2);
-		*/
-		if (positionSouris.size() == 3) {}
-			//Créer triangle + réinitialiser liste positionSouris
-		break;
-	}
 }	
 
 //--------------------------------------------------------------
@@ -239,29 +209,23 @@ void ofApp::guiEvent_DoAction(int p_IdButton)
 	{
 		if (p_IdButton == 0)
 		{
-			// Créer groupe
-			m_nomNouveauGroupe = "";
-			m_ActionCreer = 0;
+			if (m_ActionCreer == -1)
+			{
+				// Créer groupe
+				m_ActionCreer = 0;
 
-			m_guiCreerGroupe = new ofxUISuperCanvas("Nouveau groupe", ((ofGetWidth() / 2) - (100)), ((ofGetHeight() / 2) - (100)), 200, 211);
-			m_guiCreerGroupe->addSpacer();
-			m_guiCreerGroupe->addTextInput("m_ti_CreerGroupe", m_nomNouveauGroupe);
-			m_guiCreerGroupe->addSpacer();
-			m_guiCreerGroupe->addLabelButton("Valider", false);
-			m_guiCreerGroupe->addLabelButton("Annuler", false);
-			m_guiCreerGroupe->autoSizeToFitWidgets();
-			ofAddListener(m_guiCreerGroupe->newGUIEvent, this, &ofApp::guiEvent_CreerGroupe);
-			m_guiCreerGroupe->setVisible(true);
+				m_guiCreerGroupe = new ofxUISuperCanvas("Nouveau groupe", ((ofGetWidth() / 2) - (100)), ((ofGetHeight() / 2) - (100)), 200, 211);
+				m_guiCreerGroupe->addSpacer();
+				m_guiCreerGroupe->addTextInput("m_ti_CreerGroupe", m_nomNouveauGroupe);
+				m_guiCreerGroupe->addSpacer();
+				m_guiCreerGroupe->addLabelButton("Valider", false);
+				m_guiCreerGroupe->addLabelButton("Annuler", false);
+				m_guiCreerGroupe->autoSizeToFitWidgets();
+				ofAddListener(m_guiCreerGroupe->newGUIEvent, this, &ofApp::guiEvent_CreerGroupe);
+				m_guiCreerGroupe->setVisible(true);
+			}
 		}
 		else if (p_IdButton == 1)
-		{
-			// Création diverse
-
-			/*
-			INSERT CODE HERE
-			*/
-		}
-		else if (p_IdButton == 2)
 		{
 			// Création 3D
 
@@ -269,7 +233,7 @@ void ofApp::guiEvent_DoAction(int p_IdButton)
 			INSERT CODE HERE
 			*/
 		}
-		else if (p_IdButton == 3)
+		else if (p_IdButton == 2)
 		{
 			// Création 2D
 
@@ -277,7 +241,7 @@ void ofApp::guiEvent_DoAction(int p_IdButton)
 			INSERT CODE HERE
 			*/
 		}
-		else if (p_IdButton == 4)
+		else if (p_IdButton == 3)
 		{
 			// Importer
 
@@ -285,18 +249,28 @@ void ofApp::guiEvent_DoAction(int p_IdButton)
 			INSERT CODE HERE
 			*/
 		}
-		else if (p_IdButton == 5)
+		else if (p_IdButton == 4)
 		{
 			// Quitter l'application
 			exit();
 		}
-		else if (p_IdButton == 6)
+		else if (p_IdButton == 5)
 		{
-			// Exporter
+			if (m_ActionCreer == -1)
+			{
+				// Exporter
+				m_ActionCreer = 1;
 
-			/*
-			INSERT CODE HERE
-			*/
+				m_guiCreerGroupe = new ofxUISuperCanvas("Exporter un fichier", ((ofGetWidth() / 2) - (100)), ((ofGetHeight() / 2) - (100)), 200, 211);
+				m_guiCreerGroupe->addSpacer();
+				m_guiCreerGroupe->addTextInput("m_ti_CreerGroupe", m_nomNouveauGroupe);
+				m_guiCreerGroupe->addSpacer();
+				m_guiCreerGroupe->addLabelButton("Valider", false);
+				m_guiCreerGroupe->addLabelButton("Annuler", false);
+				m_guiCreerGroupe->autoSizeToFitWidgets();
+				ofAddListener(m_guiCreerGroupe->newGUIEvent, this, &ofApp::guiEvent_CreerGroupe);
+				m_guiCreerGroupe->setVisible(true);
+			}
 		}
 	}
 }
@@ -358,11 +332,6 @@ void ofApp::guiEvent_Proprietes(ofxUIEventArgs &e)
 
 		txtinput->setAutoClear(false);
 	}
-	else if (m_kindWidget == OFX_UI_WIDGET_SLIDER_H)
-	{
-		cout << m_rotationX << endl;
-	}
-
 }
 
 void ofApp::guiEvent_CreerGroupe(ofxUIEventArgs &e)
@@ -380,31 +349,37 @@ void ofApp::guiEvent_CreerGroupe(ofxUIEventArgs &e)
 	{
 		if (m_nomWidget == "Valider")
 		{
-			cout << m_nomNouveauGroupe << endl;
+			if (m_ActionCreer == 0)
+			{
+				cout << m_nomNouveauGroupe << endl;
 
-			Group * m_nouveauGroupe = new Group(m_nomNouveauGroupe);
-			groups.push_back(m_nouveauGroupe);
+				Group * m_nouveauGroupe = new Group(m_nomNouveauGroupe);
+				groups.push_back(m_nouveauGroupe);
 
-			/*
-			_Line * m_nouvelleLigne = new _Line(m_nomNouvelleLigne,);
-			primitives.push_back(m_nouvelleLigne);
-			*/
+				m_DDL_3->addToggle(m_nomNouveauGroupe);
+			}
+			else if (m_ActionCreer == 1)
+			{
 
-			m_DDL_3->addToggle(m_nomNouveauGroupe);
+			}
 
+			m_ActionCreer = -1;
 			ofxUITextInput *txtinput = (ofxUITextInput*)m_guiCreerGroupe->getWidget("m_ti_CreerGroupe");
 			txtinput->setTextString("");
-			m_guiCreerGroupe->setVisible(false);
 			m_guiCreerGroupe->clearEmbeddedWidgets();
+			m_guiCreerGroupe->setVisible(false);
 		}
 		else if (m_nomWidget == "Annuler")
 		{
+			m_ActionCreer = -1;
+
 			cout << "ANNULER" << endl;
 
 			ofxUITextInput *txtinput = (ofxUITextInput*)m_guiCreerGroupe->getWidget("m_ti_CreerGroupe");
 			txtinput->setTextString("");
-			m_guiCreerGroupe->setVisible(false);
+
 			m_guiCreerGroupe->clearEmbeddedWidgets();
+			m_guiCreerGroupe->setVisible(false);
 		}
 	}
 }

@@ -38,8 +38,6 @@ private:
 	list<Form*> forms;
 	list<Primitive*> primitives;
 	list<Group*> groups;
-	list<ofImage*> images;
-	list<POINT*> positionSouris;
 	Utilities util;
 		
 	#pragma region Gestion - Interface
@@ -79,13 +77,13 @@ private:
 	bool m_drawFillVisible;
 	string m_valeurDimension;
 
-	int m_creation;
-
 	// Créer groupe
 	ofxUISuperCanvas *m_guiCreerGroupe;
 	void guiEvent_CreerGroupe(ofxUIEventArgs &e);
 	string m_nomNouveauGroupe;
 	int m_ActionCreer;
+
+	// Autres créer
 
 	// Autres
 	HWND m_hwndDesktop;
