@@ -358,6 +358,11 @@ void ofApp::guiEvent_Proprietes(ofxUIEventArgs &e)
 
 		txtinput->setAutoClear(false);
 	}
+	else if (m_kindWidget == OFX_UI_WIDGET_SLIDER_H)
+	{
+		cout << m_rotationX << endl;
+	}
+
 }
 
 void ofApp::guiEvent_CreerGroupe(ofxUIEventArgs &e)
