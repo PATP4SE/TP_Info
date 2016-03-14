@@ -167,12 +167,20 @@ void ofApp::draw() {
 
 	for (it = this->primitives.begin(); it != this->primitives.end(); ++it)
 	{
-		string nomClasse = typeid(*it).name();
+		string nomClasse = typeid(**it).name();
 
 		if(nomClasse == "class _Line")
-			(dynamic_cast<_Line*>(*it))->draw();
+		{
+			Primitive *Lparent = (*it);
+			_Line *Lenfant = (dynamic_cast<_Line *>(Lparent));
+			Lenfant->draw();
+		}
 		else if(nomClasse == "class Triangle")
-			(dynamic_cast<Triangle*>(*it))->draw();
+		{
+			Primitive *Tparent = (*it);
+			Triangle *Tenfant = (dynamic_cast<Triangle *>(Tparent));
+			Tenfant->draw();
+		}
 		else
 			cout << "Mauvais typage sur Primitive";
 	}
