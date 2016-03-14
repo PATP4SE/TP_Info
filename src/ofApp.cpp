@@ -169,9 +169,9 @@ void ofApp::draw() {
 	{
 		string nomClasse = typeid(*it).name();
 
-		if(nomClasse == "_Line")
+		if(nomClasse == "class _Line")
 			(dynamic_cast<_Line*>(*it))->draw();
-		else if(nomClasse == "Triangle")
+		else if(nomClasse == "class Triangle")
 			(dynamic_cast<Triangle*>(*it))->draw();
 		else
 			cout << "Mauvais typage sur Primitive";
@@ -184,11 +184,15 @@ void ofApp::draw() {
 	{
 		string nomClasse = typeid(*it2).name();
 
-		if (nomClasse == "Cube")
-			(dynamic_cast<Cube*>(*it))->draw();
-		else if (nomClasse == "Sphere")
+		if (nomClasse == "class Cube")
+		{
+			Primitive *Cparent = (*it);
+			Cube *Cenfant = (dynamic_cast<Cube *>(*Cparent));
+			Cenfant->draw();
+		}
+		else if (nomClasse == "class Sphere")
 			(dynamic_cast<Sphere*>(*it))->draw();
-		else if (nomClasse == "Modele3D")
+		else if (nomClasse == "class Modele3D")
 			(dynamic_cast<Modele3D*>(*it))->draw();
 		else
 			cout << "Mauvais typage sur Forme";
