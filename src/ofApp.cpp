@@ -186,14 +186,22 @@ void ofApp::draw() {
 
 		if (nomClasse == "class Cube")
 		{
-			Primitive *Cparent = (*it);
-			Cube *Cenfant = (dynamic_cast<Cube *>(*Cparent));
+			Form *Cparent = (*it2);
+			Cube *Cenfant = (dynamic_cast<Cube *>(Cparent));
 			Cenfant->draw();
 		}
 		else if (nomClasse == "class Sphere")
-			(dynamic_cast<Sphere*>(*it))->draw();
+		{
+			Form *Sparent = (*it2);
+			Sphere *Senfant = (dynamic_cast<Sphere *>(Sparent));
+			Senfant->draw();
+		}
 		else if (nomClasse == "class Modele3D")
-			(dynamic_cast<Modele3D*>(*it))->draw();
+		{
+			Form *Mparent = (*it2);
+			Modele3D *Menfant = (dynamic_cast<Modele3D *>(Mparent));
+			Menfant->draw();
+		}
 		else
 			cout << "Mauvais typage sur Forme";
 	}
