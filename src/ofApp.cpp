@@ -158,7 +158,7 @@ void ofApp::draw() {
 
 	ofSetColor(0, 0, 0);
 	ofDrawBitmapString("F1 - Afficher l'interface", 10, (ofGetHeight() - 35));
-	ofDrawBitmapString("Clic droit - Afficher le menu", 10, (ofGetHeight() - 15));
+	ofDrawBitmapString("Clic droit - Afficher le menu (et sous-menu)", 10, (ofGetHeight() - 15));
 	//////////////////////////////////////////////////
 	#pragma endregion
 
@@ -252,19 +252,22 @@ void ofApp::mouseDragged(int x, int y, int button){
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
 
-	if (m_sousMenuBool == false)
+	if (m_ActionCreer == -1)
 	{
-		guiEvent_DoAction(m_menu.hitTest());
-	}
-	else
-	{
-		if (m_sousMenuInt == 0)
+		if (m_sousMenuBool == false)
 		{
-			guiEvent_DoAction(m_sousMenu2D.hitTest());
-		} 
-		else if (m_sousMenuInt == 1)
+			guiEvent_DoAction(m_menu.hitTest());
+		}
+		else
 		{
-			guiEvent_DoAction(m_sousMenu3D.hitTest());
+			if (m_sousMenuInt == 0)
+			{
+				guiEvent_DoAction(m_sousMenu2D.hitTest());
+			}
+			else if (m_sousMenuInt == 1)
+			{
+				guiEvent_DoAction(m_sousMenu3D.hitTest());
+			}
 		}
 	}
 
@@ -554,6 +557,7 @@ void ofApp::guiEvent_Proprietes(ofxUIEventArgs &e)
 	{
 		if (m_nomWidget == "Valider")
 		{
+
 		}
 		else if (m_nomWidget == "Annuler")
 		{
