@@ -40,6 +40,9 @@ private:
 	list<Form*> forms;
 	list<Primitive*> primitives;
 	list<Group*> groups;
+	list<ofImage*> images;
+	list<POINT*> positionSouris;
+
 	Utilities util;
 		
 	#pragma region Gestion - Interface

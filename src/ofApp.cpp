@@ -199,8 +199,6 @@ void ofApp::mouseDragged(int x, int y, int button){
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
 	guiEvent_DoAction(m_menu.hitTest());
-<<<<<<< HEAD
-=======
 
 	switch(m_creation)
 	{
@@ -229,7 +227,6 @@ void ofApp::mousePressed(int x, int y, int button){
 			//Créer triangle + réinitialiser liste positionSouris
 		break;
 	}
->>>>>>> origin/master
 }	
 
 //--------------------------------------------------------------
