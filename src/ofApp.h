@@ -79,6 +79,7 @@ private:
 	bool m_drawFillVisible;
 	string m_valeurDimension;
 
+	POINT *m_monPoint;
 	int m_creation;
 
 	// Créer groupe

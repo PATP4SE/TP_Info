@@ -174,24 +174,22 @@ void ofApp::mousePressed(int x, int y, int button){
 			positionSouris.clear();
 		break;
 	case 1 : //En création de ligne
-		/*
-		POINT *monPoint = new POINT();
-		monPoint->x = x;
-		monPoint->y = y;
+		m_monPoint = new POINT();
+		m_monPoint->x = x;
+		m_monPoint->y = y;
 
-		positionSouris.push_back(monPoint);
-		*/
+		positionSouris.push_back(m_monPoint);
+		
 		if (positionSouris.size() == 2) {}
 			//Créer ligne + réinitialiser liste positionSouris
 		break;
 	case 2 : //En création de triangle
-		/*
-		POINT *monPoint2 = new POINT();
-		monPoint2->x = x;
-		monPoint2->y = y;
+		m_monPoint = new POINT();
+		m_monPoint->x = x;
+		m_monPoint->y = y;
 
-		positionSouris.push_back(monPoint2);
-		*/
+		positionSouris.push_back(m_monPoint);
+		
 		if (positionSouris.size() == 3) {}
 			//Créer triangle + réinitialiser liste positionSouris
 		break;
