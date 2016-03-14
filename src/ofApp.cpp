@@ -33,6 +33,25 @@ void ofApp::setup()
 	m_menu.enableMouseControl();
 	m_menu.setListener(m_listener);
 
+	m_listenerSousMenu2D = new ofxCircleMenuButtonListener();
+	m_sousMenu2D.setup();
+	m_sousMenu2D.setRadius(25, 75);
+	m_sousMenu2D.addMenuItem("Ligne");				// 0
+	m_sousMenu2D.addMenuItem("Triangle");			// 1
+	m_sousMenu2D.enableMouseControl();
+	m_sousMenu2D.setListener(m_listenerSousMenu2D);
+
+	m_listenerSousMenu3D = new ofxCircleMenuButtonListener();
+	m_sousMenu3D.setup();
+	m_sousMenu3D.setRadius(25, 75);
+	m_sousMenu3D.addMenuItem("Cube");				// 0
+	m_sousMenu3D.addMenuItem("Sphere");				// 1
+	m_sousMenu3D.enableMouseControl();
+	m_sousMenu3D.setListener(m_listenerSousMenu3D);
+
+	m_sousMenuInt = -1;
+	m_sousMenuBool = false;
+
 	// DropDownList
 	m_guiDDL_1 = new ofxUISuperCanvas("Liste d'elements 2D", 0, 0, 200, 211);
 	m_guiDDL_1->addSpacer();
@@ -120,7 +139,21 @@ void ofApp::draw() {
 	//////////////////////////////////////////////////
 	if (m_ActionCreer == -1)
 	{
-		m_menu.draw();
+		if (m_sousMenuBool == false)
+		{
+			m_menu.draw();
+		}
+		else if (m_sousMenuBool == true)
+		{
+			if (m_sousMenuInt == 0)
+			{
+				m_sousMenu2D.draw();
+			}
+			else if (m_sousMenuInt == 1)
+			{
+				m_sousMenu3D.draw();
+			}
+		}
 	}
 
 	ofSetColor(0, 0, 0);
@@ -198,7 +231,22 @@ void ofApp::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-	guiEvent_DoAction(m_menu.hitTest());
+
+	if (m_sousMenuBool == false)
+	{
+		guiEvent_DoAction(m_menu.hitTest());
+	}
+	else
+	{
+		if (m_sousMenuInt == 0)
+		{
+			guiEvent_DoAction(m_sousMenu2D.hitTest());
+		} 
+		else if (m_sousMenuInt == 1)
+		{
+			guiEvent_DoAction(m_sousMenu3D.hitTest());
+		}
+	}
 
 	switch(m_creation)
 	{
@@ -268,69 +316,153 @@ void ofApp::guiEvent_DoAction(int p_IdButton)
 {
 	if (p_IdButton != -1)
 	{
-		if (p_IdButton == 0)
+		if (m_sousMenuBool == false)
 		{
-			if (m_ActionCreer == -1)
+			if (p_IdButton == 0)
 			{
-				// Créer groupe
-				m_ActionCreer = 0;
+				if (m_ActionCreer == -1)
+				{
+					// Créer groupe
+					m_ActionCreer = 0;
 
-				m_guiCreerGroupe = new ofxUISuperCanvas("Nouveau groupe", ((ofGetWidth() / 2) - (100)), ((ofGetHeight() / 2) - (100)), 200, 211);
-				m_guiCreerGroupe->addSpacer();
-				m_guiCreerGroupe->addTextInput("m_ti_CreerGroupe", m_nomNouveauGroupe);
-				m_guiCreerGroupe->addSpacer();
-				m_guiCreerGroupe->addLabelButton("Valider", false);
-				m_guiCreerGroupe->addLabelButton("Annuler", false);
-				m_guiCreerGroupe->autoSizeToFitWidgets();
-				ofAddListener(m_guiCreerGroupe->newGUIEvent, this, &ofApp::guiEvent_CreerGroupe);
-				m_guiCreerGroupe->setVisible(true);
+					m_guiCreerGroupe = new ofxUISuperCanvas("Nouveau groupe", ((ofGetWidth() / 2) - (100)), ((ofGetHeight() / 2) - (100)), 200, 211);
+					m_guiCreerGroupe->addSpacer();
+					m_guiCreerGroupe->addTextInput("m_ti_CreerGroupe", m_nomNouveauGroupe);
+					m_guiCreerGroupe->addSpacer();
+					m_guiCreerGroupe->addLabelButton("Valider", false);
+					m_guiCreerGroupe->addLabelButton("Annuler", false);
+					m_guiCreerGroupe->autoSizeToFitWidgets();
+					ofAddListener(m_guiCreerGroupe->newGUIEvent, this, &ofApp::guiEvent_CreerGroupe);
+					m_guiCreerGroupe->setVisible(true);
+				}
+			}
+			else if (p_IdButton == 1)
+			{
+				// Création 3D
+
+				m_sousMenuInt = 1;
+				m_sousMenuBool = true;
+			}
+			else if (p_IdButton == 2)
+			{
+				// Création 2D
+
+				m_sousMenuInt = 0;
+				m_sousMenuBool = true;
+			}
+			else if (p_IdButton == 3)
+			{
+				// Importer
+
+				/*
+				INSERT CODE HERE
+				*/
+			}
+			else if (p_IdButton == 4)
+			{
+				// Quitter l'application
+				exit();
+			}
+			else if (p_IdButton == 5)
+			{
+				if (m_ActionCreer == -1)
+				{
+					// Exporter
+					m_ActionCreer = 1;
+
+					m_guiCreerGroupe = new ofxUISuperCanvas("Exporter un fichier", ((ofGetWidth() / 2) - (100)), ((ofGetHeight() / 2) - (100)), 200, 211);
+					m_guiCreerGroupe->addSpacer();
+					m_guiCreerGroupe->addTextInput("m_ti_CreerGroupe", m_nomNouveauGroupe);
+					m_guiCreerGroupe->addSpacer();
+					m_guiCreerGroupe->addLabelButton("Valider", false);
+					m_guiCreerGroupe->addLabelButton("Annuler", false);
+					m_guiCreerGroupe->autoSizeToFitWidgets();
+					ofAddListener(m_guiCreerGroupe->newGUIEvent, this, &ofApp::guiEvent_CreerGroupe);
+					m_guiCreerGroupe->setVisible(true);
+				}
 			}
 		}
-		else if (p_IdButton == 1)
+		else
 		{
-			// Création 3D
-
-			/*
-			INSERT CODE HERE
-			*/
-		}
-		else if (p_IdButton == 2)
-		{
-			// Création 2D
-
-			/*
-			INSERT CODE HERE
-			*/
-		}
-		else if (p_IdButton == 3)
-		{
-			// Importer
-
-			/*
-			INSERT CODE HERE
-			*/
-		}
-		else if (p_IdButton == 4)
-		{
-			// Quitter l'application
-			exit();
-		}
-		else if (p_IdButton == 5)
-		{
-			if (m_ActionCreer == -1)
+			if (m_sousMenuInt == 0)
 			{
-				// Exporter
-				m_ActionCreer = 1;
+				if (p_IdButton == 0)
+				{
+					// Ligne
 
-				m_guiCreerGroupe = new ofxUISuperCanvas("Exporter un fichier", ((ofGetWidth() / 2) - (100)), ((ofGetHeight() / 2) - (100)), 200, 211);
-				m_guiCreerGroupe->addSpacer();
-				m_guiCreerGroupe->addTextInput("m_ti_CreerGroupe", m_nomNouveauGroupe);
-				m_guiCreerGroupe->addSpacer();
-				m_guiCreerGroupe->addLabelButton("Valider", false);
-				m_guiCreerGroupe->addLabelButton("Annuler", false);
-				m_guiCreerGroupe->autoSizeToFitWidgets();
-				ofAddListener(m_guiCreerGroupe->newGUIEvent, this, &ofApp::guiEvent_CreerGroupe);
-				m_guiCreerGroupe->setVisible(true);
+					m_guiCreerGroupe = new ofxUISuperCanvas("Nom de la ligne", ((ofGetWidth() / 2) - (100)), ((ofGetHeight() / 2) - (100)), 200, 211);
+					m_guiCreerGroupe->addSpacer();
+					m_guiCreerGroupe->addTextInput("m_ti_CreerGroupe", m_nomNouveauGroupe);
+					m_guiCreerGroupe->addSpacer();
+					m_guiCreerGroupe->addLabelButton("Valider", false);
+					m_guiCreerGroupe->addLabelButton("Annuler", false);
+					m_guiCreerGroupe->autoSizeToFitWidgets();
+					ofAddListener(m_guiCreerGroupe->newGUIEvent, this, &ofApp::guiEvent_CreerGroupe);
+					m_guiCreerGroupe->setVisible(true);
+
+					m_ActionCreer = 2;
+					m_sousMenuBool = false;
+					m_sousMenuInt = -1;
+
+
+				}
+				else if (p_IdButton == 1)
+				{
+					// Triangle
+
+					m_guiCreerGroupe = new ofxUISuperCanvas("Nom du triangle", ((ofGetWidth() / 2) - (100)), ((ofGetHeight() / 2) - (100)), 200, 211);
+					m_guiCreerGroupe->addSpacer();
+					m_guiCreerGroupe->addTextInput("m_ti_CreerGroupe", m_nomNouveauGroupe);
+					m_guiCreerGroupe->addSpacer();
+					m_guiCreerGroupe->addLabelButton("Valider", false);
+					m_guiCreerGroupe->addLabelButton("Annuler", false);
+					m_guiCreerGroupe->autoSizeToFitWidgets();
+					ofAddListener(m_guiCreerGroupe->newGUIEvent, this, &ofApp::guiEvent_CreerGroupe);
+					m_guiCreerGroupe->setVisible(true);
+
+					m_ActionCreer = 3;
+					m_sousMenuBool = false;
+					m_sousMenuInt = -1;
+				}
+			}
+			else if (m_sousMenuInt == 1)
+			{
+				if (p_IdButton == 0)
+				{
+					// Cube
+
+					m_guiCreerGroupe = new ofxUISuperCanvas("Nom du cube", ((ofGetWidth() / 2) - (100)), ((ofGetHeight() / 2) - (100)), 200, 211);
+					m_guiCreerGroupe->addSpacer();
+					m_guiCreerGroupe->addTextInput("m_ti_CreerGroupe", m_nomNouveauGroupe);
+					m_guiCreerGroupe->addSpacer();
+					m_guiCreerGroupe->addLabelButton("Valider", false);
+					m_guiCreerGroupe->addLabelButton("Annuler", false);
+					m_guiCreerGroupe->autoSizeToFitWidgets();
+					ofAddListener(m_guiCreerGroupe->newGUIEvent, this, &ofApp::guiEvent_CreerGroupe);
+					m_guiCreerGroupe->setVisible(true);
+					
+					m_ActionCreer = 4;
+					m_sousMenuBool = false;
+					m_sousMenuInt = -1;
+				}
+				else if (p_IdButton == 1)
+				{
+					// Sphere
+
+					m_guiCreerGroupe = new ofxUISuperCanvas("Nom de la sphere", ((ofGetWidth() / 2) - (100)), ((ofGetHeight() / 2) - (100)), 200, 211);
+					m_guiCreerGroupe->addSpacer();
+					m_guiCreerGroupe->addTextInput("m_ti_CreerGroupe", m_nomNouveauGroupe);
+					m_guiCreerGroupe->addSpacer();
+					m_guiCreerGroupe->addLabelButton("Valider", false);
+					m_guiCreerGroupe->addLabelButton("Annuler", false);
+					m_guiCreerGroupe->autoSizeToFitWidgets();
+					ofAddListener(m_guiCreerGroupe->newGUIEvent, this, &ofApp::guiEvent_CreerGroupe);
+					m_guiCreerGroupe->setVisible(true);
+					
+					m_ActionCreer = 5;
+					m_sousMenuBool = false;
+					m_sousMenuInt = -1;
+				}
 			}
 		}
 	}
@@ -412,8 +544,6 @@ void ofApp::guiEvent_CreerGroupe(ofxUIEventArgs &e)
 		{
 			if (m_ActionCreer == 0)
 			{
-				cout << m_nomNouveauGroupe << endl;
-
 				Group * m_nouveauGroupe = new Group(m_nomNouveauGroupe);
 				groups.push_back(m_nouveauGroupe);
 
@@ -421,7 +551,23 @@ void ofApp::guiEvent_CreerGroupe(ofxUIEventArgs &e)
 			}
 			else if (m_ActionCreer == 1)
 			{
-
+				// Exporter
+			}
+			else if (m_ActionCreer == 2)
+			{
+				// Ligne
+			}
+			else if (m_ActionCreer == 3)
+			{
+				// Triangle
+			}
+			else if (m_ActionCreer == 4)
+			{
+				// Cube
+			}
+			else if (m_ActionCreer == 5)
+			{
+				// Sphere
 			}
 
 			m_ActionCreer = -1;
@@ -433,12 +579,8 @@ void ofApp::guiEvent_CreerGroupe(ofxUIEventArgs &e)
 		else if (m_nomWidget == "Annuler")
 		{
 			m_ActionCreer = -1;
-
-			cout << "ANNULER" << endl;
-
 			ofxUITextInput *txtinput = (ofxUITextInput*)m_guiCreerGroupe->getWidget("m_ti_CreerGroupe");
 			txtinput->setTextString("");
-
 			m_guiCreerGroupe->clearEmbeddedWidgets();
 			m_guiCreerGroupe->setVisible(false);
 		}

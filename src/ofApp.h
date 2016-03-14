@@ -51,6 +51,16 @@ private:
 	ofxCircleMenuButton m_menu;
 	ofxCircleMenuButtonListener *m_listener;
 
+	// Sous-menu
+	ofxCircleMenuButton m_sousMenu2D;
+	ofxCircleMenuButtonListener *m_listenerSousMenu2D; 
+
+	ofxCircleMenuButton m_sousMenu3D;
+	ofxCircleMenuButtonListener *m_listenerSousMenu3D;
+
+	int m_sousMenuInt;
+	bool m_sousMenuBool;
+
 	// DropDownList
 	vector<string> m_dataDDL_1;
 	ofxUISuperCanvas *m_guiDDL_1;
