@@ -90,17 +90,14 @@ void ofApp::setup()
 	m_guiParametres->addLabel("Dimension");
 	m_guiParametres->addTextInput("m_valeurDimension", m_valeurDimension);
 	m_guiParametres->addSpacer();
-	m_guiParametres->addLabel("Position XYZ");
-	m_guiParametres->addSlider("X", 0.0, (m_maxWidthPosition), &m_positionX);
-	m_guiParametres->addSlider("Y", 0.0, (m_maxHeightPosition), &m_positionY);
-	m_guiParametres->addSlider("Z", 0.0, (m_maxWidthPosition), &m_positionZ);
+	m_guiParametres->addSlider("Position X", 0.0, (m_maxWidthPosition), &m_positionX);
+	m_guiParametres->addSlider("Position Y", 0.0, (m_maxHeightPosition), &m_positionY);
+	m_guiParametres->addSlider("Position Z", 0.0, (m_maxWidthPosition), &m_positionZ);
 	m_guiParametres->addSpacer();
-	m_guiParametres->addLabel("Rotation XYZ");
-	m_guiParametres->addSlider("X", 0.0, (360), &m_rotationX);
-	m_guiParametres->addSlider("Y", 0.0, (360), &m_rotationY);
-	m_guiParametres->addSlider("Z", 0.0, (360), &m_rotationZ);
+	m_guiParametres->addSlider("Rotation X", 0.0, (360), &m_rotationX);
+	m_guiParametres->addSlider("Rotation Y", 0.0, (360), &m_rotationY);
+	m_guiParametres->addSlider("Rotation Z", 0.0, (360), &m_rotationZ);
 	m_guiParametres->addSpacer();
-	m_guiParametres->addLabel("Couleur RGBA");
 	m_guiParametres->addSlider("RED", 0.0, 255.0, &m_couleurR);
 	m_guiParametres->addSlider("GREEN", 0.0, 255.0, &m_couleurG);
 	m_guiParametres->addSlider("BLUE", 0.0, 255.0, &m_couleurB);
@@ -542,16 +539,76 @@ void ofApp::guiEvent_Proprietes(ofxUIEventArgs &e)
 
 	if (m_kindWidget == OFX_UI_WIDGET_TEXTINPUT)
 	{
-		ofxUITextInput *txtinput = (ofxUITextInput*)e.widget;
-		m_valeurDimension = txtinput->getTextString();
+		ofxUITextInput *m_texteInput = (ofxUITextInput*)e.widget;
 
-		cout << m_valeurDimension << endl;
-
-		txtinput->setAutoClear(false);
+		if (m_nomWidget == "Dimension")
+		{
+			m_valeurDimension = m_texteInput->getTextString();
+			m_texteInput->setAutoClear(false);
+		}
 	}
 	else if (m_kindWidget == OFX_UI_WIDGET_SLIDER_H)
 	{
+		ofxUIIntSlider *m_slider = (ofxUIIntSlider*)e.widget;
 
+		if (m_nomWidget == "Position X")
+		{
+			m_positionX = m_slider->getValue();
+		}
+		else if (m_nomWidget == "Position Y")
+		{
+			m_positionY = m_slider->getValue();
+		}
+		else if (m_nomWidget == "Position Z")
+		{
+			m_positionZ = m_slider->getValue();
+		}
+		else if (m_nomWidget == "Rotation X")
+		{
+			m_rotationX = m_slider->getValue();
+		}
+		else if (m_nomWidget == "Rotation Y")
+		{
+			m_rotationY = m_slider->getValue();
+		}
+		else if (m_nomWidget == "Rotation Z")
+		{
+			m_rotationZ = m_slider->getValue();
+		}
+		else if (m_nomWidget == "RED")
+		{
+			m_couleurR = m_slider->getValue();
+		}
+		else if (m_nomWidget == "GREEN")
+		{
+			m_couleurG = m_slider->getValue();
+		}
+		else if (m_nomWidget == "BLUE")
+		{
+			m_couleurB = m_slider->getValue();
+		}
+		else if (m_nomWidget == "ALPHA")
+		{
+			m_couleurA = m_slider->getValue();
+		}
+	}
+	else if (m_kindWidget == OFX_UI_WIDGET_DROPDOWNLIST)
+	{
+		if (m_nomWidget == "Selection Groupe")
+		{
+
+		}
+		else if (m_nomWidget == "Selection Image")
+		{
+
+		}
+	}
+	else if (m_kindWidget == OFX_UI_WIDGET_LABELTOGGLE)
+	{
+
+		if (m_nomWidget == "VISIBLE")
+		{
+		}
 	}
 	else if (m_kindWidget == OFX_UI_WIDGET_LABELBUTTON)
 	{
