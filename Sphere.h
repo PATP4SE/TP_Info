@@ -17,6 +17,7 @@ public:
 
 	int GetWidth() { return GetRadius(); }
 	int GetHeight() { return GetRadius(); }
+	int GetDepth() { return GetRadius(); }
 
 	void draw();
 	void draw(ofColor _color);

@@ -108,6 +108,10 @@ private:
 	HWND m_hwndDesktop;
 	RECT m_rectDesktop;
 
+	//Méthodes privées
+	void hideMessageBox();
+
+
 	ofxUICanvas *m_guiFPS;
 	//////////////////////////////////////////////////
 	#pragma endregion

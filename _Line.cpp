@@ -36,6 +36,8 @@ void _Line::draw(ofColor _color)
 	ofRotateX(this->xRotation);
 	ofRotateY(this->yRotation);
 	ofRotateZ(this->zRotation);
+	
+	int oldWidth = GetLineWidth();
 	ofSetLineWidth(this->lineWidth);
 	ofSetColor(_color);
 
@@ -43,6 +45,15 @@ void _Line::draw(ofColor _color)
 	int y = this->point2.y - this->point1.y;
 	int z = this->point2.z - this->point1.z;
 	ofDrawLine(ofPoint(0,0,0), ofPoint(x,y,z));
+	
+	if (this->selected)
+		ofSetColor(ofColor::red);
+	else
+		ofSetColor(ofColor::blue);
+	ofDrawSphere(0, 0, 0, 3);
+	ofDrawSphere(x, y, z, 3);
+
+	ofSetLineWidth(oldWidth);
 	ofPopMatrix();
 }
 

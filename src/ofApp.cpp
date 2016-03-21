@@ -3,6 +3,7 @@
 //--------------------------------------------------------------
 void ofApp::setup()
 {
+	ofSetCircleResolution(100);
 	ofSetFrameRate(60);
 	ofEnableDepthTest();
 	glShadeModel(GL_SMOOTH);
@@ -140,7 +141,7 @@ void ofApp::draw() {
 		{
 			m_menu.draw();
 		}
-		else if (m_sousMenuBool == true)
+		else
 		{
 			if (m_sousMenuInt == 0)
 			{
@@ -210,7 +211,6 @@ void ofApp::draw() {
 		else
 			cout << "Mauvais typage sur Forme";
 	}
-
 }
 
 //--------------------------------------------------------------
@@ -359,14 +359,12 @@ void ofApp::guiEvent_DoAction(int p_IdButton)
 			else if (p_IdButton == 1)
 			{
 				// Création 3D
-
 				m_sousMenuInt = 1;
 				m_sousMenuBool = true;
 			}
 			else if (p_IdButton == 2)
 			{
 				// Création 2D
-
 				m_sousMenuInt = 0;
 				m_sousMenuBool = true;
 			}
@@ -405,7 +403,7 @@ void ofApp::guiEvent_DoAction(int p_IdButton)
 					// Exporter
 					m_ActionCreer = 1;
 
-					m_guiCreerGroupe = new ofxUISuperCanvas("Nom de l'image", ((ofGetWidth() / 2) - (100)), ((ofGetHeight() / 2) - (100)), 200, 211);
+					m_guiCreerGroupe = new ofxUISuperCanvas("Nom de l'image", ((ofGetWidth() / 2) - (100)), ((ofGetHeight() / 2) - (100)), 300, 211);
 					m_guiCreerGroupe->addSpacer();
 					m_guiCreerGroupe->addTextInput("m_ti_CreerGroupe", m_nomNouveauGroupe);
 					m_guiCreerGroupe->addSpacer();
@@ -435,12 +433,9 @@ void ofApp::guiEvent_DoAction(int p_IdButton)
 					m_guiCreerGroupe->autoSizeToFitWidgets();
 					ofAddListener(m_guiCreerGroupe->newGUIEvent, this, &ofApp::guiEvent_CreerGroupe);
 					m_guiCreerGroupe->setVisible(true);
-
 					
 					m_sousMenuBool = false;
 					m_sousMenuInt = -1;
-
-
 				}
 				else if (p_IdButton == 1)
 				{
@@ -517,9 +512,24 @@ void ofApp::guiEvent_DropDownList(ofxUIEventArgs &e)
 
 			ofxUIDropDownList *m_DDL_Temp = (ofxUIDropDownList*)e.widget;
 			vector<ofxUIWidget *> &m_selectedDDL = m_DDL_Temp->getSelected();
+
+			list<Primitive*>::iterator it = this->primitives.begin();
+
+			for (it; it != this->primitives.end(); it++)
+			{
+				(*it)->SetSelected(false);
+			}
+
+			it = this->primitives.begin();
 			for (int i = 0; i < m_selectedDDL.size(); i++)
 			{
+				if (m_selectedDDL.at(i)->getName() == (*it)->GetNom())
+				{
+					(*it)->SetSelected(true);
+				}
+				it++;
 			}
+
 		}
 		else if (m_nomWidget == "Elements 3D")
 		{
@@ -528,8 +538,23 @@ void ofApp::guiEvent_DropDownList(ofxUIEventArgs &e)
 
 			ofxUIDropDownList *m_DDL_Temp = (ofxUIDropDownList*)e.widget;
 			vector<ofxUIWidget *> &m_selectedDDL = m_DDL_Temp->getSelected();
+
+			list<Form*>::iterator it = this->forms.begin();
+
+			for (it; it != this->forms.end(); it++)
+			{
+				(*it)->SetSelected(false);
+			}
+
+			it = this->forms.begin();
 			for (int i = 0; i < m_selectedDDL.size(); i++)
 			{
+				if (m_selectedDDL.at(i)->getName() == (*it)->GetNom())
+				{
+					(*it)->SetSelected(true);
+				}
+					
+				it++;
 			}
 		}
 		else if (m_nomWidget == "Groupes")
@@ -719,15 +744,10 @@ void ofApp::guiEvent_CreerGroupe(ofxUIEventArgs &e)
 			{
 				// Sphere
 				string nomSphere = m_nomNouveauGroupe;
-				//this->forms.push_back(new Sphere(nomSphere, 500, 500, 0, 100));
+				this->forms.push_back(new Sphere(nomSphere, 500, 500, 0, 100));
 				m_DDL_2->addToggle(nomSphere);
 			}
-
-			m_ActionCreer = -1;
-			ofxUITextInput *txtinput = (ofxUITextInput*)m_guiCreerGroupe->getWidget("m_ti_CreerGroupe");
-			txtinput->setTextString("");
-			m_guiCreerGroupe->clearEmbeddedWidgets();
-			m_guiCreerGroupe->setVisible(false);
+			hideMessageBox();
 		}
 		else if (m_nomWidget == "Annuler")
 		{
@@ -735,11 +755,18 @@ void ofApp::guiEvent_CreerGroupe(ofxUIEventArgs &e)
 			{
 				this->images.pop_back();
 			}
-			m_ActionCreer = -1;
-			ofxUITextInput *txtinput = (ofxUITextInput*)m_guiCreerGroupe->getWidget("m_ti_CreerGroupe");
-			txtinput->setTextString("");
-			m_guiCreerGroupe->clearEmbeddedWidgets();
-			m_guiCreerGroupe->setVisible(false);
+			hideMessageBox();
 		}
 	}
+}
+
+void ofApp::hideMessageBox()
+{
+	m_ActionCreer = -1;
+	ofxUITextInput *txtinput = (ofxUITextInput*)m_guiCreerGroupe->getWidget("m_ti_CreerGroupe");
+	txtinput->setTextString("");
+	m_guiCreerGroupe->clearEmbeddedWidgets();
+	m_guiCreerGroupe->setPosition(-100, -100);
+	m_guiCreerGroupe->setVisible(false);
+	m_guiCreerGroupe = NULL;
 }

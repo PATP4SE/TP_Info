@@ -33,8 +33,6 @@ void Utilities::ExportImage(ofImage *_image)
 ofImage* Utilities::ImportImage()
 {
 	ofImage *image = new ofImage();
-
-	image = new ofImage();
 	ofSetColor(255);
 	ofFileDialogResult dialog;
 	dialog = ofSystemLoadDialog("Importer une image");

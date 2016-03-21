@@ -16,7 +16,7 @@ Sphere::~Sphere()
 
 void Sphere::draw()
 {
-	this->draw(ofGetBackgroundColor());
+	this->draw(ofColor::black);
 }
 
 void Sphere::draw(ofColor _color)
@@ -88,7 +88,6 @@ int Sphere::GetRadius()
 {
 	return this->radius;
 }
-
 
 
 

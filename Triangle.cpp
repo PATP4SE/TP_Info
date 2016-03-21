@@ -46,6 +46,15 @@ void Triangle::draw(ofColor _color, bool fill)
 	else
 		ofNoFill();
 	ofDrawTriangle(ofPoint(0,0,0), ofPoint(x2,y2,z2), ofPoint(x3, y3, z3));
+
+	if (this->selected)
+		ofSetColor(ofColor::red);
+	else
+		ofSetColor(ofColor::blue);
+	ofDrawSphere(0, 0, 0, 2);
+	ofDrawSphere(x2, y2, z2, 2);
+	ofDrawSphere(x3, y3, z3, 2);
+
 	ofPopMatrix();
 }
 

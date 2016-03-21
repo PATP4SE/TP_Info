@@ -314,9 +314,9 @@ void Cube::draw(ofColor _color)
 
 	//Dessine les points
 	if (this->selected)
-		ofSetColor(ofColor::blue);
-	else
 		ofSetColor(ofColor::red);
+	else
+		ofSetColor(ofColor::blue);
 	ofDrawSphere(topFrontLeft, 3);
 	ofDrawSphere(topFrontRight, 3);
 	ofDrawSphere(bottomFrontLeft, 3);
