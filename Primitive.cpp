@@ -6,6 +6,7 @@ Primitive::Primitive()
 	this->x = 0;
 	this->y = 0;
 	this->z = 0;
+	this->selected = false;
 }
 
 Primitive::Primitive(string p_nom, int _x, int _y, int _z, int _lineWidth)
@@ -15,6 +16,7 @@ Primitive::Primitive(string p_nom, int _x, int _y, int _z, int _lineWidth)
 	this->y = _y;
 	this->z = _z;
 	this->lineWidth = _lineWidth;
+	this->selected = false;
 }
 
 Primitive::~Primitive()

@@ -47,7 +47,8 @@ private:
 	vector<string*> noms_images;
 
 	Utilities util;
-		
+	ofImage* imageSelected;
+
 	#pragma region Gestion - Interface
 	//////////////////////////////////////////////////
 	// Menu
@@ -110,6 +111,7 @@ private:
 
 	//Méthodes privées
 	void hideMessageBox();
+	void unselectAll();
 
 
 	ofxUICanvas *m_guiFPS;
