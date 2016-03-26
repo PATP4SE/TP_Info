@@ -38,7 +38,6 @@ void Triangle::draw(ofColor _color, bool fill)
 	int x3 = this->point3.x - this->point1.x;
 	int y3 = this->point3.y - this->point1.y;
 	int z3 = this->point3.z - this->point1.z;
-	int oldWidth = GetLineWidth();
 
 	ofSetLineWidth(this->lineWidth);
 	ofSetColor(_color);
@@ -55,7 +54,6 @@ void Triangle::draw(ofColor _color, bool fill)
 	ofDrawSphere(0, 0, 0, 2);
 	ofDrawSphere(x2, y2, z2, 2);
 	ofDrawSphere(x3, y3, z3, 2);
-	ofSetLineWidth(oldWidth);
 
 	ofPopMatrix();
 }

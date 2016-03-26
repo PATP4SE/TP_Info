@@ -70,11 +70,6 @@ int Form::GetRotationZ()
 	return this->zRotation;
 }
 
-ofImage* Form::GetTexture()
-{
-	return this->texture;
-}
-
 bool Form::IsSelected()
 {
 	return this->selected;

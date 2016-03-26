@@ -17,7 +17,6 @@ public:
 	int GetX();
 	int GetY();
 	int GetZ();
-	bool IsSelected();
 
 	int GetRotationX();
 	int GetRotationY();
@@ -32,7 +31,6 @@ public:
 	void SetY(int _y);
 	void SetZ(int _z);
 	void SetPosition(int _x, int _y, int _z);
-	void SetSelected(bool _selected);
 
 	void RotateX(int _x);
 	void RotateY(int _y);

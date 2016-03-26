@@ -24,7 +24,6 @@ public:
 	virtual int GetHeight() = 0;
 	virtual int GetDepth() = 0;
 
-	ofImage* GetTexture();
 	void SetTexture(ofImage *_image);
 
 	void SetNom(string p_nom);
