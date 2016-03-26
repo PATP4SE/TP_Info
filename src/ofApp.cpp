@@ -194,13 +194,28 @@ void ofApp::draw() {
 		{
 			Form *Cparent = (*it2);
 			Cube *Cenfant = (dynamic_cast<Cube *>(Cparent));
-			Cenfant->draw();
+			if (Cenfant->GetTexture() != NULL)
+			{
+				Cenfant->drawOnCube();
+			}
+			else
+			{
+				Cenfant->draw();
+			}
+			
 		}
 		else if (nomClasse == "class Sphere")
 		{
 			Form *Sparent = (*it2);
 			Sphere *Senfant = (dynamic_cast<Sphere *>(Sparent));
-			Senfant->draw();
+			if (Senfant->GetTexture() != NULL)
+			{
+				Senfant->drawWithTexture();
+			}
+			else
+			{
+				Senfant->draw();
+			}
 		}
 		else if (nomClasse == "class Modele3D")
 		{
@@ -529,7 +544,6 @@ void ofApp::guiEvent_DropDownList(ofxUIEventArgs &e)
 				}
 				it++;
 			}
-
 		}
 		else if (m_nomWidget == "Elements 3D")
 		{
@@ -553,7 +567,6 @@ void ofApp::guiEvent_DropDownList(ofxUIEventArgs &e)
 				{
 					(*it)->SetSelected(true);
 				}
-					
 				it++;
 			}
 		}
@@ -564,8 +577,21 @@ void ofApp::guiEvent_DropDownList(ofxUIEventArgs &e)
 
 			ofxUIDropDownList *m_DDL_Temp = (ofxUIDropDownList*)e.widget;
 			vector<ofxUIWidget *> &m_selectedDDL = m_DDL_Temp->getSelected();
+			list<Group*>::iterator it = this->groups.begin();
+
+			for (it; it != this->groups.end(); it++)
+			{
+				(*it)->SetSelected(false);
+			}
+
+			it = this->groups.begin();
 			for (int i = 0; i < m_selectedDDL.size(); i++)
 			{
+				if (m_selectedDDL.at(i)->getName() == (*it)->GetNom())
+				{
+					(*it)->SetSelected(true);
+				}
+				it++;
 			}
 		}
 	}
@@ -592,6 +618,32 @@ void ofApp::guiEvent_Proprietes(ofxUIEventArgs &e)
 
 		if (m_nomWidget == "Position X")
 		{
+			list<Group*>::iterator itGroup = this->groups.begin();
+			for (itGroup; itGroup != this->groups.end(); itGroup++)
+			{
+				if ((*itGroup)->IsSelected())
+				{
+					(*itGroup)->SetX(m_slider->getValue());
+				}
+			}
+
+			list<Form*>::iterator itFrom = this->forms.begin();
+			for (itFrom; itFrom != this->forms.end(); itFrom++)
+			{
+				if ((*itFrom)->IsSelected())
+				{
+					(*itFrom)->SetX(m_slider->getValue());
+				}
+			}
+
+			list<Primitive*>::iterator itPrimitive = this->primitives.begin();
+			for (itPrimitive; itPrimitive != this->primitives.end(); itPrimitive++)
+			{
+				if ((*itPrimitive)->IsSelected())
+				{
+					(*itPrimitive)->SetX(m_slider->getValue());
+				}
+			}
 			m_positionX = m_slider->getValue();
 		}
 		else if (m_nomWidget == "Position Y")
@@ -635,10 +687,60 @@ void ofApp::guiEvent_Proprietes(ofxUIEventArgs &e)
 	{
 		if (m_nomWidget == "Selection Groupe")
 		{
+			ofxUIDropDownList *m_DDL_Temp = (ofxUIDropDownList*)e.widget;
+			vector<ofxUIWidget *> &m_selectedDDL = m_DDL_Temp->getSelected();
+
 
 		}
 		else if (m_nomWidget == "Selection Image")
 		{
+			ofxUIDropDownList *m_DDL_Temp = (ofxUIDropDownList*)e.widget;
+			vector<ofxUIWidget *> &m_selectedDDL = m_DDL_Temp->getSelected();
+			
+			if (m_selectedDDL.size() != 0)
+			{
+				list<ofImage*>::iterator it = this->images.begin();
+
+				for (int i = 0; i < this->noms_images.size(); i++)
+				{
+					if (*noms_images.at(i) == m_selectedDDL.at(0)->getName())
+					{
+						this->imageSelected = *it;
+						break;
+					}
+					it++;
+				}
+				
+				list<Form*>::iterator it2 = this->forms.begin();
+				bool formsSelected = false;
+
+				for (it2 ; it2 != this->forms.end(); it2++)
+				{
+					if ((*it2)->IsSelected())
+					{
+						formsSelected = true;
+						break;
+					}
+				}
+
+				if (formsSelected)
+				{
+					m_guiCreerGroupe = new ofxUISuperCanvas("Application de l'image", ((ofGetWidth() / 2) - (100)), ((ofGetHeight() / 2) - (100)), 300, 211);
+					m_guiCreerGroupe->addSpacer();
+					m_guiCreerGroupe->addLabel("Voulez-vous appliquer");
+					m_guiCreerGroupe->addLabel("cette texture a");
+					m_guiCreerGroupe->addLabel("l'objet selectionne?");
+					m_guiCreerGroupe->addLabelButton("Oui", false);
+					m_guiCreerGroupe->addLabelButton("Non", false);
+					m_guiCreerGroupe->autoSizeToFitWidgets();
+					ofAddListener(m_guiCreerGroupe->newGUIEvent, this, &ofApp::guiEvent_CreerGroupe);
+					m_guiCreerGroupe->setVisible(true);
+
+					m_sousMenuBool = false;
+					m_sousMenuInt = -1;
+				}
+			}
+			m_DDL_Temp->clearSelected();
 
 		}
 	}
@@ -747,7 +849,6 @@ void ofApp::guiEvent_CreerGroupe(ofxUIEventArgs &e)
 				this->forms.push_back(new Sphere(nomSphere, 500, 500, 0, 100));
 				m_DDL_2->addToggle(nomSphere);
 			}
-			hideMessageBox();
 		}
 		else if (m_nomWidget == "Annuler")
 		{
@@ -755,8 +856,23 @@ void ofApp::guiEvent_CreerGroupe(ofxUIEventArgs &e)
 			{
 				this->images.pop_back();
 			}
-			hideMessageBox();
 		}
+		else if (m_nomWidget == "Oui")
+		{
+			list<Form*>::iterator it = this->forms.begin();
+
+			for (it; it != this->forms.end(); it++)
+			{
+				if ((*it)->IsSelected())
+				{
+					(*it)->SetTexture(this->imageSelected);
+				}
+			}
+		}
+		else if (m_nomWidget == "Non")
+		{
+		}
+		hideMessageBox();
 	}
 }
 
@@ -769,4 +885,28 @@ void ofApp::hideMessageBox()
 	m_guiCreerGroupe->setPosition(-100, -100);
 	m_guiCreerGroupe->setVisible(false);
 	m_guiCreerGroupe = NULL;
+}
+
+void ofApp::unselectAll()
+{
+	list<Group*>::iterator itGroup = this->groups.begin();
+	for (itGroup; itGroup != this->groups.end(); itGroup++)
+	{
+		(*itGroup)->SetSelected(false);
+	}
+	m_DDL_1->clearSelected();
+
+	list<Form*>::iterator itFrom = this->forms.begin();
+	for (itFrom; itFrom != this->forms.end(); itFrom++)
+	{
+		(*itFrom)->SetSelected(false);
+	}
+	m_DDL_2->clearSelected();
+
+	list<Primitive*>::iterator itPrimitive = this->primitives.begin();
+	for (itPrimitive; itPrimitive != this->primitives.end(); itPrimitive++)
+	{
+		(*itPrimitive)->SetSelected(false);
+	}
+	m_DDL_3->clearSelected();
 }

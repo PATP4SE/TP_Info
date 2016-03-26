@@ -207,7 +207,7 @@ void Group::enleverTransformationsGroupeGroupe(Group *p_group)
 }
 
 /******************************************************************************
-***************                 GET ET SET            *************************
+*****************                 GET ET SET            ***********************
 *******************************************************************************/
 
 
@@ -259,6 +259,34 @@ int Group::GetDimensionY()
 int Group::GetDimensionZ()
 {
 	return this->zDimension;
+}
+bool Group::IsSelected()
+{
+	return this->selected;
+}
+
+void Group::SetSelected(bool _selected)
+{
+	this->selected = _selected;
+
+	list<Form*>::iterator itForms = forms.begin();
+	list<Primitive*>::iterator itPrimitives = primitives.begin();
+	list<Group*>::iterator itGroups = groups.begin();
+
+	for (itForms; itForms != forms.end(); itForms++)
+	{
+		(*itForms)->SetSelected(_selected);
+	}
+
+	for (itPrimitives; itPrimitives != primitives.end(); itPrimitives++)
+	{
+		(*itPrimitives)->SetSelected(_selected);
+	}
+
+	for (itGroups; itGroups != groups.end(); itGroups++)
+	{
+		(*itGroups)->SetSelected(_selected);
+	}
 }
 
 void Group::SetNom(string p_nom)
