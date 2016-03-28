@@ -37,7 +37,7 @@ void _Line::draw(ofColor _color)
 	ofRotateY(this->yRotation);
 	ofRotateZ(this->zRotation);
 	
-	int oldWidth = GetLineWidth();
+	int oldWidth = 1;
 	ofSetLineWidth(this->lineWidth);
 	ofSetColor(_color);
 

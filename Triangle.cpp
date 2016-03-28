@@ -38,7 +38,7 @@ void Triangle::draw(ofColor _color, bool fill)
 	int x3 = this->point3.x - this->point1.x;
 	int y3 = this->point3.y - this->point1.y;
 	int z3 = this->point3.z - this->point1.z;
-	int oldWidth = GetLineWidth();
+	int oldWidth = 1;
 
 	ofSetLineWidth(this->lineWidth);
 	ofSetColor(_color);

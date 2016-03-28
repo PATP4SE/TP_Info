@@ -57,16 +57,16 @@ void ofApp::setup()
 	m_guiDDL_1 = new ofxUISuperCanvas("Liste d'elements 2D", 0, 0, 200, 211);
 	m_guiDDL_1->addSpacer();
 	m_DDL_1 = m_guiDDL_1->addDropDownList("Elements 2D", m_dataDDL_1);
-	m_DDL_1->setAllowMultiple(true);
-	m_DDL_1->setAutoClose(false);
+	m_DDL_1->setAllowMultiple(false);
+	m_DDL_1->setAutoClose(true);
 	m_guiDDL_1->autoSizeToFitWidgets();
 	ofAddListener(m_guiDDL_1->newGUIEvent, this, &ofApp::guiEvent_DropDownList);
 
 	m_guiDDL_2 = new ofxUISuperCanvas("Liste d'elements 3D", 201, 0, 200, 211);
 	m_guiDDL_2->addSpacer();
 	m_DDL_2 = m_guiDDL_2->addDropDownList("Elements 3D", m_dataDDL_2);
-	m_DDL_2->setAllowMultiple(true);
-	m_DDL_2->setAutoClose(false);
+	m_DDL_2->setAllowMultiple(false);
+	m_DDL_2->setAutoClose(true);
 	m_guiDDL_2->autoSizeToFitWidgets();
 	ofAddListener(m_guiDDL_2->newGUIEvent, this, &ofApp::guiEvent_DropDownList);
 
@@ -343,7 +343,8 @@ void ofApp::gotMessage(ofMessage msg){
 }
 
 //--------------------------------------------------------------
-void ofApp::dragEvent(ofDragInfo dragInfo){ 
+void ofApp::dragEvent(ofDragInfo dragInfo)
+{ 
 
 }
 
@@ -530,6 +531,9 @@ void ofApp::guiEvent_DropDownList(ofxUIEventArgs &e)
 
 			list<Primitive*>::iterator it = this->primitives.begin();
 
+			if (m_selectedDDL.size() >  0)
+				unselectAll(m_nomWidget);
+
 			for (it; it != this->primitives.end(); it++)
 			{
 				(*it)->SetSelected(false);
@@ -547,13 +551,17 @@ void ofApp::guiEvent_DropDownList(ofxUIEventArgs &e)
 		}
 		else if (m_nomWidget == "Elements 3D")
 		{
+
 			ofxUIToggle *toggle = (ofxUIToggle*)e.widget;
 			m_DDL_2->setShowCurrentSelected(toggle->getValue());
-
+			
 			ofxUIDropDownList *m_DDL_Temp = (ofxUIDropDownList*)e.widget;
 			vector<ofxUIWidget *> &m_selectedDDL = m_DDL_Temp->getSelected();
 
 			list<Form*>::iterator it = this->forms.begin();
+
+			if(m_selectedDDL.size() >  0)
+				unselectAll(m_nomWidget);
 
 			for (it; it != this->forms.end(); it++)
 			{
@@ -578,6 +586,9 @@ void ofApp::guiEvent_DropDownList(ofxUIEventArgs &e)
 			ofxUIDropDownList *m_DDL_Temp = (ofxUIDropDownList*)e.widget;
 			vector<ofxUIWidget *> &m_selectedDDL = m_DDL_Temp->getSelected();
 			list<Group*>::iterator it = this->groups.begin();
+
+			if (m_selectedDDL.size() >  0)
+				unselectAll(m_nomWidget);
 
 			for (it; it != this->groups.end(); it++)
 			{
@@ -827,6 +838,7 @@ void ofApp::guiEvent_CreerGroupe(ofxUIEventArgs &e)
 				string nomLine = m_nomNouveauGroupe;
 				this->primitives.push_back(new _Line(nomLine, ofPoint(300, 300, 0), ofPoint(400, 300, 0)));
 				m_DDL_1->addToggle(nomLine);
+				m_dataDDL_1.push_back(nomLine);
 			}
 			else if (m_ActionCreer == 4)
 			{
@@ -834,6 +846,7 @@ void ofApp::guiEvent_CreerGroupe(ofxUIEventArgs &e)
 				string nomTriangle = m_nomNouveauGroupe;
 				this->primitives.push_back(new Triangle(nomTriangle, ofPoint(300, 300, 0), ofPoint(400, 300, 0), ofPoint(350, 400, 0)));
 				m_DDL_1->addToggle(nomTriangle);
+				m_dataDDL_1.push_back(nomTriangle);
 			}
 			else if (m_ActionCreer == 5)
 			{
@@ -841,6 +854,7 @@ void ofApp::guiEvent_CreerGroupe(ofxUIEventArgs &e)
 				string nomCube = m_nomNouveauGroupe;
 				this->forms.push_back(new Cube(nomCube, 500, 500, 0, 100, 100, 100));
 				m_DDL_2->addToggle(nomCube);
+				m_dataDDL_2.push_back(nomCube);
 			}
 			else if (m_ActionCreer == 6)
 			{
@@ -848,6 +862,7 @@ void ofApp::guiEvent_CreerGroupe(ofxUIEventArgs &e)
 				string nomSphere = m_nomNouveauGroupe;
 				this->forms.push_back(new Sphere(nomSphere, 500, 500, 0, 100));
 				m_DDL_2->addToggle(nomSphere);
+				m_dataDDL_2.push_back(nomSphere);
 			}
 		}
 		else if (m_nomWidget == "Annuler")
@@ -887,26 +902,57 @@ void ofApp::hideMessageBox()
 	m_guiCreerGroupe = NULL;
 }
 
-void ofApp::unselectAll()
+void ofApp::unselectAll(string _expception)
 {
 	list<Group*>::iterator itGroup = this->groups.begin();
-	for (itGroup; itGroup != this->groups.end(); itGroup++)
-	{
-		(*itGroup)->SetSelected(false);
-	}
-	m_DDL_1->clearSelected();
-
 	list<Form*>::iterator itFrom = this->forms.begin();
-	for (itFrom; itFrom != this->forms.end(); itFrom++)
-	{
-		(*itFrom)->SetSelected(false);
-	}
-	m_DDL_2->clearSelected();
-
 	list<Primitive*>::iterator itPrimitive = this->primitives.begin();
-	for (itPrimitive; itPrimitive != this->primitives.end(); itPrimitive++)
+	if (_expception == "Elements 2D")
 	{
-		(*itPrimitive)->SetSelected(false);
+		for (itFrom; itFrom != this->forms.end(); itFrom++)
+		{
+			(*itFrom)->SetSelected(false);
+		}
+		m_DDL_2->clearSelected();
+		m_dataDDL_2.clear();
+
+		for (itGroup; itGroup != this->groups.end(); itGroup++)
+		{
+			(*itGroup)->SetSelected(false);
+		}
+		m_DDL_3->clearSelected();
+		m_dataDDL_3.clear();
 	}
-	m_DDL_3->clearSelected();
+	else if (_expception == "Elements 3D")
+	{
+		for (itGroup; itGroup != this->groups.end(); itGroup++)
+		{
+			(*itGroup)->SetSelected(false);
+		}
+		m_DDL_3->clearSelected();
+		m_dataDDL_3.clear();
+
+		for (itPrimitive; itPrimitive != this->primitives.end(); itPrimitive++)
+		{
+			(*itPrimitive)->SetSelected(false);
+		}
+		m_DDL_1->clearSelected();
+		m_dataDDL_1.clear();
+	}
+	else if (_expception == "Groupes")
+	{
+		for (itPrimitive; itPrimitive != this->primitives.end(); itPrimitive++)
+		{
+			(*itPrimitive)->SetSelected(false);
+		}
+		m_DDL_1->clearSelected();
+		m_dataDDL_1.clear();
+
+		for (itFrom; itFrom != this->forms.end(); itFrom++)
+		{
+			(*itFrom)->SetSelected(false);
+		}
+		m_DDL_2->clearSelected();
+		m_dataDDL_2.clear();
+	}
 }

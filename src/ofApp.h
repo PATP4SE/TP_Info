@@ -1,10 +1,10 @@
 #pragma once
 
 #include "ofMain.h"
-#include "ofxCircleMenuButton.h"
-#include "ofxUI/src/ofxUI.h"
-//#include "../addons/ofxCircleMenuButton/src/ofxCircleMenuButton.h"
-//#include "../addons/ofxUI/src/ofxUI.h"
+//#include "ofxCircleMenuButton.h"
+//#include "ofxUI/src/ofxUI.h"
+#include "../addons/ofxCircleMenuButton/src/ofxCircleMenuButton.h"
+#include "../addons/ofxUI/src/ofxUI.h"
 #include <ofMain.h>
 #include "../Cube.h"
 #include "../Sphere.h"
@@ -111,7 +111,7 @@ private:
 
 	//Méthodes privées
 	void hideMessageBox();
-	void unselectAll();
+	void unselectAll(string _expception);
 
 
 	ofxUICanvas *m_guiFPS;
