@@ -1,10 +1,10 @@
 #pragma once
 
 #include "ofMain.h"
-//#include "ofxCircleMenuButton.h"
-//#include "ofxUI/src/ofxUI.h"
-#include "../addons/ofxCircleMenuButton/src/ofxCircleMenuButton.h"
-#include "../addons/ofxUI/src/ofxUI.h"
+#include "ofxCircleMenuButton.h"
+#include "ofxUI/src/ofxUI.h"
+//#include "../addons/ofxCircleMenuButton/src/ofxCircleMenuButton.h"
+//#include "../addons/ofxUI/src/ofxUI.h"
 #include <ofMain.h>
 #include "../Cube.h"
 #include "../Sphere.h"
@@ -98,6 +98,18 @@ private:
 
 	POINT *m_monPoint;
 	int m_creation;
+
+	//Sliders
+	ofxUISlider *m_sliderXPosition;
+	ofxUISlider *m_sliderYPosition;
+	ofxUISlider *m_sliderZPosition;
+	ofxUISlider *m_sliderXRotation;
+	ofxUISlider *m_sliderYRotation;
+	ofxUISlider *m_sliderZRotation;
+	ofxUISlider *m_sliderRed;
+	ofxUISlider *m_sliderGreen;
+	ofxUISlider *m_sliderBlue;
+	ofxUISlider *m_sliderAlpha;
 
 	// Créer groupe
 	ofxUISuperCanvas *m_guiCreerGroupe;

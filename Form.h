@@ -19,13 +19,15 @@ public:
 	int GetRotationY();
 	int GetRotationZ();
 	bool IsSelected();
-	
+	ofColor GetColor();
+
 	virtual int GetWidth() = 0;
 	virtual int GetHeight() = 0;
 	virtual int GetDepth() = 0;
 
 	ofImage* GetTexture();
 	void SetTexture(ofImage *_image);
+	void SetColor(ofColor _color);
 
 	void SetNom(string p_nom);
 	void SetX(int _x);
@@ -50,5 +52,6 @@ protected:
 	int yRotation;
 	int zRotation;
 	ofImage *texture;
+	ofColor color;
 };
 

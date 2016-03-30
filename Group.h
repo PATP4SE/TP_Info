@@ -26,7 +26,9 @@ public:
 	int GetDimensionX();
 	int GetDimensionY();
 	int GetDimensionZ();
+	ofColor GetColor();
 
+	void SetColor(ofColor _color);
 	void SetNom(string p_nom);
 	void SetX(int _x);
 	void SetY(int _y);
@@ -81,5 +83,7 @@ private:
 	int xDimension;
 	int yDimension;
 	int zDimension;
+	ofColor color;
+
 };
 

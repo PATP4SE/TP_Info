@@ -260,6 +260,17 @@ int Group::GetDimensionZ()
 {
 	return this->zDimension;
 }
+
+ofColor Group::GetColor()
+{
+	return this->color;
+}
+
+void Group::SetColor(ofColor _color)
+{
+	this->color = _color;
+}
+
 bool Group::IsSelected()
 {
 	return this->selected;
@@ -269,7 +280,7 @@ void Group::SetSelected(bool _selected)
 {
 	this->selected = _selected;
 
-	list<Form*>::iterator itForms = forms.begin();
+	/*list<Form*>::iterator itForms = forms.begin();
 	list<Primitive*>::iterator itPrimitives = primitives.begin();
 	list<Group*>::iterator itGroups = groups.begin();
 
@@ -286,7 +297,7 @@ void Group::SetSelected(bool _selected)
 	for (itGroups; itGroups != groups.end(); itGroups++)
 	{
 		(*itGroups)->SetSelected(_selected);
-	}
+	}*/
 }
 
 void Group::SetNom(string p_nom)

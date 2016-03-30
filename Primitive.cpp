@@ -7,6 +7,7 @@ Primitive::Primitive()
 	this->y = 0;
 	this->z = 0;
 	this->selected = false;
+	this->color = ofGetBackgroundColor();
 }
 
 Primitive::Primitive(string p_nom, int _x, int _y, int _z, int _lineWidth)
@@ -17,6 +18,7 @@ Primitive::Primitive(string p_nom, int _x, int _y, int _z, int _lineWidth)
 	this->z = _z;
 	this->lineWidth = _lineWidth;
 	this->selected = false;
+	this->color = ofGetBackgroundColor();
 }
 
 Primitive::~Primitive()
@@ -61,6 +63,16 @@ int Primitive::GetRotationY()
 int Primitive::GetRotationZ()
 {
 	return this->zRotation;
+}
+
+ofColor Primitive::GetColor()
+{
+	return this->color;
+}
+
+void Primitive::SetColor(ofColor _color)
+{
+	this->color = _color;
 }
 
 bool Primitive::IsSelected()

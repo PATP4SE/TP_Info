@@ -20,7 +20,7 @@ Cube::~Cube()
 
 void Cube::draw()
 {
-	this->draw(ofGetBackgroundColor());
+	this->draw(this->color);
 }
 
 void Cube::drawOnCube()
@@ -326,7 +326,10 @@ void Cube::draw(ofColor _color)
 	ofDrawSphere(topBackRight, 3);
 	ofDrawSphere(bottomBackLeft, 3);
 	ofDrawSphere(bottomBackRight, 3);
-	
+
+	ofSetColor(this->color);
+	ofDrawBox(ofPoint(0, 0, 0), this->width, this->height, this->depth);
+
 	ofSetColor(ofColor::black);
 	//Draw les lignes sur le front
 	ofDrawLine(topFrontLeft, topFrontRight);

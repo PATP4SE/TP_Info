@@ -17,12 +17,13 @@ public:
 	int GetLineWidth();
 	bool IsSelected();
 
-	void SetNom(string p_nom);
+	ofColor GetColor();
 
 	int GetRotationX();
 	int GetRotationY();
 	int GetRotationZ();
 
+	void SetNom(string p_nom);
 	void SetX(int _x);
 	void SetY(int _y);
 	void SetZ(int _z);
@@ -30,6 +31,7 @@ public:
 	void SetLineWidth(int _width);
 	void SetSelected(bool _selected);
 	virtual void SetDimension(int _x, int _y, int _z) = 0;
+	void SetColor(ofColor _color);
 
 	void RotateX(int _x);
 	void RotateY(int _y);
@@ -46,5 +48,6 @@ protected:
 	int zRotation;
 	int lineWidth;
 	bool selected;
+	ofColor color;
 };
 

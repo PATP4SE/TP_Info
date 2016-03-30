@@ -85,24 +85,26 @@ void ofApp::setup()
 	m_maxWidthPosition = m_rectDesktop.right, m_maxHeightPosition = m_rectDesktop.bottom;
 	m_drawFillVisible = true;
 	m_valeurDimension = "0.0";
-
+	
+	//slider = new ofxUISlider("Position X",0,500,300,0,0);
+	
 	m_guiParametres = new ofxUISuperCanvas("Parametres", ofGetWidth() - 211, 0, 211, 211);
 	m_guiParametres->addSpacer();
 	m_guiParametres->addLabel("Dimension");
 	m_guiParametres->addTextInput("m_valeurDimension", m_valeurDimension);
 	m_guiParametres->addSpacer();
-	m_guiParametres->addSlider("Position X", 0.0, (m_maxWidthPosition), &m_positionX);
-	m_guiParametres->addSlider("Position Y", 0.0, (m_maxHeightPosition), &m_positionY);
-	m_guiParametres->addSlider("Position Z", 0.0, (m_maxWidthPosition), &m_positionZ);
+	m_sliderXPosition = m_guiParametres->addSlider("Position X", 0.0, (m_maxWidthPosition), &m_positionX);
+	m_sliderYPosition = m_guiParametres->addSlider("Position Y", 0.0, (m_maxHeightPosition), &m_positionY);
+	m_sliderZPosition = m_guiParametres->addSlider("Position Z", 0.0, (m_maxWidthPosition), &m_positionZ);
 	m_guiParametres->addSpacer();
-	m_guiParametres->addSlider("Rotation X", 0.0, (360), &m_rotationX);
-	m_guiParametres->addSlider("Rotation Y", 0.0, (360), &m_rotationY);
-	m_guiParametres->addSlider("Rotation Z", 0.0, (360), &m_rotationZ);
+	m_sliderXRotation = m_guiParametres->addSlider("Rotation X", 0.0, (360), &m_rotationX);
+	m_sliderYRotation = m_guiParametres->addSlider("Rotation Y", 0.0, (360), &m_rotationY);
+	m_sliderZRotation = m_guiParametres->addSlider("Rotation Z", 0.0, (360), &m_rotationZ);
 	m_guiParametres->addSpacer();
-	m_guiParametres->addSlider("RED", 0.0, 255.0, &m_couleurR);
-	m_guiParametres->addSlider("GREEN", 0.0, 255.0, &m_couleurG);
-	m_guiParametres->addSlider("BLUE", 0.0, 255.0, &m_couleurB);
-	m_guiParametres->addSlider("ALPHA", 0.0, 255.0, &m_couleurA);
+	m_sliderRed = m_guiParametres->addSlider("RED", 0.0, 255.0, &m_couleurR);
+	m_sliderGreen = m_guiParametres->addSlider("GREEN", 0.0, 255.0, &m_couleurG);
+	m_sliderBlue = m_guiParametres->addSlider("BLUE", 0.0, 255.0, &m_couleurB);
+	m_sliderAlpha = m_guiParametres->addSlider("ALPHA", 0.0, 255.0, &m_couleurA);
 	m_guiParametres->addSpacer();
 	m_DDL_4 = m_guiParametres->addDropDownList("Selection Groupe", m_dataDDL_4);
 	m_DDL_4->setAllowMultiple(false);
@@ -531,23 +533,41 @@ void ofApp::guiEvent_DropDownList(ofxUIEventArgs &e)
 
 			list<Primitive*>::iterator it = this->primitives.begin();
 
-			if (m_selectedDDL.size() >  0)
-				unselectAll(m_nomWidget);
-
 			for (it; it != this->primitives.end(); it++)
 			{
 				(*it)->SetSelected(false);
 			}
-
-			it = this->primitives.begin();
-			for (int i = 0; i < m_selectedDDL.size(); i++)
+			
+			if (m_selectedDDL.size() > 0)
 			{
-				if (m_selectedDDL.at(i)->getName() == (*it)->GetNom())
+				unselectAll(m_nomWidget);
+				it = this->primitives.begin();
+				for (it; it != this->primitives.end(); it++)
 				{
-					(*it)->SetSelected(true);
+					if (m_selectedDDL.at(0)->getName() == (*it)->GetNom())
+					{
+						(*it)->SetSelected(true);
+						m_positionX = (*it)->GetX();
+						m_positionY = (*it)->GetY();
+						m_positionZ = (*it)->GetZ();
+						m_rotationX = (*it)->GetRotationX();
+						m_rotationY = (*it)->GetRotationY();
+						m_rotationZ = (*it)->GetRotationZ();
+						m_couleurR = (float)(*it)->GetColor().r;
+						m_couleurG = (float)(*it)->GetColor().g;
+						m_couleurB = (float)(*it)->GetColor().b;
+						m_couleurA = (float)(*it)->GetColor().a;
+					}
 				}
-				it++;
 			}
+			/*for (int i = 0; i < m_selectedDDL.size(); i++)
+			{
+			if (m_selectedDDL.at(i)->getName() == (*it)->GetNom())
+			{
+			(*it)->SetSelected(true);
+			}
+			it++;
+			}*/
 		}
 		else if (m_nomWidget == "Elements 3D")
 		{
@@ -560,23 +580,42 @@ void ofApp::guiEvent_DropDownList(ofxUIEventArgs &e)
 
 			list<Form*>::iterator it = this->forms.begin();
 
-			if(m_selectedDDL.size() >  0)
-				unselectAll(m_nomWidget);
-
 			for (it; it != this->forms.end(); it++)
 			{
 				(*it)->SetSelected(false);
 			}
 
-			it = this->forms.begin();
-			for (int i = 0; i < m_selectedDDL.size(); i++)
+			if (m_selectedDDL.size() > 0)
+			{
+				unselectAll(m_nomWidget);
+				it = this->forms.begin();
+				for (it; it != this->forms.end(); it++)
+				{
+					if (m_selectedDDL.at(0)->getName() == (*it)->GetNom())
+					{
+						(*it)->SetSelected(true);
+						m_positionX = (*it)->GetX();
+						m_positionY = (*it)->GetY();
+						m_positionZ = (*it)->GetZ();
+						m_rotationX = (*it)->GetRotationX();
+						m_rotationY = (*it)->GetRotationY();
+						m_rotationZ = (*it)->GetRotationZ();
+						m_couleurR = (float)(*it)->GetColor().r;
+						m_couleurG = (float)(*it)->GetColor().g;
+						m_couleurB = (float)(*it)->GetColor().b;
+						m_couleurA = (float)(*it)->GetColor().a;
+					}
+				}
+			}
+			/*for (int i = 0; i < m_selectedDDL.size(); i++)
 			{
 				if (m_selectedDDL.at(i)->getName() == (*it)->GetNom())
 				{
 					(*it)->SetSelected(true);
 				}
 				it++;
-			}
+			}*/
+
 		}
 		else if (m_nomWidget == "Groupes")
 		{
@@ -594,16 +633,37 @@ void ofApp::guiEvent_DropDownList(ofxUIEventArgs &e)
 			{
 				(*it)->SetSelected(false);
 			}
-
-			it = this->groups.begin();
-			for (int i = 0; i < m_selectedDDL.size(); i++)
+			
+			if (m_selectedDDL.size() > 0)
 			{
-				if (m_selectedDDL.at(i)->getName() == (*it)->GetNom())
+				unselectAll(m_nomWidget);
+				it = this->groups.begin();
+				for (it; it != this->groups.end(); it++)
 				{
-					(*it)->SetSelected(true);
+					if (m_selectedDDL.at(0)->getName() == (*it)->GetNom())
+					{
+						(*it)->SetSelected(true);
+						m_positionX = (*it)->GetX();
+						m_positionY = (*it)->GetY();
+						m_positionZ = (*it)->GetZ();
+						m_rotationX = (*it)->GetRotationX();
+						m_rotationY = (*it)->GetRotationY();
+						m_rotationZ = (*it)->GetRotationZ();
+						m_couleurR = (float)(*it)->GetColor().r;
+						m_couleurG = (float)(*it)->GetColor().g;
+						m_couleurB = (float)(*it)->GetColor().b;
+						m_couleurA = (float)(*it)->GetColor().a;
+					}
 				}
-				it++;
 			}
+			/*for (int i = 0; i < m_selectedDDL.size(); i++)
+			{
+			if (m_selectedDDL.at(i)->getName() == (*it)->GetNom())
+			{
+			(*it)->SetSelected(true);
+			}
+			it++;
+			}*/
 		}
 	}
 }
@@ -627,71 +687,50 @@ void ofApp::guiEvent_Proprietes(ofxUIEventArgs &e)
 	{
 		ofxUIIntSlider *m_slider = (ofxUIIntSlider*)e.widget;
 
-		if (m_nomWidget == "Position X")
-		{
-			list<Group*>::iterator itGroup = this->groups.begin();
-			for (itGroup; itGroup != this->groups.end(); itGroup++)
-			{
-				if ((*itGroup)->IsSelected())
-				{
-					(*itGroup)->SetX(m_slider->getValue());
-				}
-			}
+		m_positionX = m_sliderXPosition->getValue();
+		m_positionY = m_sliderYPosition->getValue();
+		m_positionZ = m_sliderZPosition->getValue();
 
-			list<Form*>::iterator itFrom = this->forms.begin();
-			for (itFrom; itFrom != this->forms.end(); itFrom++)
-			{
-				if ((*itFrom)->IsSelected())
-				{
-					(*itFrom)->SetX(m_slider->getValue());
-				}
-			}
+		m_rotationX = m_sliderXRotation->getValue();
+		m_rotationY = m_sliderYRotation->getValue();
+		m_rotationZ = m_sliderZRotation->getValue();
 
-			list<Primitive*>::iterator itPrimitive = this->primitives.begin();
-			for (itPrimitive; itPrimitive != this->primitives.end(); itPrimitive++)
+		m_couleurR = m_sliderRed->getValue();
+		m_couleurG = m_sliderGreen->getValue();
+		m_couleurB = m_sliderBlue->getValue();
+		m_couleurA = m_sliderAlpha->getValue();
+
+		list<Group*>::iterator itGroup = this->groups.begin();
+		for (itGroup; itGroup != this->groups.end(); itGroup++)
+		{
+			if ((*itGroup)->IsSelected())
 			{
-				if ((*itPrimitive)->IsSelected())
-				{
-					(*itPrimitive)->SetX(m_slider->getValue());
-				}
+				(*itGroup)->SetPosition(m_positionX, m_positionY, m_positionZ);
+				(*itGroup)->Rotate(m_rotationX, m_rotationY, m_rotationZ);
+				(*itGroup)->SetColor(ofColor(m_couleurR, m_couleurG, m_couleurB, m_couleurA));
 			}
-			m_positionX = m_slider->getValue();
 		}
-		else if (m_nomWidget == "Position Y")
+
+		list<Form*>::iterator itFrom = this->forms.begin();
+		for (itFrom; itFrom != this->forms.end(); itFrom++)
 		{
-			m_positionY = m_slider->getValue();
+			if ((*itFrom)->IsSelected())
+			{
+				(*itFrom)->SetPosition(m_positionX, m_positionY, m_positionZ);
+				(*itFrom)->Rotate(m_rotationX, m_rotationY, m_rotationZ);
+				(*itFrom)->SetColor(ofColor(m_couleurR, m_couleurG, m_couleurB, m_couleurA));
+			}
 		}
-		else if (m_nomWidget == "Position Z")
+
+		list<Primitive*>::iterator itPrimitive = this->primitives.begin();
+		for (itPrimitive; itPrimitive != this->primitives.end(); itPrimitive++)
 		{
-			m_positionZ = m_slider->getValue();
-		}
-		else if (m_nomWidget == "Rotation X")
-		{
-			m_rotationX = m_slider->getValue();
-		}
-		else if (m_nomWidget == "Rotation Y")
-		{
-			m_rotationY = m_slider->getValue();
-		}
-		else if (m_nomWidget == "Rotation Z")
-		{
-			m_rotationZ = m_slider->getValue();
-		}
-		else if (m_nomWidget == "RED")
-		{
-			m_couleurR = m_slider->getValue();
-		}
-		else if (m_nomWidget == "GREEN")
-		{
-			m_couleurG = m_slider->getValue();
-		}
-		else if (m_nomWidget == "BLUE")
-		{
-			m_couleurB = m_slider->getValue();
-		}
-		else if (m_nomWidget == "ALPHA")
-		{
-			m_couleurA = m_slider->getValue();
+			if ((*itPrimitive)->IsSelected())
+			{
+				(*itPrimitive)->SetPosition(m_positionX, m_positionY, m_positionZ);
+				(*itPrimitive)->Rotate(m_rotationX, m_rotationY, m_rotationZ);
+				(*itPrimitive)->SetColor(ofColor(m_couleurR, m_couleurG, m_couleurB, m_couleurA));
+			}
 		}
 	}
 	else if (m_kindWidget == OFX_UI_WIDGET_DROPDOWNLIST)

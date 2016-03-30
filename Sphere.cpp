@@ -8,6 +8,7 @@ Sphere::Sphere(): Form()
 Sphere::Sphere(string p_nom, int _x, int _y, int _z, int _radius):Form(p_nom, _x, _y, _z)
 {
 	this->radius = _radius;
+	this->color = ofColor::black;
 }
 
 Sphere::~Sphere()
@@ -16,29 +17,31 @@ Sphere::~Sphere()
 
 void Sphere::draw()
 {
-	this->draw(ofColor::black);
+	this->draw(this->color);
 }
 
 void Sphere::draw(ofColor _color)
 {
 	ofPushMatrix();
+	ofTranslate(this->x, this->y, this->z);
+	ofRotateX(this->xRotation);
+	ofRotateY(this->yRotation);
+	ofRotateZ(this->zRotation);
 	//Dessine les points
 	if(this->selected)
 		ofSetColor(ofColor::red);
 	else
 		ofSetColor(ofColor::blue);
-	ofDrawSphere(this->x, this->y - this->radius, this->z, 3);
-	ofDrawSphere(this->x, this->y + this->radius, this->z, 3);
-	ofDrawSphere(this->x + this->radius, this->y, this->z, 3);
-	ofDrawSphere(this->x - this->radius, this->y, this->z, 3);
-	//ofDrawSphere(this->x, this->y, this->z, 3);
 
-	ofRotateX(this->xRotation);
-	ofRotateY(this->xRotation);
-	ofRotateZ(this->xRotation);
+	ofDrawSphere(0, 0 - this->radius, 0, 3);
+	ofDrawSphere(0, 0 + this->radius, 0, 3);
+	ofDrawSphere(0 + this->radius, 0, 0, 3);
+	ofDrawSphere(0 - this->radius, 0, 0, 3);
+	//ofDrawSphere(this->x, this->y, this->z, 3);
+	
 	ofNoFill();
 	ofSetColor(_color);
-	ofDrawSphere(this->x, this->y, this->z, this->radius);
+	ofDrawSphere(0, 0, 0, this->radius);
 	ofPopMatrix();
 }
 

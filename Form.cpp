@@ -10,6 +10,7 @@ Form::Form()
 	this->zRotation = 0;
 	this->selected = false;
 	this->texture = NULL;
+	this->color = ofGetBackgroundColor();
 }
 
 Form::Form(string p_nom, int _x, int _y, int _z)
@@ -23,13 +24,13 @@ Form::Form(string p_nom, int _x, int _y, int _z)
 	this->zRotation = 0;
 	this->selected = false;
 	this->texture = NULL;
+	this->color = ofGetBackgroundColor();
 }
-
 
 Form::~Form()
 {
+	delete this->texture;
 }
-
 
 /******************************************************************************
 ***************                 GET ET SET            *************************
@@ -73,6 +74,16 @@ int Form::GetRotationZ()
 ofImage* Form::GetTexture()
 {
 	return this->texture;
+}
+
+ofColor Form::GetColor()
+{
+	return this->color;
+}
+
+void Form::SetColor(ofColor _color)
+{
+	this->color = _color;
 }
 
 bool Form::IsSelected()
@@ -119,17 +130,17 @@ void Form::SetPosition(int _x, int _y, int _z)
 
 void Form::RotateX(int _x)
 {
-	this->xRotation += _x;
+	this->xRotation = _x;
 }
 
 void Form::RotateY(int _y)
 {
-	this->yRotation += _y;
+	this->yRotation = _y;
 }
 
 void Form::RotateZ(int _z)
 {
-	this->zRotation += _z;
+	this->zRotation = _z;
 }
 
 void Form::Rotate(int _x, int _y, int _z)
