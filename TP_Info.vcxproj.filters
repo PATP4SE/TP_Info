@@ -181,6 +181,7 @@
     <ClCompile Include="Particule.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="Camera.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -410,6 +411,7 @@
     <ClInclude Include="Particule.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="Camera.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="icon.rc" />

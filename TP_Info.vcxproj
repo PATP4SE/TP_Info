@@ -226,6 +226,7 @@ C:\Users\Étienne\Desktop\openFrameworks\addons\ofxCircleMenuButton\src;%(Additi
     <ClCompile Include="..\..\addons\ofxXmlSettings\libs\tinyxmlerror.cpp" />
     <ClCompile Include="..\..\addons\ofxXmlSettings\libs\tinyxmlparser.cpp" />
     <ClCompile Include="..\..\addons\ofxXmlSettings\src\ofxXmlSettings.cpp" />
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Cube.cpp" />
     <ClCompile Include="Form.cpp" />
     <ClCompile Include="Group.cpp" />
@@ -293,6 +294,7 @@ C:\Users\Étienne\Desktop\openFrameworks\addons\ofxCircleMenuButton\src;%(Additi
     <ClInclude Include="..\..\addons\ofxUI\src\ofxUIWrapper.h" />
     <ClInclude Include="..\..\addons\ofxXmlSettings\libs\tinyxml.h" />
     <ClInclude Include="..\..\addons\ofxXmlSettings\src\ofxXmlSettings.h" />
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="Cube.h" />
     <ClInclude Include="Form.h" />
     <ClInclude Include="Group.h" />
