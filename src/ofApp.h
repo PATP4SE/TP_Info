@@ -51,16 +51,24 @@ private:
 
 	#pragma region Gestion - Interface
 	//////////////////////////////////////////////////
-	// Menu
-	ofxCircleMenuButton m_menu;
+	ofxCircleMenuButton m_selectedMenu;
+	ofxCircleMenuButton m_bkMenu;
+	ofxCircleMenuButton m_bkMenu2D;
+	ofxCircleMenuButton m_bkMenu3D;
+
 	ofxCircleMenuButtonListener *m_listener;
 
-	// Sous-menu
-	ofxCircleMenuButton m_sousMenu2D;
-	ofxCircleMenuButtonListener *m_listenerSousMenu2D; 
 
-	ofxCircleMenuButton m_sousMenu3D;
-	ofxCircleMenuButtonListener *m_listenerSousMenu3D;
+
+	// Menu
+	//ofxCircleMenuButton m_menu;
+
+	// Sous-menu
+	//ofxCircleMenuButton m_sousMenu2D;
+	//ofxCircleMenuButtonListener *m_listenerSousMenu2D; 
+
+	//ofxCircleMenuButton m_sousMenu3D;
+	//ofxCircleMenuButtonListener *m_listenerSousMenu3D;
 
 	int m_sousMenuInt;
 	bool m_sousMenuBool;
@@ -129,5 +137,4 @@ private:
 	ofxUICanvas *m_guiFPS;
 	//////////////////////////////////////////////////
 	#pragma endregion
-
 };

@@ -23,32 +23,34 @@ void ofApp::setup()
 
 	// Menu
 	m_listener = new ofxCircleMenuButtonListener();
-	m_menu.setup();
-	m_menu.setRadius(80, 240);
-	m_menu.addMenuItem("Creer groupe");		// 0
-	m_menu.addMenuItem("Creation 3D");		// 1
-	m_menu.addMenuItem("Creation 2D");		// 2
-	m_menu.addMenuItem("Importer");			// 3
-	m_menu.addMenuItem("Quitter");			// 4
-	m_menu.addMenuItem("Exporter");			// 5
-	m_menu.enableMouseControl();
-	m_menu.setListener(m_listener);
 
-	m_listenerSousMenu2D = new ofxCircleMenuButtonListener();
-	m_sousMenu2D.setup();
-	m_sousMenu2D.setRadius(25, 75);
-	m_sousMenu2D.addMenuItem("Ligne");				// 0
-	m_sousMenu2D.addMenuItem("Triangle");			// 1
-	m_sousMenu2D.enableMouseControl();
-	m_sousMenu2D.setListener(m_listenerSousMenu2D);
+	m_bkMenu.setup();
+	m_bkMenu.setRadius(80, 240);
+	m_bkMenu.addMenuItem("Creer groupe");		// 0
+	m_bkMenu.addMenuItem("Creation 3D");		// 1
+	m_bkMenu.addMenuItem("Creation 2D");		// 2
+	m_bkMenu.addMenuItem("Importer");			// 3
+	m_bkMenu.addMenuItem("Quitter");			// 4
+	m_bkMenu.addMenuItem("Exporter");			// 5
+	m_bkMenu.enableMouseControl();
+	
+	m_bkMenu2D.setup();
+	m_bkMenu2D.setRadius(50, 150);
+	m_bkMenu2D.addMenuItem("Ligne");			// 0
+	m_bkMenu2D.addMenuItem("Triangle");			// 1
+	m_bkMenu2D.addMenuItem("Annuler");			// 2
+	m_bkMenu2D.enableMouseControl();
 
-	m_listenerSousMenu3D = new ofxCircleMenuButtonListener();
-	m_sousMenu3D.setup();
-	m_sousMenu3D.setRadius(25, 75);
-	m_sousMenu3D.addMenuItem("Cube");				// 0
-	m_sousMenu3D.addMenuItem("Sphere");				// 1
-	m_sousMenu3D.enableMouseControl();
-	m_sousMenu3D.setListener(m_listenerSousMenu3D);
+	m_bkMenu3D.setup();
+	m_bkMenu3D.setRadius(50, 150);
+	m_bkMenu3D.addMenuItem("Cube");				// 0
+	m_bkMenu3D.addMenuItem("Sphere");			// 1
+	m_bkMenu3D.addMenuItem("Annuler");			// 2
+	m_bkMenu3D.enableMouseControl();
+	
+	m_selectedMenu.setup();
+	m_selectedMenu = m_bkMenu;
+	m_selectedMenu.setListener(m_listener);
 
 	m_sousMenuInt = -1;
 	m_sousMenuBool = false;
@@ -137,24 +139,7 @@ void ofApp::update(){
 void ofApp::draw() {
 	#pragma region Gestion - Interface
 	//////////////////////////////////////////////////
-	if (m_ActionCreer == -1)
-	{
-		if (m_sousMenuBool == false)
-		{
-			m_menu.draw();
-		}
-		else
-		{
-			if (m_sousMenuInt == 0)
-			{
-				m_sousMenu2D.draw();
-			}
-			else if (m_sousMenuInt == 1)
-			{
-				m_sousMenu3D.draw();
-			}
-		}
-	}
+	m_selectedMenu.draw();
 
 	ofSetColor(0, 0, 0);
 	ofDrawBitmapString("F1 - Afficher l'interface", 10, (ofGetHeight() - 35));
@@ -250,40 +235,20 @@ void ofApp::keyPressed(int key)
 
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key){
-
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseMoved(int x, int y ){
-
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseDragged(int x, int y, int button){
-
 }
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
 
-	if (m_ActionCreer == -1)
-	{
-		if (m_sousMenuBool == false)
-		{
-			guiEvent_DoAction(m_menu.hitTest());
-		}
-		else
-		{
-			if (m_sousMenuInt == 0)
-			{
-				guiEvent_DoAction(m_sousMenu2D.hitTest());
-			}
-			else if (m_sousMenuInt == 1)
-			{
-				guiEvent_DoAction(m_sousMenu3D.hitTest());
-			}
-		}
-	}
+	guiEvent_DoAction(m_selectedMenu.hitTest());
 
 	switch(m_creation)
 	{
@@ -316,17 +281,14 @@ void ofApp::mousePressed(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button){
-
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseEntered(int x, int y){
-
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseExited(int x, int y){
-
 }
 
 //--------------------------------------------------------------
@@ -372,19 +334,33 @@ void ofApp::guiEvent_DoAction(int p_IdButton)
 					m_guiCreerGroupe->autoSizeToFitWidgets();
 					ofAddListener(m_guiCreerGroupe->newGUIEvent, this, &ofApp::guiEvent_CreerGroupe);
 					m_guiCreerGroupe->setVisible(true);
+
+					m_selectedMenu.setup();
+					m_selectedMenu = m_bkMenu;
+					m_selectedMenu.setListener(m_listener);
 				}
 			}
 			else if (p_IdButton == 1)
 			{
 				// Création 3D
+				//m_selectedMenu = m_bkMenu3D;
 				m_sousMenuInt = 1;
 				m_sousMenuBool = true;
+
+				m_selectedMenu.setup();
+				m_selectedMenu = m_bkMenu3D;
+				m_selectedMenu.setListener(m_listener);
 			}
 			else if (p_IdButton == 2)
 			{
 				// Création 2D
 				m_sousMenuInt = 0;
 				m_sousMenuBool = true;
+
+				m_selectedMenu.setup();
+				m_selectedMenu = m_bkMenu2D;
+				m_selectedMenu.setListener(m_listener);
+
 			}
 			else if (p_IdButton == 3)
 			{
@@ -408,6 +384,10 @@ void ofApp::guiEvent_DoAction(int p_IdButton)
 						m_guiCreerGroupe->setVisible(true);
 					}
 				}
+
+				m_selectedMenu.setup();
+				m_selectedMenu = m_bkMenu;
+				m_selectedMenu.setListener(m_listener);
 			}
 			else if (p_IdButton == 4)
 			{
@@ -431,6 +411,10 @@ void ofApp::guiEvent_DoAction(int p_IdButton)
 					ofAddListener(m_guiCreerGroupe->newGUIEvent, this, &ofApp::guiEvent_CreerGroupe);
 					m_guiCreerGroupe->setVisible(true);
 				}
+
+				m_selectedMenu.setup();
+				m_selectedMenu = m_bkMenu;
+				m_selectedMenu.setListener(m_listener);
 			}
 		}
 		else
@@ -440,7 +424,6 @@ void ofApp::guiEvent_DoAction(int p_IdButton)
 				if (p_IdButton == 0)
 				{
 					// Ligne
-
 					m_ActionCreer = 3;
 					m_guiCreerGroupe = new ofxUISuperCanvas("Nom de la ligne", ((ofGetWidth() / 2) - (100)), ((ofGetHeight() / 2) - (100)), 200, 211);
 					m_guiCreerGroupe->addSpacer();
@@ -452,6 +435,9 @@ void ofApp::guiEvent_DoAction(int p_IdButton)
 					ofAddListener(m_guiCreerGroupe->newGUIEvent, this, &ofApp::guiEvent_CreerGroupe);
 					m_guiCreerGroupe->setVisible(true);
 					
+					m_selectedMenu.setup();
+					m_selectedMenu = m_bkMenu;
+					m_selectedMenu.setListener(m_listener);
 					m_sousMenuBool = false;
 					m_sousMenuInt = -1;
 				}
@@ -469,7 +455,17 @@ void ofApp::guiEvent_DoAction(int p_IdButton)
 					ofAddListener(m_guiCreerGroupe->newGUIEvent, this, &ofApp::guiEvent_CreerGroupe);
 					m_guiCreerGroupe->setVisible(true);
 
-					
+					m_selectedMenu.setup();
+					m_selectedMenu = m_bkMenu;
+					m_selectedMenu.setListener(m_listener);
+					m_sousMenuBool = false;
+					m_sousMenuInt = -1;
+				}
+				else
+				{
+					m_selectedMenu.setup();
+					m_selectedMenu = m_bkMenu;
+					m_selectedMenu.setListener(m_listener);
 					m_sousMenuBool = false;
 					m_sousMenuInt = -1;
 				}
@@ -490,6 +486,9 @@ void ofApp::guiEvent_DoAction(int p_IdButton)
 					ofAddListener(m_guiCreerGroupe->newGUIEvent, this, &ofApp::guiEvent_CreerGroupe);
 					m_guiCreerGroupe->setVisible(true);
 					
+					m_selectedMenu.setup();
+					m_selectedMenu = m_bkMenu;
+					m_selectedMenu.setListener(m_listener);
 					m_sousMenuBool = false;
 					m_sousMenuInt = -1;
 				}
@@ -507,6 +506,9 @@ void ofApp::guiEvent_DoAction(int p_IdButton)
 					ofAddListener(m_guiCreerGroupe->newGUIEvent, this, &ofApp::guiEvent_CreerGroupe);
 					m_guiCreerGroupe->setVisible(true);
 					
+					m_selectedMenu.setup();
+					m_selectedMenu = m_bkMenu;
+					m_selectedMenu.setListener(m_listener);
 					m_ActionCreer = 6;
 					m_sousMenuBool = false;
 					m_sousMenuInt = -1;
